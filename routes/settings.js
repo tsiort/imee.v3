@@ -1,90 +1,172 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
-var fs = require('fs');
-var path = require('path');
+const asyncWrapper = require("../middleware/asyncMiddleware");
 
-// Models
-var Program = require('../models/program.js');
-var Slider = require('../models/slider.js');
-var Meganav = require('../models/meganav.js');
-var Experience = require('../models/experience.js')
-var ExperienceCat = require('../models/experience-cat.js')
+// -----------------------------------------------------------------------------
+// File system includes and promisification
+// -----------------------------------------------------------------------------
+const fs = require('fs');
+const path = require('path');
+const {
+  promisify
+} = require("util");
+const readdir = promisify(fs.readdir);
+
+
+// -----------------------------------------------------------------------------
+// Model includes
+// -----------------------------------------------------------------------------
+const models = require("../models");
+const Category = models.category;
+const ProgramType = models.programType;
+const Program = models.program;
+const Slider = models.slider;
+
+// -----------------------------------------------------------------------------
+// Data Arrays
+// -----------------------------------------------------------------------------
+let documents = [];
+let images = [];
+let categories = [];
+let programTypes = [];
+let programs = [];
+let sliders = [];
+
+let data;
+
+// -----------------------------------------------------------------------------
+// Data retrieval executed before main routing
+// -----------------------------------------------------------------------------
+router.get('*', asyncWrapper(async (req, res, next) => {
+
+  categories = await Category.findAll({
+    where: {
+      status: 'active'
+    }
+  });
+  programTypes = await ProgramType.findAll({
+    where: {
+      status: 'active'
+    }
+  });
+  programs = await Program.findAll({
+    where: {
+      status: 'active'
+    }
+  });
+  sliders = await Slider.findAll({
+    where: {
+      status: 'active'
+    }
+  });
+
+  let result;
+  // Get documents
+  result = await readdir('./public/files/uploads/docs');
+  result.forEach(function(item) {
+    var file = {};
+    file.name = item;
+    file.ext = path.extname(item).substring(1).toLowerCase();
+    file.type = 'doc';
+    documents.push(file);
+  });
+  // Get Images
+  result = await readdir('./public/files/uploads/images');
+  result.forEach(function(item) {
+    var file = {};
+    file.name = item;
+    file.ext = path.extname(item).substring(1).toLowerCase();
+    file.type = 'img';
+    images.push(file);
+  });
+
+
+  next();
+}));
+
+
+// -----------------------------------------------------------------------------
+// GET /admin/settings/slider
+// -----------------------------------------------------------------------------
+router.get('/slider', asyncWrapper(async (req, res, next) => {
+
+  data = {
+    documents: documents,
+    images: images,
+    categories: categories,
+    programTypes: programTypes,
+    programs: programs,
+    sliders: sliders
+  }
+
+  res.render('admin/slider', {
+    layout: 'admin',
+    title: 'Ρυθμίσεις',
+    type: 'slider',
+    data: data
+  });
+
+}));
+
+
+// -----------------------------------------------------------------------------
+// GET /admin/settings/slider/new
+// -----------------------------------------------------------------------------
+router.get('/slider/new', asyncWrapper(async (req, res, next) => {
+
+  data = {
+    documents: documents,
+    images: images,
+    categories: categories,
+    programTypes: programTypes,
+    programs: programs,
+    sliders: sliders
+  }
+
+  res.render('admin/create', {
+    layout: 'admin',
+    title: 'Νέο Slider',
+    type: 'slider',
+    data: data
+  });
+
+}));
+
 
 
 // Global arrays
-let experience_categories = [];
-let experience = [];
+// let experience_categories = [];
+// let experience = [];
 
-router.get(/exp/, function(req, res, next) {
-  ExperienceCat.getAll(function(err, result) {
-    if (err) {
-      res.json(err);
-      return;
-    }
+// router.get(/exp/, function(req, res, next) {
+//   ExperienceCat.getAll(function(err, result) {
+//     if (err) {
+//       res.json(err);
+//       return;
+//     }
+//
+//     experience_categories = result;
+//
+//     Experience.getAll(function(err, result) {
+//       if (err) {
+//         res.json(err);
+//         return;
+//       }
+//
+//       result.forEach(function(item) {
+//         item.categories = JSON.parse(item.categories);
+//       });
+//
+//       experience = result;
+//       next();
+//     });
+//   });
+// });
 
-    experience_categories = result;
-
-    Experience.getAll(function(err, result) {
-      if (err) {
-        res.json(err);
-        return;
-      }
-
-      result.forEach(function(item) {
-        item.categories = JSON.parse(item.categories);
-      });
-
-      experience = result;
-      next();
-    });
-  });
-});
 
 
 
-/* Slider GET */
-router.get('/slider', authenticationMiddleware(), function(req, res, next) {
-
-  var images = [];
-
-  fs.readdir('./public/files/uploads/images', function(err, imgFiles) {
-    if (err) {
-      res.json(err);
-      return;
-    }
-    imgFiles.forEach(function(item) {
-      var file = {};
-      file.name = item;
-      file.ext = path.extname(item).substring(1).toLowerCase();
-      file.type = 'img';
-      images.push(file);
-    })
-
-    Program.getAll(function(err, result) {
-      if (err) {
-        res.json(err);
-      } else {
-
-        Slider.get(function(err, slider) {
-          if (err) {
-            res.json(err);
-          } else {
-            res.render('admin/slider', {
-              layout: 'admin',
-              title: 'Ρυθμίσεις',
-              type: 'slider',
-              images: images,
-              programs: result,
-              slider: slider[0]
-            });
-
-          }
-        });
-      }
-    });
-  });
-});
 
 
 /* Slider POST */
@@ -354,7 +436,7 @@ router.post('/exp-file', authenticationMiddleware(), function(req, res, next) {
   var categories = req.body.expCat;
   var text = req.body.expText;
 
-  Experience.new(categories, name , text, function(err, result) {
+  Experience.new(categories, name, text, function(err, result) {
     if (err) {
       res.json(err);
     } else {
@@ -425,8 +507,7 @@ router.post('/exp-file/:id/edit', authenticationMiddleware(), function(req, res,
 
   // req.checkBody('categoryName', 'Το Όνομα της κατηγορίας είναι υποχρεωτικό').notEmpty();
 
-  var errors = req.validationErrors();
-;
+  var errors = req.validationErrors();;
   if (errors) {
     req.flash('errors', errors);
     res.redirect(req.originalUrl);
@@ -442,7 +523,6 @@ router.post('/exp-file/:id/edit', authenticationMiddleware(), function(req, res,
     }
   });
 });
-
 
 
 

@@ -1,13 +1,54 @@
 <div class="my-3 p-3 bg-white rounded shadow-sm">
+  <div class="border-bottom border-gray pb-2 mb-0 row mx-0 ">
+    <div class="col-9 my-auto">
+      <h6 class="m-0">Sliders</h6>
+    </div>
+    <div class="col-3 ">
+      <div class="input-group input-group-sm ">
+        <input type="text" class="form-control" id="seachInput" onkeyup="liveSearch()" placeholder="Αναζήτηση..." aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+      </div>
+    </div>
 
-  <!-- Category Edit -->
+  </div>
+  {{#if data.sliders}}
+
+    {{#each data.sliders}}
+    <div class="media text-muted pt-3 imee-seach-item" imee-search-keys="{{id}} {{title}} {{text}}">
+      <i class="fas fa-2x fa-clipboard-list"></i>
+      <p class="media-body ml-3 pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <strong class="d-block text-gray-dark">{{title}}</strong>
+        <a href="/admin/settings/slider/{{id}}/delete"><span class="float-right mx-3"><i title="Διαγραφή" class="fas fa-trash-alt"></i></span></a>
+        <a href="/admin/category/slider/{{id}}/edit"><span class="float-right mx-3"><i title="Επεξεργασία" class="fas fa-edit"></i></span></a>
+        {{id}}
+      </p>
+    </div>
+    {{/each}}
+
+  {{else}}
+  <div class="media text-muted pt-3">
+    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+      <strong class="d-block text-gray-dark">Δεν βρέθηκαν Sliders</strong>
+    </p>
+  </div>
+
+  {{/if}}
+  <small class="d-block text-right mt-3">
+    <a href="/admin/settings/slider/new">Νέο Slider</a>
+  </small>
+</div>
+
+
+
+<!-- <div class="my-3 p-3 bg-white rounded shadow-sm">
+
+
 
   <h6 class="border-bottom border-gray pb-2 mb-0" style="font-weight:600;">Ρύθμιση Slider</h6>
 
 
   <form action="/admin/settings/slider" method="post" class="mt-3">
 
-    <!-- Slider 1 -->
+
     <div class="media text-muted pt-3">
       <p class="media-body pb-1 mb-0 small lh-125 border-bottom border-gray">
         <strong class="d-block text-gray-dark">Slider 1</strong>
@@ -31,7 +72,7 @@
         <div class="col-12  col-md-4 text-center">
           <label for="programGalleryPrev-1" class="m-0"><small class="text-secondary" style="font-weight:600;">Προεπισκόπηση</small></label>
           <div class="border rounded" id="programGalleryPrev-1" style="height:250px;">
-            <!-- Dynamic Append  -->
+
             {{#if slider.slider1img}}
               <img src="/files/uploads/images/{{slider.slider1img}}" alt="{{slider.slider1img}}" class="w-100 h-100 ">
             {{/if}}
@@ -80,7 +121,7 @@
     </div>
 
 
-    <!-- Slider 2 -->
+
     <div class="media text-muted pt-3">
       <p class="media-body pb-1 mb-0 small lh-125 border-bottom border-gray">
         <strong class="d-block text-gray-dark">Slider 2</strong>
@@ -104,7 +145,7 @@
         <div class="col-12  col-md-4 text-center">
           <label for="programGalleryPrev-2" class="m-0"><small class="text-secondary" style="font-weight:600;">Προεπισκόπηση</small></label>
           <div class="border rounded" id="programGalleryPrev-2" style="height:250px;">
-            <!-- Dynamic Append  -->
+
             {{#if slider.slider2img}}
               <img src="/files/uploads/images/{{slider.slider2img}}" alt="{{slider.slider2img}}" class="w-100 h-100 ">
             {{/if}}
@@ -152,7 +193,7 @@
       </div>
     </div>
 
-    <!-- Slider 3 -->
+
     <div class="media text-muted pt-3">
       <p class="media-body pb-1 mb-0 small lh-125 border-bottom border-gray">
         <strong class="d-block text-gray-dark">Slider 3</strong>
@@ -176,7 +217,7 @@
         <div class="col-12  col-md-4 text-center">
           <label for="programGalleryPrev-3" class="m-0"><small class="text-secondary" style="font-weight:600;">Προεπισκόπηση</small></label>
           <div class="border rounded" id="programGalleryPrev-3" style="height:250px;">
-            <!-- Dynamic Append  -->
+
             {{#if slider.slider3img}}
               <img src="/files/uploads/images/{{slider.slider3img}}" alt="{{slider.slider3img}}" class="w-100 h-100 ">
             {{/if}}
@@ -236,4 +277,4 @@
 
 
 
-</div>
+</div> -->

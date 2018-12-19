@@ -19,7 +19,7 @@ var categRouter = require('./routes/category');
 var progrRouter = require('./routes/program');
 // var newsRouter  = require('./routes/news');
 // var filesRouter = require('./routes/file');
-// var settingsRouter = require('./routes/settings');
+var settingsRouter = require('./routes/settings');
 
 // WYSIWYG Request Handler
 // var froalaHandler = require('./routes/froala');
@@ -95,7 +95,7 @@ app.use('/admin/category', categRouter);
 app.use('/admin/program', progrRouter);
 // app.use('/admin/news', newsRouter);
 // app.use('/admin/file', filesRouter);
-// app.use('/admin/settings', settingsRouter);
+app.use('/admin/settings', settingsRouter);
 // app.use('/admin/froala', froalaHandler);
 
 
