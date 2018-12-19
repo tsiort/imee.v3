@@ -1,0 +1,81 @@
+<div class="my-3 p-3 bg-white rounded shadow-sm">
+  <div class="border-bottom border-gray pb-2 mb-0 row mx-0 ">
+    <div class="col-9 my-auto">
+      <h6 class="m-0">Εμπειρία του Φορέα</h6>
+    </div>
+    <div class="col-3 ">
+      <div class="input-group input-group-sm ">
+        <input type="text" class="form-control" id="seachInput" onkeyup="liveSearch()" placeholder="Αναζήτηση..." aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+      </div>
+    </div>
+
+  </div>
+
+  <div class="media text-muted pt-3">
+    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+      <strong class="d-block text-gray-dark">Κατηγορίες</strong>
+    </p>
+  </div>
+  {{#if categories}}
+
+    {{#each categories}}
+      <div class="media text-muted pt-3 imee-seach-item" imee-search-keys="{{id}} {{name}}">
+        <i class="fas fa-2x fa-file"></i>
+        <p class="media-body ml-3 pb-3 mb-0 small lh-125 border-bottom border-gray">
+          <strong class="d-block text-gray-dark">{{name}}</strong>
+          <a href="/admin/settings/exp-cat/{{id}}/delete"><span class="float-right mx-3"><i title="Διαγραφή" class="fas fa-trash-alt"></i></span></a>
+          <a href="/admin/settings/exp-cat/{{id}}/edit"><span class="float-right mx-3"><i title="Επεξεργασία" class="fas fa-edit"></i></span></a>
+        </p>
+      </div>
+    {{/each}}
+  {{else}}
+    <div class="media text-muted pt-3">
+      <img data-src="holder.js/32x32?theme=thumb&bg=007bff&fg=007bff&size=1" alt="" class="mr-2 rounded">
+      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <strong class="d-block text-gray-dark">Δεν βρέθηκαν Κατηγορίες</strong>
+      </p>
+    </div>
+  {{/if}}
+  <div class="media text-muted pt-3">
+    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+      <strong class="d-block text-gray-dark">Εμπειρία</strong>
+    </p>
+  </div>
+  {{#if experience}}
+
+    {{#each experience}}
+      <div class="media text-muted pt-3 imee-seach-item" imee-search-keys="{{id}} {{title}}">
+        <i class="fas fa-2x fa-file-image"></i>
+        <p class="media-body ml-3 pb-3 mb-0 small lh-125 border-bottom border-gray">
+          <strong class="d-block text-gray-dark">{{title}}</strong>
+          <a href="/admin/settings/exp-file/{{id}}/delete"><span class="float-right mx-3"><i title="Διαγραφή" class="fas fa-trash-alt"></i></span></a>
+          <a href="/admin/settings/exp-file/{{id}}/edit"><span class="float-right mx-3"><i title="Επεξεργασία" class="fas fa-edit"></i></span></a>
+        </p>
+      </div>
+    {{/each}}
+  {{else}}
+    <div class="media text-muted pt-3">
+      <img data-src="holder.js/32x32?theme=thumb&bg=007bff&fg=007bff&size=1" alt="" class="mr-2 rounded">
+      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <strong class="d-block text-gray-dark">Δεν βρέθηκαν αρχεία</strong>
+      </p>
+    </div>
+  {{/if}}
+  <!-- {{docs}}
+{{images}} -->
+
+
+
+
+
+  <small class="d-block text-right mt-3">
+    <a href="/admin/settings/exp-cat">Δημιουργία Κατηγορίας</a>
+    <a href="/admin/settings/exp-file" class="mx-2">Δημιουργία Εμπειρίας</a>
+  </small>
+
+  <!-- <form ref='uploadForm' id='uploadForm' action='/admin/file/upload' method='post' encType="multipart/form-data">
+  <input type="file" name="sampleFile" />
+  <input type='submit' value='Upload!' />
+</form> -->
+
+</div>

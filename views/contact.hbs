@@ -1,0 +1,146 @@
+<div class="row mx-0 imee-red shadow-sm border-bottom d-none">
+  <div class="col-12 py-3 ">
+    <div class="imee-container text-center ">
+      <h6 class="text-white m-0 imee-section-header" style="font-size: 0.9rem !important">ΕΠΙΚΟΙΝΩΝΙΑ</h6>
+    </div>
+  </div>
+</div>
+</div>
+<div class="row mx-0 py-3 mt-5 mb-4" id="contact-form">
+  <div class="col-12">
+    <div class="imee-container text-center">
+      <h3 class="py-0 m-0 imee-section-header imee-text-grey-blue">Φόρμα Επικοινωνίας</h3>
+    </div>
+  </div>
+</div>
+<div class="row mx-0 ">
+  <div class="col-12 p-0">
+    <div class="imee-container">
+      <div class="row mx-0">
+        <div class="col-12">
+          <form class="" action="/contact" method="post">
+            <div class="form-group row">
+              <label for="inputEmail3" class="col-sm-3 col-form-label imee-text-black">Ηλ. Διεύθυνση</label>
+              <div class="col-sm-9">
+                <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputPassword3" class="col-sm-3 col-form-label imee-text-black">Oνοματεπώνυμο</label>
+              <div class="col-sm-9">
+                <input type="password" class="form-control" id="inputPassword3" placeholder="Oνοματεπώνυμο">
+              </div>
+            </div>
+            <fieldset class="form-group">
+              <div class="row">
+                <legend class="col-form-label col-sm-3 pt-0 imee-text-black">Κείμενο</legend>
+                <div class="col-sm-9">
+                  <textarea name="contact_text" rows="4" class="w-100  border"></textarea>
+                </div>
+              </div>
+            </fieldset>
+            <div class="form-group row">
+              <div class="col-sm-3"></div>
+              <div class="col-sm-9">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="gridCheck1">
+                  <label class="form-check-label" for="gridCheck1">
+                    Συναίνεση
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-12 col-md-3">
+                <button type="submit" class="btn imee-btn-grey w-100 ">Αποστολή</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<div class="row mx-0 py-3 mt-5 mb-4" id="contact-maps">
+  <div class="col-12">
+    <div class="imee-container text-center">
+      <h3 class="py-0 m-0 imee-section-header imee-text-grey-blue">Χάρτες</h3>
+    </div>
+  </div>
+</div>
+<div class="row mx-0 mb-5">
+  <div class="col-12 p-0">
+    <div class="imee-container">
+      <div class="row mx-0 my-3">
+        <div class="col-12 col-lg-6 p-3">
+          <div class="card shadow-sm border" style="width: auto;">
+            <div class="card-img-top border-bottom" id="mapathens" style="height:500px"></div>
+            <div class="card-body">
+              <h6 class="card-title font-weight-bold">Αθήνα</h6>
+              <p class="card-text font-weight-bold " style="font-size:14px;">Ερατύρας 3, Τ.Κ. 10439 Σταθμός Λαρίσης</p>
+              <i class="fas fa-headset imee-text-black"></i>
+              <a href="tel:00302108259660"><span class="imee-text-black mr-3" style="font-size:13px;">+30 210 8259660</span></a>
+              <i class="fas fa-fax imee-text-black"></i>
+              <span class="imee-text-black mr-3" style="font-size:13px;">+30 210 8847224</span>
+              <i class="fas fa-envelope imee-text-black"></i>
+              <a href="mailto:imee@otenet.gr"><span class="imee-text-black mr-3" style="font-size:13px;">imee@otenet.gr</span></a>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-lg-6 p-3">
+          <div class="card shadow-sm border" style="width: auto;">
+            <div class="card-img-top border-bottom" id="mapthiva" style="height:500px; font-size:10px"></div>
+            <div class="card-body">
+              <h6 class="card-title font-weight-bold">Θήβα</h6>
+              <p class="card-text font-weight-bold " style="font-size:14px;">Λοξής Φάλαγγος 64, Τ.Κ. 32200 </p>
+              <i class="fas fa-headset imee-text-black"></i>
+              <a href="tel:00302108259660"><span class="imee-text-black mr-3" style="font-size:13px;">+30 22620 24249</span></a>
+              <i class="fas fa-envelope imee-text-black"></i>
+              <a href="mailto:imee@otenet.gr"><span class="imee-text-black mr-3" style="font-size:13px;">imee@otenet.gr</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+  var mapathens,
+    mapthiva,
+    athens = {
+      lat: 37.990437,
+      lng: 23.721866
+    },
+    thiva = {
+      lat: 38.311043,
+      lng: 23.317490
+    },
+    markathens,
+    markthiva;
+
+  function initMap() {
+    mapathens = new google.maps.Map(document.getElementById('mapathens'), {
+      center: athens,
+      zoom: 15
+    });
+    mapthiva = new google.maps.Map(document.getElementById('mapthiva'), {
+      center: thiva,
+      zoom: 15
+    });
+    markathens = new google.maps.Marker({
+      position: athens,
+      map: mapathens,
+      title: 'Ερατύρας 3, Σταθμός Λαρίσης, Αθήνα'
+    });
+    markthiva = new google.maps.Marker({
+      position: thiva,
+      map: mapthiva,
+      title: 'Λοξής Φάλαγγος 64, Θήβα'
+    });
+  }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmjZnJfx_94hYpSXlxXZZ4HWF0fJnEpRA&callback=initMap" async defer></script>

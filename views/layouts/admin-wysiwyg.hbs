@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="../../../../favicon.ico">
+
+  <title>{{title}}</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.css">
+
+  <!-- Include Editor style. -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.5.1/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.5.1/css/froala_style.min.css" rel="stylesheet" type="text/css" />
+
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <!-- Custom styles for this template -->
+  <link href="/stylesheets/offcanvas.css" rel="stylesheet">
+
+</head>
+
+<body class="bg-light">
+
+  <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
+    <a class="navbar-brand mr-auto mr-lg-3" href="/admin">ΙΜΕ&#38;Ε</a>
+    <button class="navbar-toggler p-0 border-0" type="button" data-toggle="offcanvas">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+    <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item {{#ifCond type '==' 'cat'}}active{{/ifCond}}">
+          <a class="nav-link" href="/admin/category">Κατηγορίες<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item {{#ifCond type '==' 'prog'}}active{{/ifCond}}">
+          <a class="nav-link" href="/admin/program">Προγράμματα</a>
+        </li>
+        <li class="nav-item {{#ifCond type '==' 'news'}}active{{/ifCond}}">
+          <a class="nav-link" href="/admin/news">Ανακοινώσεις</a>
+        </li>
+        <li class="nav-item {{#ifCond type '==' 'file'}}active{{/ifCond}}">
+          <a class="nav-link" href="/admin/file">Αρχεία</a>
+        </li>
+        <li class="nav-item {{#ifCond type '==' 'slider'}}active{{/ifCond}}">
+          <a class="nav-link" href="/admin/settings/slider">Slider</a>
+        </li>
+        <li class="nav-item {{#ifCond type '==' 'meganav'}}active{{/ifCond}}">
+          <a class="nav-link" href="/admin/settings/meganav">Dropdown Menu</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="https://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ο Φορές</a>
+          <div class="dropdown-menu" aria-labelledby="dropdown01">
+            <a class="dropdown-item {{#ifCond type '==' 'exp'}}active{{/ifCond}}{{#ifCond type '==' 'exp-files'}}active{{/ifCond}}{{#ifCond type '==' 'exp-file'}}active{{/ifCond}}" href="/admin/settings/exp">Εμπειρία</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="https://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ρυθμίσεις</a>
+          <div class="dropdown-menu" aria-labelledby="dropdown01">
+            <a class="dropdown-item {{#ifCond type '==' 'meganav'}}active{{/ifCond}}" href="/admin/settings/meganav">Dropdown Menu</a>
+            <a class="dropdown-item {{#ifCond type '==' 'slider'}}active{{/ifCond}}" href="/admin/settings/slider">Slider</a>
+            <!-- <a class="dropdown-item" href="#">Something else here</a> -->
+          </div>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <!-- <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> -->
+        <!-- <a class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</a> -->
+        <!-- <li class="nav-item float-right"> -->
+        <a class="nav-link text-white" href="/logout">Αποσύνδεση</a>
+        <!-- </li> -->
+      </form>
+    </div>
+  </nav>
+
+  <div class="nav-scroller bg-white shadow-sm">
+    <nav class="nav nav-underline">
+      <a class="nav-link active" href="#">Dashboard</a>
+      <a class="nav-link" href="#">
+          Friends
+          <span class="badge badge-pill bg-light align-text-bottom">27</span>
+        </a>
+      <a class="nav-link" href="#">Explore</a>
+      <a class="nav-link" href="#">Suggestions</a>
+      <a class="nav-link" href="#">Link</a>
+      <a class="nav-link" href="#">Link</a>
+      <a class="nav-link" href="#">Link</a>
+      <a class="nav-link" href="#">Link</a>
+      <a class="nav-link" href="#">Link</a>
+    </nav>
+  </div>
+
+  <main role="main" class="container">
+
+    <!-- Success Message -->
+    {{#if success_msg}}
+      <div class="alert alert-success alert-dismissible fade show mt-4" role="alert">
+        <strong>{{success_msg}}</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      </div>
+
+    {{/if}}
+    <!-- Error handler -->
+    {{#if error_msg }}
+      <div class="alert alert-warning alert-dismissible fade show mt-4" role="alert">
+        <strong>{{error_msg}}</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+    {{/if}}
+
+    {{#if errors }}
+      {{#each errors}}
+        <div class="alert alert-warning alert-dismissible fade show mt-4" role="alert">
+          <strong>{{this.msg}}</strong>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      {{/each}}
+    {{/if}}
+
+
+    {{{body}}}
+
+  </main>
+
+  <!-- Bootstrap core JavaScript
+    ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <!-- Include external JS libs. -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/xml/xml.min.js"></script>
+
+  <!-- Include Editor JS files. -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.5.1//js/froala_editor.pkgd.min.js"></script>
+
+  <!-- El lang plugin -->
+  <script type="text/javascript" src="/libs/froala/languages/el.js"></script>
+
+  <script src="/javascripts/admin.js"></script>
+
+</body>
+
+</html>

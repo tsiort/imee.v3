@@ -1,0 +1,44 @@
+<div class="row mx-0 imee-red shadow-sm border-bottom d-none">
+  <div class="col-12 py-3 ">
+    <div class="imee-container text-center ">
+      <h6 class="text-white m-0 imee-section-header" style="font-size: 0.9rem !important">ΑΝΑΚΟΙΝΩΣΕΙΣ</h6>
+    </div>
+  </div>
+</div>
+
+<div class="row mx-0 ">
+  <div class="col-12 p-0">
+
+    <div class="imee-container">
+      <div class="row mx-0 py-4">
+        {{#if news}}
+          {{#each news}}
+            <div class="col-12 py-4" id="announcement-{{id}}">
+              <div class="card imee-news-card shadow-sm rounded-right border">
+                <div class="card-body text-justify">
+                  <div class="card-title border-bottom">
+                    <div class="row mx-0">
+                      <div class="col-12 col-md-8 px-0 text-left">
+                        <h6 class="imee-text-blue imee-fw-600">{{title}}</h6>
+                      </div>
+                      <div class="col-12 col-md-4 px-0 text-right">
+                        <span class="imee-text-red">Τελευταία ενημέρωση: {{dateFormat update_time}}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-text h-100 fr-view">
+                    {{{text}}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          {{/each}}
+
+        {{else}}
+        {{/if}}
+
+
+      </div>
+    </div>
+  </div>
+</div>

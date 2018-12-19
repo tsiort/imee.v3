@@ -1,0 +1,422 @@
+@import "../../node_modules/bootstrap/scss/bootstrap"
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans')
+
+body
+  height: 100%
+  font-family: 'Noto Sans', sans-serif  
+  font-smoothing: antialiased !important
+  -webkit-font-smoothing: antialiased !important
+  -moz-osx-font-smoothing: grayscale !important
+  text-rendering: optimizeLegibility !important
+
+$black: #00060c
+$blue: #011f79
+// $grey-transparent: rgba(1, 31, 121, .5)
+$grey-transparent: rgba(118, 117, 136, 0.5)
+$light-grey: #f2f2f2
+$grey: #dbdbdb
+$heavy-grey: #6f6f6f
+$heavier-grey: #666666
+// $red: #be2a27
+$red: #9f2d31
+$grey-blue: #767588
+$grey-blue-dark: #2f2f37
+$light: #f8f9fa
+
+.imee-black
+  background: $black !important
+.imee-light
+  background: $light !important
+.imee-red
+  background: $red !important
+.imee-blue
+  background: $blue !important
+.imee-grey
+  background: $grey !important
+.imee-light-grey
+  background: $light-grey !important
+.imee-heavier-grey
+  background: $heavier-grey !important
+.imee-grey-blue
+  background: $grey-blue !important
+.imee-grey-blue-dark
+    background: $grey-blue-dark !important
+.imee-text-black
+  color: $black !important
+.imee-text-red
+  color: $red !important
+.imee-text-blue
+  color: $blue !important
+.imee-text-grey
+  color: $grey !important
+.imee-text-heavy-grey
+  color: $heavy-grey !important
+.imee-text-light-grey
+  color: $light-grey !important
+.imee-text-grey-blue
+  color: $grey-blue !important
+
+
+@include media-breakpoint-up(md)
+  .carousel-caption
+    right: auto
+    top: 10%
+    bottom: 10%
+    max-width: 500px
+    > h3
+      background: $grey-transparent
+      padding: 20px
+      text-shadow: 2px 2px 4px #000000
+    > p
+      font-size: 18px
+      text-shadow: 2px 2px 4px #000000
+      background: $grey-transparent
+      padding: 20px
+    > div
+      background: $grey-transparent
+      padding: 10px
+
+
+
+
+
+
+@include media-breakpoint-up(lg)
+  .dropdown:hover
+    >.dropdown-menu
+      display: block
+
+.dropdown
+  >.dropdown-toggle:active
+    pointer-events: none
+
+.dropdown-menu
+  border-radius: 0
+
+.dropdown-toggle::after
+  content: none
+
+.dropdown-item.active, .dropdown-item:active
+    color: #fff
+    text-decoration: none
+    background-color: $grey-blue
+    &:hover
+      color: #fff
+      text-decoration: none
+      background-color: $grey-blue
+    // background-color: #007bff
+
+.dropdown-item:hover, .dropdown-item:focus
+    color: #16181b
+    text-decoration: none
+    background-color: #f8f9fa
+    // background-color: #f8f9fa
+
+
+
+
+.imee-section-header
+  letter-spacing: 2px
+  font-weight: bold
+
+// .dropdown-header
+//     padding: 1rem 1.5rem
+//     font-size: 1.1rem
+//     color: $grey-blue-dark
+
+.dropdown-item
+    padding: 0.7rem 1.5rem
+
+.imee-btn
+  color: $black
+  background: $light-grey
+  padding: 0.6rem 1.7rem
+  font-size: 0.9rem
+  line-height: 1.5
+  // border-radius: 0.4rem
+  border-radius: 2rem
+  &:hover
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19)
+    color: $light-grey
+    background: $black
+.imee-btn-grey
+    color: $grey-blue
+    background: white
+    border: 1px solid #dee2e6
+    padding: 0.6rem 1.7rem
+    font-size: 0.9rem
+    line-height: 1.5
+    border-radius: 2rem
+    &:hover
+      color: $grey-blue
+      box-shadow: 3px 6px 16px -8px rgba(118, 117, 136, 0.5)
+    &.btn-lg
+      font-size: 1.25rem !important
+      line-height: 1.5 !important
+
+
+.imee-scroller
+  position: relative
+  z-index: 2
+  overflow-y: hidden
+  .nav
+    display: -ms-flexbox
+    display: flex
+    -ms-flex-wrap: nowrap
+    flex-wrap: nowrap
+    padding-bottom: 1rem
+    // margin-top: -1px
+    overflow-x: auto
+    // color: rgba(255, 255, 255, 0.75)
+    text-align: center
+    white-space: nowrap
+    -webkit-overflow-scrolling: touch
+
+.imee-nav-link
+  transition: background-color .5s ease
+  &::before
+  	content: ''
+  	display: block
+  	margin: auto
+  	height: 3px
+  	width: 0px
+  	background: transparent
+    border-top: 2px solid transparent
+  	transition: width .5s ease, background-color .5s ease
+  &:hover::before
+    width: 100%
+    background-color: transparent
+    border-top: 2px solid $light
+    color: $red
+  &.active
+    background-color: white !important
+  &.active::before
+    width: 100%
+    border-top: 2px solid $blue
+  &:hover
+    background-color: $light
+    > a
+      color: $red !important
+      background-color: $light !important
+
+
+.imee-pill
+  color: $grey-blue !important
+  background-color: transparent !important
+  // border-radius: 0px !important
+  transition: background-color .5s ease
+  // border: 1px solid #dee2e6 !important
+  padding: 0.0rem 0.9rem !important
+  // padding: 0 !important
+  font-size: 0.95rem
+  &.active
+    border: none !important
+    color: $blue !important
+    // color: black !important
+    // color: $grey-blue
+    // font-weight: 700
+    // background-color: $light-grey !important
+    // text-decoration: underline
+    // font-weight: 700 !important
+  &:hover
+    color: $blue !important
+    // text-decoration: underline
+    // color: black !important
+    // font-weight: 700
+    // background-color: $light-grey !important
+    // border: none !important
+    // text-decoration: underline
+
+.imee-card
+  height: 100%
+  line-height: 1.5
+  // transition: transform 10s
+  overflow: hidden !important
+  > .card-div-top
+    overflow: hidden !important
+    max-height: 250px
+    height: 250px
+    // transition: all 10s
+  // background: $red
+  // font-size: 13px
+  > .card-div-top
+    > img
+      max-height: 250px
+      height: 250px
+      object-fit: cover
+      transition: all 1s
+  > .card-body
+    // overflow: hidden
+    > .card-title
+      // height: 2.55rem
+      // overflow: hidden
+    > .card-text
+      // height: 39px
+      // overflow: hidden
+  > .card-footer
+    border: 0
+    background-color: transparent
+  &:hover
+    // box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important
+    // border: 1px solid #ccc !important
+
+
+.imee-card:hover
+  > .card-div-top
+    > img
+      transform: scale(1.05, 1.05) !important
+
+
+
+
+    // box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important
+    // box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.5) !important
+    // transform: scale(1.1)
+
+.imee-news-card
+  border-left: 5px solid $red !important
+  // border-top-left-radius: 0
+  // border-bottom-left-radius: 0
+  height: 100%
+  line-height: 1.5
+  font-size: 13px
+  > .card-body
+
+    overflow: hidden
+    > .card-title
+
+    > .card-text
+      height: 78px
+      overflow: hidden
+  > .card-footer
+    font-size: 0.9rem
+    border: 0
+    background-color: transparent
+
+  // font-family: "Roboto Condensed", sans-serif !important
+
+  // padding: 50px
+  // font: 14px "Lucida Grande", Helvetica, Arial, sans-serif
+p
+  margin: 0
+
+
+#myTab
+    display: none
+
+
+@include media-breakpoint-up(md)
+  #myTab
+    display: flex
+  .card
+    border: none
+  .card
+    .card-header
+      display: none
+    .collapse
+      display: block
+
+
+
+@include media-breakpoint-down(md)
+    .imee-tab-pane
+        display: block !important
+        opacity: 1
+    #myTab
+        display: none
+
+.imee-resp-font
+  font-size: 15px
+  // font-size: 0.9rem
+
+@include media-breakpoint-down(sm)
+    .imee-resp-font
+      font-size: 12px
+      // font-size: 0.8rem !important
+
+
+
+
+
+.red
+  border: 1px solid red
+
+.imee-container
+  width: 100%
+  padding-right: -15px
+  padding-left: -15px
+  margin-right: auto
+  margin-left: auto
+  max-width: 1200px
+
+
+#imee-mega-nav
+  display: none
+  -webkit-transition: opacity .5s
+  transition: opacity .5s
+  &:hover
+    display: block
+
+#imee-prog:hover ~ #imee-mega-nav
+  display: block
+
+.imee-prog-img
+  transition: box-shadow 0.3s ease-in-out
+  &:hover
+    cursor: pointer
+    box-shadow: 4px 4px 10px grey
+
+.imee-prog-title
+  font-size: 1.3rem
+
+.imee-prog-subtitle
+  font-size: 1rem
+
+#imee-img-viewer
+  > img:hover
+  cursor: pointer
+
+#imee-footer-seperator
+  background: $blue
+  border-bottom: 0px solid $red
+  // padding: 2px
+
+.imee-fw-600
+  font-weight: 600
+
+.fa-facebook:hover
+  color: $blue
+
+
+
+
+.imee-foreas-card
+  > .imee-foreas-card-tag
+    // font-size: 0.8rem
+    // font-weight: 400
+    &:hover
+      // color: $grey-blue-dark !important
+  > .imee-foreas-card-title
+    // font-weight: 600
+
+
+.imee-foreas-category:last-child
+  border: none !important
+
+
+.imee-collapse
+  text-decoration: none
+  clear: both
+  &:hover
+    text-decoration: none
+    > i
+      color: $red
+      // content: 'f055'
+
+
+
+a[aria-expanded="true"]
+  background: $grey-blue !important
+  color: white !important
+  >.fa-plus::before
+      content: "\f068"

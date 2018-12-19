@@ -1,0 +1,257 @@
+{{#if data.sliders}}
+  <div id="demo" class="carousel slide" data-ride="carousel">
+
+
+    <!-- Indicators -->
+    <ul class="carousel-indicators">
+      {{#each data.sliders}}
+        <li data-target="#demo" data-slide-to="{{@index}}" class="active"></li>
+      {{/each}}
+    </ul>
+
+    <!-- Slideshow -->
+
+    <div class="carousel-inner">
+      {{#each data.sliders}}
+        <div class="carousel-item {{#ifCond @index '==' '0'}}active{{/ifCond}}" style="height: 450px;">
+          <!-- <div class="w-100 h-100 position-absolute"></div> -->
+          <img class="img-fluid w-100" src="/files/uploads/images/{{image}}" alt="{{title}}" style="max-width:100%;height:auto;min-height:500px;object-fit:cover;">
+          <div class="carousel-caption text-left">
+            <h3>{{title}}</h3>
+            <p class="pl-2">{{text}}</p>
+            <div class="align-text-bottom w-100 text-right">
+              <a href="/programs/" class="btn imee-btn ">Περισσότερα</a>
+            </div>
+
+          </div>
+
+        </div>
+      {{/each}}
+    </div>
+
+    <!-- Left and right controls -->
+    <a class="carousel-control-prev" href="#demo" data-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </a>
+    <a class="carousel-control-next" href="#demo" data-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </a>
+  </div>
+{{/if}}
+
+<!-- Programs -->
+<div class="row mx-0 ">
+  <div class="col-12 p-0">
+    <div class="row mx-0 py-3 mt-5 mb-4">
+      <div class="col-12">
+        <div class="imee-container text-center">
+          <h5 class="py-0 m-0 imee-section-header imee-text-grey-blue">Δημοφιλή Προγράμματα</h5>
+        </div>
+      </div>
+    </div>
+    <div class="imee-container">
+      <div class="row mx-0  py-3 ">
+
+        <!-- {{#if featured}}
+          {{#each featured}}
+            <div class="col-12 col-sm-6 col-md-6  col-lg-{{getLayout ../featured.length @index}} mb-3">
+              <div class="card imee-card shadow-sm border" style="width: auto;">
+                <img class="card-img-top img-fluid" src="/files/uploads/images/{{image}}" alt="{{title}}">
+                <div class="card-body pb-1 text-justify">
+                  <h6 class="card-title imee-text-red">{{title}}</h6>
+                  <div class="card-text  fr-view">
+                    {{#if categories}}
+                      {{#each categories}}
+                        {{#each ../../category}}
+                          {{#ifCond this.id '==' ../this}}
+                            <a href="/programs/category/{{this.id}}" class="text-white imee-grey-blue px-2 py-1 mr-2 my-1  float-left badge badge-primary font-weight-normal">{{this.category}}</a>
+                          {{/ifCond}}
+                        {{/each}}
+                      {{else}}
+                        {{#each ../category}}
+                          {{#ifCond this.id '==' ../categories}}
+                            <a href="/programs/category/{{this.id}}" class="text-white imee-grey-blue px-2 py-1 mr-2 my-1  float-left badge badge-primary font-weight-normal">{{this.category}}</a>
+                          {{/ifCond}}
+                        {{/each}}
+                      {{/each}}
+                    {{/if}}
+                  </div>
+                </div>
+                <div class="card-footer text-right ">
+                  <a href="/programs/{{id}}" class="btn imee-btn-grey">Περισσότερα</a>
+                </div>
+              </div>
+            </div>
+          {{/each}}
+
+          <div class="col-12 text-center py-3">
+            <a href="/programs" class="btn btn-lg imee-btn-grey">Όλα τα προγράμματα</a>
+          </div>
+
+        {{else}}
+
+        {{/if}} -->
+
+
+
+        <div class="col-12 col-sm-6 col-md-6  col-lg-4 mb-3">
+          <div class="card imee-card shadow-sm border" style="width: auto;">
+            <div class="card-div-top">
+              <img class="card-img-top img-fluid" src="/files/uploads/images/slider1.jpg" alt="{{title}}">
+            </div>
+            <div class="card-body pb-1 text-justify">
+              <h6 class="card-title imee-text-red">Υγιεινή και Ασφάλεια τροφίμων ΕΦΕΤ</h6>
+              <div class="card-text  fr-view">
+                <a href="/programs/category/{{this.id}}" class="text-white imee-grey-blue px-2 py-1 mr-2 my-1  float-left badge badge-primary font-weight-normal">{{this.category}}</a>
+              </div>
+            </div>
+            <div class="card-footer text-right ">
+              <a href="/programs/{{id}}" class="btn imee-btn-grey">Περισσότερα</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-6  col-lg-4 mb-3">
+          <div class="card imee-card shadow-sm border" style="width: auto;">
+            <div class="card-div-top">
+              <img class="card-img-top img-fluid" src="/files/uploads/images/Logo OTE.jpg" alt="{{title}}">
+            </div>
+            <div class="card-body pb-1 text-justify">
+              <h6 class="card-title imee-text-red">{{title}}</h6>
+              <div class="card-text  fr-view">
+                <a href="/programs/category/{{this.id}}" class="text-white imee-grey-blue px-2 py-1 mr-2 my-1  float-left badge badge-primary font-weight-normal">{{this.category}}</a>
+              </div>
+            </div>
+            <div class="card-footer text-right ">
+              <a href="/programs/{{id}}" class="btn imee-btn-grey">Περισσότερα</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-6  col-lg-4 mb-3">
+          <div class="card imee-card shadow-sm border" style="width: auto;">
+            <div class="card-div-top">
+              <img class="card-img-top img-fluid" src="/files/uploads/images/atom_screen.jpg" alt="{{title}}">
+            </div>
+            <div class="card-body pb-1 text-justify">
+              <h6 class="card-title imee-text-red">{{title}}</h6>
+              <div class="card-text  fr-view">
+                <a href="/programs/category/{{this.id}}" class="text-white imee-grey-blue px-2 py-1 mr-2 my-1  float-left badge badge-primary font-weight-normal">{{this.category}}</a>
+              </div>
+            </div>
+            <div class="card-footer text-right ">
+              <a href="/programs/{{id}}" class="btn imee-btn-grey">Περισσότερα</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-6  col-lg-4 mb-3">
+          <div class="card imee-card shadow-sm border" style="width: auto;">
+            <div class="card-div-top">
+              <img class="card-img-top img-fluid" src="/files/uploads/images/food_chef.jpg" alt="{{title}}">
+            </div>
+            <div class="card-body pb-1 text-justify">
+              <h6 class="card-title imee-text-red">{{title}}</h6>
+              <div class="card-text  fr-view">
+                <a href="/programs/category/{{this.id}}" class="text-white imee-grey-blue px-2 py-1 mr-2 my-1  float-left badge badge-primary font-weight-normal">{{this.category}}</a>
+              </div>
+            </div>
+            <div class="card-footer text-right ">
+              <a href="/programs/{{id}}" class="btn imee-btn-grey">Περισσότερα</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-6  col-lg-4 mb-3">
+          <div class="card imee-card shadow-sm border" style="width: auto;">
+            <div class="card-div-top">
+              <img class="card-img-top img-fluid" src="/files/uploads/images/gdpr-3442145_1920.jpg" alt="{{title}}">
+            </div>
+            <div class="card-body pb-1 text-justify">
+              <h6 class="card-title imee-text-red">{{title}}</h6>
+              <div class="card-text  fr-view">
+                <a href="/programs/category/{{this.id}}" class="text-white imee-grey-blue px-2 py-1 mr-2 my-1  float-left badge badge-primary font-weight-normal">{{this.category}}</a>
+              </div>
+            </div>
+            <div class="card-footer text-right ">
+              <a href="/programs/{{id}}" class="btn imee-btn-grey">Περισσότερα</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-6  col-lg-4 mb-3">
+          <div class="card imee-card shadow-sm border" style="width: auto;">
+            <div class="card-div-top">
+              <img class="card-img-top img-fluid" src="/files/uploads/images/efet_photo.jpg" alt="{{title}}">
+            </div>
+            <div class="card-body pb-1 text-justify">
+              <h6 class="card-title imee-text-red">{{title}}</h6>
+              <div class="card-text  fr-view">
+                <a href="/programs/category/{{this.id}}" class="text-white imee-grey-blue px-2 py-1 mr-2 my-1  float-left badge badge-primary font-weight-normal">{{this.category}}</a>
+              </div>
+            </div>
+            <div class="card-footer text-right ">
+              <a href="/programs/{{id}}" class="btn imee-btn-grey">Περισσότερα</a>
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+
+
+
+        <div class="col-12 text-center py-3">
+          <a href="/programs" class="btn btn-lg imee-btn-grey">Όλα τα προγράμματα</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- News -->
+<div class="row mx-0 bg-light">
+  <div class="col-12 p-0">
+    <div class="row mx-0 py-3 mt-5 mb-4">
+      <div class="col-12">
+        <div class="imee-container text-center">
+          <h5 class="py-0 m-0 ιmee-section-header imee-text-grey-blue">Τελευταία Νέα</h5>
+        </div>
+      </div>
+    </div>
+    <div class="imee-container">
+      <div class="row mx-0  py-3 ">
+
+        {{#if news}}
+          {{#each news}}
+            <div class="col-12 py-3">
+              <div class="card imee-news-card shadow-sm rounded-right border">
+                <div class="card-body text-justify">
+                  <div class="card-title border-bottom">
+                    <div class="row mx-0">
+                      <div class="col-12 col-md-8 px-0 text-left">
+                        <h6 class="imee-text-red imee-fw-600">{{title}}</h6>
+                      </div>
+                      <div class="col-12 col-md-4 px-0 text-right">
+                        <span class="imee-text-red">Τελευταία ενημέρωση: {{dateFormat update_time}}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-text text-justify fr-view">
+                    {{{text}}}
+                  </div>
+                </div>
+                <div class="card-footer text-right  border-top bg-light text-right">
+                  <a href="/news#announcement-{{id}}" class="imee-text-grey-blue">Περισσότερα</a>
+                </div>
+              </div>
+            </div>
+          {{/each}}
+        {{else}}
+          <!-- No news found -->
+        {{/if}}
+        <div class="col-12 text-center py-3">
+          <a href="/news" class="btn btn-lg imee-btn-grey">Όλες οι ανακοινώσεις</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,46 @@
+<div class="my-3 p-3 bg-white rounded shadow-sm">
+  <div class="border-bottom border-gray pb-2 mb-0 row mx-0 ">
+    <div class="col-9 my-auto">
+      <h6 class="m-0">Προγράμματα</h6>
+    </div>
+    <div class="col-3 ">
+      <div class="input-group input-group-sm ">
+        <input type="text" class="form-control" id="seachInput" onkeyup="liveSearch()" placeholder="Αναζήτηση..." aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+      </div>
+    </div>
+
+  </div>
+
+  {{#if programs}}
+
+    {{#each programs}}
+      <div class="media text-muted pt-3 imee-seach-item" imee-search-keys="{{id}} {{title}}">
+        <i class="fas fa-2x fa-book-open"></i>
+        <p class="media-body ml-3 pb-3 mb-0 small lh-125 border-bottom border-gray">
+          <strong class="d-block text-gray-dark">{{title}}</strong>
+          <a href="/admin/program/{{id}}/delete"><span class="float-right mx-3"><i title="Διαγραφή" class="fas fa-trash-alt"></i></span></a>
+          <a href="/admin/program/{{id}}/edit"><span class="float-right mx-3"><i title="Επεξεργασία" class="fas fa-edit"></i></span></a>
+            @{{id}}
+        </p>
+
+      </div>
+    {{/each}}
+
+  {{else}}
+    <div class="media text-muted pt-3">
+      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <strong class="d-block text-gray-dark">Δεν βρέθηκαν Προγράμματα</strong>
+      </p>
+    </div>
+
+  {{/if}}
+
+
+
+
+  <small class="d-block text-right mt-3">
+  <a href="/admin/program/new">Δημιουργία Προγράμματος</a>
+</small>
+
+
+</div>

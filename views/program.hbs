@@ -1,0 +1,256 @@
+<div class="row mx-0 imee-red shadow-sm border-bottom d-none">
+  <div class="col-12 py-3 ">
+    <div class="imee-container text-center ">
+      <h6 class="text-white m-0 imee-section-header" style="font-size: 0.9rem !important">ΠΡΟΓΡΑΜΜΑΤΑ</h6>
+    </div>
+  </div>
+</div>
+
+<div class="row mx-0 my-4">
+  <div class="col-12 p-0 ">
+    <div class="imee-container rounded border shadow-sm ">
+
+      {{#if program}}
+
+        <div class="row mx-0">
+          <div class="col-12 p-0">
+            <img src="/files/uploads/images/{{program.image}}" alt="{{program.image}}" style="height:400px;width:100%;object-fit:cover;">
+          </div>
+        </div>
+        <div class="row mx-0">
+
+          <!-- Left Column  -->
+          <div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 p-2 imee-text-black ">
+            <div class="row mx-0">
+              <div class="col-12 py-2 my-1 border-bottom">
+                <span class="imee-prog-title imee-text-blue">{{program.title}}</span>
+                <!-- <h3 class="py-0 m-0 imee-section-header imee-text-grey-blue">{{program.title}}</h3> -->
+              </div>
+              <div class="col-12 fr-view mt-4">
+                {{#ifCond program.section_indicator '==' '2'}}
+
+                  {{#if program.section01title}}
+                    <div class="row mx-0 my-2 ">
+                      <div class="col-12 px-0 ">
+                        <a class="imee-collapse w-100 d-block py-3 pl-4 imee-text-grey-blue font-weight-bold imee-light-grey collapsed" data-toggle="collapse" href="#section01title" role="" aria-expanded="true" aria-controls="collapse">
+                          <i class="fas fa-plus"></i> {{program.section01title}}
+                        </a>
+                        <div class="collapse show" id="section01title">
+                          <div class=" w-100 pl-4 mt-3 text-justify">
+                            {{{program.section01text}}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  {{/if}}
+
+                  {{#if program.section02title}}
+                    <div class="row mx-0 my-2 ">
+                      <div class="col-12 px-0 ">
+                        <a class="imee-collapse w-100 d-block py-3 pl-4 imee-text-grey-blue font-weight-bold imee-light-grey" data-toggle="collapse" href="#section02title" role="" aria-expanded="false" aria-controls="collapse">
+                          <i class="fas fa-plus mr-1"></i> {{program.section02title}}
+                        </a>
+                        <div class="collapse" id="section02title">
+                          <div class=" w-100 pl-4 mt-3 text-justify">
+                            {{{program.section02text}}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  {{/if}}
+
+                  {{#if program.section03title}}
+                    <div class="row mx-0 my-2 ">
+                      <div class="col-12 px-0 ">
+                        <a class="imee-collapse w-100 d-block py-3 pl-4 imee-text-grey-blue font-weight-bold imee-light-grey" data-toggle="collapse" href="#section03title" role="" aria-expanded="false" aria-controls="collapse">
+                          <i class="fas fa-plus"></i> {{program.section03title}}
+                        </a>
+                        <div class="collapse" id="section03title">
+                          <div class=" w-100 pl-4 mt-3 text-justify">
+                            {{{program.section03text}}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  {{/if}}
+
+                  {{#if program.section04title}}
+                    <div class="row mx-0 my-2 ">
+                      <div class="col-12 px-0 ">
+                        <a class="imee-collapse w-100 d-block py-3 pl-4 imee-text-grey-blue font-weight-bold imee-light-grey" data-toggle="collapse" href="#section04title" role="" aria-expanded="false" aria-controls="collapse">
+                          <i class="fas fa-plus"></i> {{program.section04title}}
+                        </a>
+                        <div class="collapse" id="section04title">
+                          <div class=" w-100 pl-4 mt-3 text-justify">
+                            {{{program.section04text}}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  {{/if}}
+
+                  {{#if program.section05title}}
+                    <div class="row mx-0 my-2 ">
+                      <div class="col-12 px-0 ">
+                        <a class="imee-collapse w-100 d-block py-3 pl-4 imee-text-grey-blue font-weight-bold imee-light-grey" data-toggle="collapse" href="#section05title" role="" aria-expanded="false" aria-controls="collapse">
+                          <i class="fas fa-plus"></i> {{program.section05title}}
+                        </a>
+                        <div class="collapse" id="section05title">
+                          <div class=" w-100 pl-4 mt-3 text-justify">
+                            {{{program.section05text}}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  {{/if}}
+
+                  {{#if program.section06title}}
+                    <div class="row mx-0 my-2 ">
+                      <div class="col-12 px-0 ">
+                        <a class="imee-collapse w-100 d-block py-3 pl-4 imee-text-grey-blue font-weight-bold imee-light-grey" data-toggle="collapse" href="#section06title" role="" aria-expanded="false" aria-controls="collapse">
+                          <i class="fas fa-plus"></i> {{program.section06title}}
+                        </a>
+                        <div class="collapse" id="section06title">
+                          <div class=" w-100 pl-4 mt-3 text-justify">
+                            {{{program.section06text}}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  {{/if}}
+
+
+                {{/ifCond}}
+
+
+                {{#ifCond program.section_indicator '==' '1'}}
+                  {{{program.text}}}
+                {{/ifCond}}
+              </div>
+
+
+            </div>
+          </div>
+
+          <!-- Right Column  -->
+          <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 p-2 rounder">
+            <div class="row mx-0 imee-text-grey-blue">
+              <div class="col-12 p-2 my-1 border-bottom">
+                <span class="imee-prog-title">Πληροφορίες</span>
+                <!-- <h3 class="py-0 m-0 imee-section-header imee-text-grey-blue">Πληροφορίες</h3> -->
+              </div>
+              {{#if program.start_date}}
+                <div class="col-12 p-2 my-1">
+                  <span class="font-weight-bold float-left">Έναρξη</span>
+                  <span class="font-weight-normal float-right imee-text-red">{{dateFormat program.start_date}}</span>
+                </div>
+              {{/if}}
+              {{#if program.end_date}}
+                <div class="col-12 p-2 my-1 ">
+                  <span class="font-weight-bold float-left">Λήξη</span>
+                  <span class="font-weight-normal float-right imee-text-red">{{dateFormat program.end_date}}</span>
+                </div>
+              {{/if}}
+              {{#if program.hours}}
+                <div class="col-12 p-2 my-1 ">
+                  <span class="font-weight-bold float-left">Ώρες</span>
+                  <span class="font-weight-normal float-right imee-text-red">{{program.hours}}</span>
+                </div>
+              {{/if}}
+              {{#if program.cost}}
+                {{#ifCond program.cost "!=" "0" }}
+                  <div class="col-12 p-2 my-1">
+                    <span class="font-weight-bold float-left">Κόστος</span>
+                    <span class="font-weight-normal float-right imee-text-red">{{program.cost}} &euro;</span>
+                  </div>
+                {{/ifCond}}
+              {{/if}}
+              {{#if program.location}}
+                <div class="col-12 p-2 my-1 ">
+                  <span class="font-weight-bold float-left">Τοποθεσία</span>
+                  <span class="font-weight-normal float-right imee-text-red">{{program.location}}</span>
+                </div>
+              {{/if}}
+              {{#if program.teacher}}
+                <div class="col-12 p-2 my-1">
+                  <span class="font-weight-bold float-left">Εισηγητής</span>
+                  <span class="font-weight-normal float-right imee-text-red">{{program.teacher}}</span>
+                </div>
+              {{/if}}
+            </div>
+          </div>
+
+        </div>
+
+
+
+
+        <div class="row mx-0 px-2 ">
+          <!-- Gallery -->
+          {{#if program.gallery}}
+            <div class="col-12 py-3">
+              <h5 class="imee-text-grey-blue my-3">Σχετικές Εικόνες</h5>
+              <div id="imee-img-viewer">
+                {{#each program.gallery}}
+                  <img src="/files/uploads/images/{{this}}" alt="{{this}}" class="img-thumbnail " style="height:100px;width:100px;object-fit:cover;">
+                {{else}}
+                  <img src="/files/uploads/images/{{this}}" alt="{{this}}" class="img-thumbnail " style="height:100px;width:100px;object-fit:cover;">
+                {{/each}}
+              </div>
+            </div>
+          {{/if}}
+          <!-- Attachments  -->
+          {{#if program.attachments}}
+            <div class="col-12 py-3">
+              <h5 class="imee-text-grey-blue my-3">Αρχεία</h5>
+              {{#each program.attachments}}
+                <div class="col-12 p-0 mb-3">
+                  <a href="/files/uploads/docs/{{this}}" class="imee-text-grey-blue" download>
+                    <i class="fas fa-lg fa-file-download"></i>
+                    <span>{{this}}</span>
+                  </a>
+                </div>
+              {{else}}
+                <div class="col-12 p-0 mb-3">
+                  <a href="/files/uploads/docs/{{program.attachments}}" class="imee-text-grey-blue" download>
+                    <i class="fas fa-lg fa-file-download"></i>
+                    <span>{{program.attachments}}</span>
+                  </a>
+                </div>
+              {{/each}}
+            </div>
+          {{/if}}
+        </div>
+
+
+      {{/if}}
+    </div>
+  </div>
+</div>
+
+{{#if program.gallery}}
+  <script src="/libs//viewerjs/dist/viewer.js"></script>
+  <script type="text/javascript">
+    // View a list of images
+    var viewer = new Viewer(document.getElementById('imee-img-viewer'), {
+      title: false,
+      toolbar: {
+        zoomIn: 4,
+        zoomOut: 4,
+        oneToOne: 4,
+        reset: 4,
+        prev: 1,
+        play: {
+          show: 4,
+          size: 'large',
+        },
+        next: 1,
+        rotateLeft: false,
+        rotateRight: false,
+        flipHorizontal: false,
+        flipVertical: false,
+      },
+      movable: false,
+    });
+  </script>
+{{/if}}

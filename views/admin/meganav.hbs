@@ -1,0 +1,208 @@
+<div class="my-3 p-3 bg-white rounded shadow-sm">
+
+  <!-- Category Edit -->
+
+  <h6 class="border-bottom border-gray pb-2 mb-0" style="font-weight:600;">Ρύθμιση Mega Menu</h6>
+
+
+  <form action="/admin/settings/meganav" method="post" class="mt-3">
+
+    <!-- Column 1 -->
+    <div class="media text-muted pt-3">
+      <p class="media-body pb-1 mb-0 small lh-125 border-bottom border-gray">
+        <strong class="d-block text-gray-dark">Στήλη 1</strong>
+      </p>
+    </div>
+
+    <div class="form-group my-2 pl-3 mb-5">
+      <div class="row h-100">
+        <div class="col-12">
+          <label for="meganav_title_1" class="m-0"><small class="text-primary" style="font-weight:600;">Τίτλος</small></label>
+          <input class="form-control form-control-sm" id="meganav_title_1" name="meganav_title_1" {{#if meganav.meganav_title_1}} value="{{meganav.meganav_title_1}}" {{/if}}>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group my-2 pl-3">
+      <div class="row h-100">
+        <div class="col-12 col-md-6">
+          <label for="meganav_title_1_1" class="m-0"><small class="text-primary" style="font-weight:600;">Σειρά 1 τίτλος</small></label>
+          <input class="form-control form-control-sm" id="meganav_title_1_1" name="meganav_title_1_1" {{#if meganav.meganav_title_1_1}} value="{{meganav.meganav_title_1_1}}" {{/if}}>
+        </div>
+        <div class="col-12  col-md-6">
+          <label for="meganav_title_1_1_prog" class="m-0"><small class="text-primary" style="font-weight:600;">Σύνδεση με πρόγραμμα</small></label>
+          <select class="form-control form-control-sm" id="meganav_title_1_1_prog" name="meganav_title_1_1_prog">
+            {{#if programs}}
+              <option value="" selected>Χωρίς σύνδεση</option>
+              {{#each programs}}
+                <option value="{{id}}" {{#if ../meganav}} {{#ifCond ../meganav.meganav_title_1_1_prog '==' id}} selected {{/ifCond}} {{/if}}>{{title}}</option>
+              {{/each}}
+            {{else}}
+              <option value="Δεν βρέθηκαν προγράμματα">Δεν βρέθηκαν προγράμματα</option>
+            {{/if}}
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="form-group my-2 pl-3">
+      <div class="row h-100">
+        <div class="col-12 col-md-6">
+          <label for="meganav_title_1_2" class="m-0"><small class="text-primary" style="font-weight:600;">Σειρά 2 τίτλος</small></label>
+          <input class="form-control form-control-sm" id="meganav_title_1_2" name="meganav_title_1_2" {{#if meganav.meganav_title_1_2}} value="{{meganav.meganav_title_1_2}}" {{/if}}>
+        </div>
+        <div class="col-12  col-md-6">
+          <label for="meganav_title_1_2_prog" class="m-0"><small class="text-primary" style="font-weight:600;">Σύνδεση με πρόγραμμα</small></label>
+          <select class="form-control form-control-sm" id="meganav_title_1_2_prog" name="meganav_title_1_2_prog">
+            {{#if programs}}
+              <option value="" selected>Χωρίς σύνδεση</option>
+              {{#each programs}}
+                <option value="{{id}}" {{#if ../meganav}} {{#ifCond ../meganav.meganav_title_1_2_prog '==' id}} selected {{/ifCond}} {{/if}}>{{title}}</option>
+              {{/each}}
+            {{else}}
+              <option value="Δεν βρέθηκαν προγράμματα">Δεν βρέθηκαν προγράμματα</option>
+            {{/if}}
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="form-group my-2 pl-3">
+      <div class="row h-100">
+        <div class="col-12 col-md-6">
+          <label for="meganav_title_1_3" class="m-0"><small class="text-primary" style="font-weight:600;">Σειρά 3 τίτλος</small></label>
+          <input class="form-control form-control-sm" id="meganav_title_1_3" name="meganav_title_1_3" {{#if meganav.meganav_title_1_3}} value="{{meganav.meganav_title_1_3}}" {{/if}}>
+        </div>
+        <div class="col-12  col-md-6">
+          <label for="meganav_title_1_3_prog" class="m-0"><small class="text-primary" style="font-weight:600;">Σύνδεση με πρόγραμμα</small></label>
+          <select class="form-control form-control-sm" id="meganav_title_1_3_prog" name="meganav_title_1_3_prog">
+            {{#if programs}}
+              <option value="" selected>Χωρίς σύνδεση</option>
+              {{#each programs}}
+                <option value="{{id}}" {{#if ../meganav}} {{#ifCond ../meganav.meganav_title_1_3_prog '==' id}} selected {{/ifCond}} {{/if}}>{{title}}</option>
+              {{/each}}
+            {{else}}
+              <option value="Δεν βρέθηκαν προγράμματα">Δεν βρέθηκαν προγράμματα</option>
+            {{/if}}
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Column 2 -->
+    <div class="media text-muted pt-3 mt-3">
+      <p class="media-body pb-1 mb-0 small lh-125 border-bottom border-gray">
+        <strong class="d-block text-gray-dark">Στήλη 2</strong>
+      </p>
+    </div>
+
+    <div class="form-group my-2 pl-3 mb-5">
+      <div class="row h-100">
+        <div class="col-12">
+          <label for="meganav_title_2" class="m-0"><small class="text-primary" style="font-weight:600;">Τίτλος</small></label>
+          <input class="form-control form-control-sm" id="meganav_title_2" name="meganav_title_2" {{#if meganav.meganav_title_2}} value="{{meganav.meganav_title_2}}" {{/if}}>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group my-2 pl-3">
+      <div class="row h-100">
+        <div class="col-12 col-md-6">
+          <label for="meganav_title_2_1" class="m-0"><small class="text-primary" style="font-weight:600;">Σειρά 1 τίτλος</small></label>
+          <input class="form-control form-control-sm" id="meganav_title_2_1" name="meganav_title_2_1" {{#if meganav.meganav_title_2_1}} value="{{meganav.meganav_title_2_1}}" {{/if}}>
+        </div>
+        <div class="col-12  col-md-6">
+          <label for="meganav_title_2_1_prog" class="m-0"><small class="text-primary" style="font-weight:600;">Σύνδεση με πρόγραμμα</small></label>
+          <select class="form-control form-control-sm" id="meganav_title_2_1_prog" name="meganav_title_2_1_prog">
+            {{#if programs}}
+              <option value="" selected>Χωρίς σύνδεση</option>
+              {{#each programs}}
+                <option value="{{id}}" {{#if ../meganav}} {{#ifCond ../meganav.meganav_title_2_1_prog '==' id}} selected {{/ifCond}} {{/if}}>{{title}}</option>
+              {{/each}}
+            {{else}}
+              <option value="Δεν βρέθηκαν προγράμματα">Δεν βρέθηκαν προγράμματα</option>
+            {{/if}}
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="form-group my-2 pl-3">
+      <div class="row h-100">
+        <div class="col-12 col-md-6">
+          <label for="meganav_title_2_2" class="m-0"><small class="text-primary" style="font-weight:600;">Σειρά 2 τίτλος</small></label>
+          <input class="form-control form-control-sm" id="meganav_title_2_2" name="meganav_title_2_2" {{#if meganav.meganav_title_2_2}} value="{{meganav.meganav_title_2_2}}" {{/if}}>
+        </div>
+        <div class="col-12  col-md-6">
+          <label for="meganav_title_2_2_prog" class="m-0"><small class="text-primary" style="font-weight:600;">Σύνδεση με πρόγραμμα</small></label>
+          <select class="form-control form-control-sm" id="meganav_title_2_2_prog" name="meganav_title_2_2_prog">
+            {{#if programs}}
+              <option value="" selected>Χωρίς σύνδεση</option>
+              {{#each programs}}
+                <option value="{{id}}" {{#if ../meganav}} {{#ifCond ../meganav.meganav_title_2_2_prog '==' id}} selected {{/ifCond}} {{/if}}>{{title}}</option>
+              {{/each}}
+            {{else}}
+              <option value="Δεν βρέθηκαν προγράμματα">Δεν βρέθηκαν προγράμματα</option>
+            {{/if}}
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="form-group my-2 pl-3">
+      <div class="row h-100">
+        <div class="col-12 col-md-6">
+          <label for="meganav_title_2_3" class="m-0"><small class="text-primary" style="font-weight:600;">Σειρά 3 τίτλος</small></label>
+          <input class="form-control form-control-sm" id="meganav_title_2_3" name="meganav_title_2_3" {{#if meganav.meganav_title_2_3}} value="{{meganav.meganav_title_2_3}}" {{/if}}>
+        </div>
+        <div class="col-12  col-md-6">
+          <label for="meganav_title_2_3_prog" class="m-0"><small class="text-primary" style="font-weight:600;">Σύνδεση με πρόγραμμα</small></label>
+          <select class="form-control form-control-sm" id="meganav_title_2_3_prog" name="meganav_title_2_3_prog">
+            {{#if programs}}
+              <option value="" selected>Χωρίς σύνδεση</option>
+              {{#each programs}}
+                <option value="{{id}}" {{#if ../meganav}} {{#ifCond ../meganav.meganav_title_2_3_prog '==' id}} selected {{/ifCond}} {{/if}}>{{title}}</option>
+              {{/each}}
+            {{else}}
+              <option value="Δεν βρέθηκαν προγράμματα">Δεν βρέθηκαν προγράμματα</option>
+            {{/if}}
+          </select>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Column 3 -->
+    <div class="media text-muted pt-3 mt-3">
+      <p class="media-body pb-1 mb-0 small lh-125 border-bottom border-gray">
+        <strong class="d-block text-gray-dark">Στήλη 3</strong>
+      </p>
+    </div>
+    <div class="form-group my-2 pl-3">
+      <div class="row h-100">
+        <div class="col-12">
+          <label for="meganav_featured" class="m-0"><small class="text-primary" style="font-weight:600;">Featured πρόγραμμα</small></label>
+          <select class="form-control form-control-sm" id="meganav_featured" name="meganav_featured">
+            {{#if programs}}
+              <option value="" selected>Χωρίς σύνδεση</option>
+              {{#each programs}}
+                <option value="{{id}}" {{#if ../meganav}} {{#ifCond ../meganav.meganav_featured '==' id}} selected {{/ifCond}} {{/if}}>{{title}}</option>
+              {{/each}}
+            {{else}}
+              <option value="Δεν βρέθηκαν προγράμματα">Δεν βρέθηκαν προγράμματα</option>
+            {{/if}}
+          </select>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+    <div class="d-flex justify-content-between border-top pt-3 mt-3">
+      <button type="submit" class="btn btn-primary btn-sm">Αποθήκευση</button>
+      <a href="/admin/" class="my-auto"><small>Πίσω</small></a>
+    </div>
+
+  </form>
+
+
+
+</div>

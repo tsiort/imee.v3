@@ -1,0 +1,142 @@
+<div class="row mx-0 imee-red d-none">
+  <div class="col-12 py-3 ">
+    <div class="imee-container text-center ">
+      <h6 class="text-white m-0 imee-section-header" style="font-size: 0.9rem !important">Ο ΦΟΡΕΑΣ</h6>
+    </div>
+  </div>
+</div>
+
+
+<div class="row mx-0  pt-3 shadow-sm border-bottom imee-scroller">
+  <div class="col-12 p-0">
+    <div class="imee-container">
+
+      <ul class="nav nav-pills nav-justified">
+        <li class="nav-item mx-2 my-1">
+          <a class="nav-link imee-pill " href="/foreas/">Ιστορικό</a>
+        </li>
+        <li class="nav-item mx-2 my-1">
+          <a class="nav-link imee-pill " href="/foreas/synerg">Συνεργασίες</a>
+        </li>
+        <li class="nav-item mx-2 my-1">
+          <a class="nav-link imee-pill active" href="#">Εμπειρια του φορέα</a>
+        </li>
+        <li class="nav-item mx-2 my-1">
+          <a class="nav-link imee-pill " href="/foreas/ipodomi">Υποδομη</a>
+        </li>
+        <li class="nav-item mx-2 my-1">
+          <a class="nav-link imee-pill " href="/foreas/drast">Δραστηριότητα</a>
+        </li>
+        <li class="nav-item mx-2 my-1">
+          <a class="nav-link imee-pill " href="/org">Οργάνωση & Υπηρεσίες</a>
+        </li>
+        <li class="nav-item mx-2 my-1">
+          <a class="nav-link imee-pill " href="/foreas/#">Πολιτική Προστασίας</a>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+<div class="row mx-0 my-4">
+  <div class="col-12 p-0 ">
+    <div class="imee-container rounded border shadow-sm">
+
+      <div class="row mx-0">
+        <div class="col-12 p-0">
+          <img src="/images/Empeiria_tou_forea.jpg" alt="" style="height:400px;width:100%;object-fit:cover;">
+        </div>
+      </div>
+      <div class="row mx-0  py-3" id="imee-content">
+        <div class="col-md-8 py-3">
+          {{#if experience}}
+
+            <div class="px-3  mb-3">
+              <!-- Tags -->
+
+              {{#if experience.categories}}
+                <div class="row mx-0 mb-3">
+                  <div class="col-12 px-0">
+                    {{#each experience.categories}}
+                      {{#each ../categories}}
+                        {{#ifCond this.id '==' ../this}}
+                          <a href="/foreas/empiria/cat/{{id}}#imee-content" class="text-white imee-grey-blue px-2 py-1 mr-2 my-1 float-left badge badge-primary font-weight-normal">{{this.name}}</a>
+                        {{/ifCond}}
+                      {{/each}}
+                    {{else}}
+                      {{#each categories}}
+                        {{#ifCond this.id '==' ../experience.categories}}
+                          <a href="/foreas/empiria/cat/{{id}}#imee-content" class="text-white imee-grey-blue px-2 py-1 mr-2 my-1 float-left badge badge-primary font-weight-normal">{{this.name}}</a>
+                        {{/ifCond}}
+                      {{/each}}
+                    {{/each}}
+                  </div>
+                </div>
+              {{/if}}
+
+
+              <!-- Title -->
+              <div class="row mx-0 mb-3">
+                <div class="col-12 px-0 pt-3 mb-3 border-bottom">
+                  {{experience.title}}
+                </div>
+              </div>
+
+              <!-- <span class=" d-block imee-text-black py-2"></span> -->
+              <div class="row mx-0">
+                <div class="col-12 px-0 py-3 ">
+                  {{{experience.text}}}
+                </div>
+              </div>
+
+              <div class="row mx-0">
+                <div class="col-12 px-0 text-center py-4">
+                  <a href="/foreas/empiria{{#if active}}{{#ifCond active '!=' "all"}}/cat/{{active}}{{/ifCond}}{{/if}}#imee-content" class="btn imee-btn-grey">
+                    <i class="fas fa-arrow-left"></i>
+                    Πίσω
+                  </a>
+                </div>
+              </div>
+
+            </div>
+
+          {{/if}}
+        </div>
+
+
+
+        <div class="col-md-4 py-3">
+          <div class=" p-3 border shadow-sm rounded">
+
+            <div class="py-2">
+              <a href="/foreas/empiria#imee-content" class="dropdown-item {{#if active}} {{#ifCond active '==' "all"}} active {{/ifCond}} {{/if}}">Όλα</a>
+            </div>
+            {{#if categories}}
+              {{#each categories}}
+                <div class="py-2 imee-foreas-category">
+                  <a href="/foreas/empiria/cat/{{id}}#imee-content" class="dropdown-item  {{#if ../active}} {{#ifCond ../active '==' id}} active {{/ifCond}} {{/if}}">{{name}}</a>
+                </div>
+              {{/each}}
+            {{/if}}
+
+
+          </div>
+        </div>
+
+
+      </div>
+      <!-- Navigation buttons -->
+      <!-- <div class="row mx-0 my-4">
+        <div class="col-12 col-sm-6 text-center text-sm-left py-2">
+          <a href="/foreas/empiria{{#if active}}{{#ifCond active '!=' "all"}}/cat/{{active}}{{/ifCond}}{{/if}}#imee-content" class="btn imee-btn-grey">
+            <i class="fas fa-arrow-left"></i>
+            Πίσω
+          </a>
+        </div>
+      </div> -->
+
+    </div>
+  </div>
+</div>
