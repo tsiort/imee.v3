@@ -1,30 +1,97 @@
 <div class="my-3 p-3 bg-white rounded shadow-sm">
+
   {{#ifCond type '==' 'slider'}}
+
     <h6 class="border-bottom border-gray pb-2 mb-0" style="font-weight:600;">Νέο Slider</h6>
 
     <form action="/admin/settings/slider/new" method="post" class="mt-3">
 
-      {{#if data.programTypes}}
 
-        <div class="form-group">
-          <label for="programTypeId" class="m-0"><small class="text-primary" style="font-weight:600;">Είδος Κατηγορίας</small></label>
-          <select class="custom-select custom-select-sm" id="programTypeId" name="programTypeId" required>
-            {{#each data.programTypes}}
-              <option value="{{id}}">{{text}}</option>
-            {{/each}}
-          </select>
+      <div class="form-group my-2">
+        <div class="row h-100">
+          <div class="col-12 col-md-8">
+            <label for="image" class="m-0"><small class="text-primary" style="font-weight:600;">Εικόνα</small></label>
+
+
+            {{#if data.images}}
+              <select class="custom-select custom-select-sm" size="5" id="sliderImage" name="image" style="height:250px;" required>
+                {{#each data.images}}
+                  <option value="{{name}}">{{name}}</option>
+                {{/each}}
+              </select>
+            {{else}}
+              <select class="custom-select custom-select-sm" size="5" id="sliderImage" name="image" style="height:250px;" disabled>
+                <option value="Δεν βρέθηκαν εικόνες">Δεν βρέθηκαν εικόνες</option>
+              </select>
+            {{/if}}
+          </div>
+          <div class="col-12  col-md-4 text-center">
+            <label for="imagePreview" class="m-0"><small class="text-secondary" style="font-weight:600;">Προεπισκόπηση</small></label>
+            <div class="border rounded" id="sliderImagePreview" style="height:250px;">
+
+            </div>
+            <button type="button" id="sliderImagePreviewClear" class="btn btn-primary btn-sm w-100 mt-1">Καθαρισμός Εικόνας</button>
+          </div>
         </div>
+      </div>
 
-        <div class="form-group">
-          <label for="text" class="m-0"><small class="text-primary" style="font-weight:600;">Όνομα Κατηγορίας</small></label>
-          <input type="text" class="form-control form-control-sm" id="text" name="text" aria-describedby="textHelp" placeholder="Όνομα Κατηγορίας" required>
+
+      <div class="form-group my-2">
+        <div class="row h-100">
+          <div class="col-12">
+            <label for="title" class="m-0"><small class="text-primary" style="font-weight:600;">Τίτλος</small></label>
+            <input class="form-control form-control-sm" id="title" name="title" placeholder="Τίτλος" required>
+          </div>
         </div>
+      </div>
 
-      {{/if }}
+      <div class="form-group my-2">
+        <div class="row h-100">
+          <div class="col-12">
+            <label for="text" class="m-0"><small class="text-primary" style="font-weight:600;">Κείμενο</small></label>
+            <textarea class="form-control form-control-sm" id="text" name="text" placeholder="Κείμενο"></textarea>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="form-group my-4">
+        <div class="row h-100">
+          <div class="col-12">
+            <label for="sliderConnection" class="m-0"><small class="text-primary" style="font-weight:600;">Σύνδεσμος</small></label>
+            <select class="form-control form-control-sm" id="sliderConnection" name="sliderConnection">
+              <option value="" selected>Χωρίς σύνδεση</option>
+              {{#if data.programs}}
+                <optgroup label="Προγράμματα">
+                  {{#each data.programs}}
+                    <option value="1-{{id}}">{{title}}</option>
+                  {{/each}}
+                </optgroup>
+              {{/if}}
+              {{#if data.categories}}
+                <optgroup label="Κατηγορίες">
+                  {{#each data.categories}}
+                    <option value="2-{{id}}">{{text}}</option>
+                  {{/each}}
+                </optgroup>
+              {{/if}}
+              {{#if data.programTypes}}
+                <optgroup label="Βασικές Κατηγορίες Προγραμμάτων">
+                  {{#each data.programTypes}}
+                    <option value="3-{{id}}">{{text}}</option>
+                  {{/each}}
+                </optgroup>
+              {{/if}}
+            </select>
+          </div>
+        </div>
+      </div>
+
+
 
       <div class="d-flex justify-content-between">
         <button type="submit" class="btn btn-primary btn-sm">Δημιουργία</button>
-        <a href="/admin/category" class="my-auto"><small>Πίσω</small></a>
+        <a href="/admin/settings/slider" class="my-auto"><small>Πίσω</small></a>
       </div>
 
     </form>
@@ -79,13 +146,13 @@
       <div class="form-group mb-5 mt-3 pl-3">
         <div class="row h-100">
           <div class="col-12 col-md-9">
-            <label for="programTitle" class="m-0"><small class="text-primary" style="font-weight:600;">Τίτλος</small></label>
-            <input type="text" class="form-control form-control-sm" id="programTitle" name="programTitle" aria-describedby="textHelp" placeholder="Όνομα Προγράμματος" required>
+            <label for="title" class="m-0"><small class="text-primary" style="font-weight:600;">Τίτλος</small></label>
+            <input type="text" class="form-control form-control-sm" id="title" name="title" aria-describedby="textHelp" placeholder="Όνομα Προγράμματος" required>
           </div>
           <div class="col-12 col-md-3 align-self-end">
             <div class="form-check form-check-inline">
-              <input type="checkbox" class="form-check-input" id="programMainPage" name="programMainPage">
-              <label class="form-check-label" for="programMainPage"><small class="text-secondary">Εμφάνηση στην αρχική σελίδα</small></label>
+              <input type="checkbox" class="form-check-input" id="featured" name="featured">
+              <label class="form-check-label" for="featured"><small class="text-secondary">Εμφάνηση στην αρχική σελίδα</small></label>
             </div>
           </div>
         </div>
@@ -93,63 +160,63 @@
       <!-- Addition of multiple sections  -->
       <div class="form-group my-5 pl-3">
         <div class="custom-control custom-radio custom-control-inline">
-          <input type="radio" id="singleSection" name="progSections" class="custom-control-input" value="1" checked>
+          <input type="radio" id="singleSection" name="multiText" class="custom-control-input" value="1" checked>
           <label class="custom-control-label" for="singleSection"><small class="text-secondary">Μία ενότητα</small></label>
         </div>
         <div class="custom-control custom-radio custom-control-inline">
-          <input type="radio" id="multipleSection" name="progSections" class="custom-control-input" value="2">
+          <input type="radio" id="multipleSection" name="multiText" class="custom-control-input" value="2">
           <label class="custom-control-label" for="multipleSection"><small class="text-secondary">Πολλαπλές ενότητες</small></label>
         </div>
       </div>
 
       <!-- Single section -->
       <div class="form-group my-5 pl-3 imee-admin-single-section">
-        <label for="programText" class="m-0"><small class="text-primary" style="font-weight:600;">Κείμενο</small></label>
-        <textarea class="wysiwyg" name="programText" id="programText"></textarea>
+        <label for="singleText" class="m-0"><small class="text-primary" style="font-weight:600;">Κείμενο</small></label>
+        <textarea class="wysiwyg" name="singleText" id="singleText"></textarea>
       </div>
 
 
       <!-- Multiple sections -->
       <div class="form-group my-5 pl-3 imee-admin-multiple-sections">
-        <label for="section1title" class="m-0"><small class="text-primary" style="font-weight:600;">Κεφαλίδα Ενότητας</small></label>
-        <input type="text" class="form-control form-control-sm" id="section1title" name="section1title" aria-describedby="textHelp" placeholder="Κεφαλίδα">
-        <label for="section1text" class="m-0"><small class="text-primary" style="font-weight:600;">Κείμενο Ενότητας</small></label>
-        <textarea class="wysiwyg" name="section1text" id="section1text"></textarea>
+        <label for="subTitle1" class="m-0"><small class="text-primary" style="font-weight:600;">Κεφαλίδα Ενότητας</small></label>
+        <input type="text" class="form-control form-control-sm" id="subTitle1" name="subTitle1" aria-describedby="textHelp" placeholder="Κεφαλίδα">
+        <label for="subText1" class="m-0"><small class="text-primary" style="font-weight:600;">Κείμενο Ενότητας</small></label>
+        <textarea class="wysiwyg" name="subText1" id="subText1"></textarea>
       </div>
 
       <div class="form-group my-5 pl-3 imee-admin-multiple-sections">
-        <label for="section2title" class="m-0"><small class="text-primary" style="font-weight:600;">Κεφαλίδα Ενότητας</small></label>
-        <input type="text" class="form-control form-control-sm" id="section2title" name="section2title" aria-describedby="textHelp" placeholder="Κεφαλίδα">
-        <label for="section2text" class="m-0"><small class="text-primary" style="font-weight:600;">Κείμενο</small></label>
-        <textarea class="wysiwyg" name="section2text" id="section2text"></textarea>
+        <label for="subTitle2" class="m-0"><small class="text-primary" style="font-weight:600;">Κεφαλίδα Ενότητας</small></label>
+        <input type="text" class="form-control form-control-sm" id="subTitle2" name="subTitle2" aria-describedby="textHelp" placeholder="Κεφαλίδα">
+        <label for="subText2" class="m-0"><small class="text-primary" style="font-weight:600;">Κείμενο</small></label>
+        <textarea class="wysiwyg" name="subText2" id="subText2"></textarea>
       </div>
 
       <div class="form-group my-5 pl-3 imee-admin-multiple-sections">
-        <label for="section3title" class="m-0"><small class="text-primary" style="font-weight:600;">Κεφαλίδα Ενότητας</small></label>
-        <input type="text" class="form-control form-control-sm" id="section32title" name="section3title" aria-describedby="textHelp" placeholder="Κεφαλίδα">
-        <label for="section3text" class="m-0"><small class="text-primary" style="font-weight:600;">Κείμενο</small></label>
-        <textarea class="wysiwyg" name="section3text" id="section3text"></textarea>
+        <label for="subTitle3" class="m-0"><small class="text-primary" style="font-weight:600;">Κεφαλίδα Ενότητας</small></label>
+        <input type="text" class="form-control form-control-sm" id="subTitle3" name="subTitle3" aria-describedby="textHelp" placeholder="Κεφαλίδα">
+        <label for="subText3" class="m-0"><small class="text-primary" style="font-weight:600;">Κείμενο</small></label>
+        <textarea class="wysiwyg" name="subText3" id="subText3"></textarea>
       </div>
 
       <div class="form-group my-5 pl-3 imee-admin-multiple-sections">
-        <label for="section4title" class="m-0"><small class="text-primary" style="font-weight:600;">Κεφαλίδα Ενότητας</small></label>
-        <input type="text" class="form-control form-control-sm" id="section4title" name="section4title" aria-describedby="textHelp" placeholder="Κεφαλίδα">
-        <label for="section4text" class="m-0"><small class="text-primary" style="font-weight:600;">Κείμενο</small></label>
-        <textarea class="wysiwyg" name="section4text" id="section4text"></textarea>
+        <label for="subTitle4" class="m-0"><small class="text-primary" style="font-weight:600;">Κεφαλίδα Ενότητας</small></label>
+        <input type="text" class="form-control form-control-sm" id="subTitle4" name="subTitle4" aria-describedby="textHelp" placeholder="Κεφαλίδα">
+        <label for="subText4" class="m-0"><small class="text-primary" style="font-weight:600;">Κείμενο</small></label>
+        <textarea class="wysiwyg" name="subText4" id="subText4"></textarea>
       </div>
 
       <div class="form-group my-5 pl-3 imee-admin-multiple-sections">
-        <label for="section5title" class="m-0"><small class="text-primary" style="font-weight:600;">Κεφαλίδα Ενότητας</small></label>
-        <input type="text" class="form-control form-control-sm" id="section5title" name="section5title" aria-describedby="textHelp" placeholder="Κεφαλίδα">
-        <label for="section5text" class="m-0"><small class="text-primary" style="font-weight:600;">Κείμενο</small></label>
-        <textarea class="wysiwyg" name="section5text" id="section5text"></textarea>
+        <label for="subTitle5" class="m-0"><small class="text-primary" style="font-weight:600;">Κεφαλίδα Ενότητας</small></label>
+        <input type="text" class="form-control form-control-sm" id="subTitle5" name="subTitle5" aria-describedby="textHelp" placeholder="Κεφαλίδα">
+        <label for="subText5" class="m-0"><small class="text-primary" style="font-weight:600;">Κείμενο</small></label>
+        <textarea class="wysiwyg" name="subText5" id="subText5"></textarea>
       </div>
 
       <div class="form-group my-5 pl-3 imee-admin-multiple-sections">
-        <label for="section6title" class="m-0"><small class="text-primary" style="font-weight:600;">Κεφαλίδα Ενότητας</small></label>
-        <input type="text" class="form-control form-control-sm" id="section6title" name="section6title" aria-describedby="textHelp" placeholder="Κεφαλίδα">
-        <label for="section6text" class="m-0"><small class="text-primary" style="font-weight:600;">Κείμενο</small></label>
-        <textarea class="wysiwyg" name="section6text" id="section6text"></textarea>
+        <label for="subTitle6" class="m-0"><small class="text-primary" style="font-weight:600;">Κεφαλίδα Ενότητας</small></label>
+        <input type="text" class="form-control form-control-sm" id="subTitle6" name="subTitle6" aria-describedby="textHelp" placeholder="Κεφαλίδα">
+        <label for="subText6" class="m-0"><small class="text-primary" style="font-weight:600;">Κείμενο</small></label>
+        <textarea class="wysiwyg" name="subText6" id="subText6"></textarea>
       </div>
       <!-- Addition of multiple sections  -->
 
@@ -159,9 +226,9 @@
         <!-- <input type="text" class="form-control form-control-sm" id="programCategories" name="programCategories" aria-describedby="textHelp" placeholder="Όνομα Προγράμματος"> -->
         <select class="custom-select custom-select-sm" size="5" id="programCategories" name="programCategories" multiple required>
           <!-- <option selected>Open this select menu</option> -->
-          {{#if category}}
-            {{#each category}}
-              <option value="{{id}}">{{category}}</option>
+          {{#if data.categories}}
+            {{#each data.categories}}
+              <option value="{{id}}">{{text}}</option>
             {{/each}}
           {{else}}
             <option value="Δεν βρέθηκαν κατηγορίες">Δεν βρέθηκαν κατηγορίες</option>
@@ -174,15 +241,15 @@
           <div class="col-12 col-md-8">
             <label for="programGallery" class="m-0"><small class="text-primary" style="font-weight:600;">Κύρια Εικόνα</small></label>
             <div class="border rounded" style="height:250px;overflow-y:scroll;">
-              {{#if images}}
-                {{#each images}}
+              {{#if data.images}}
+                {{#each data.images}}
                   <div class="m-3 border d-inline-block text-center" style="height:80px; width:80px;">
                     <img src="/files/uploads/images/{{name}}" alt="{{name}}" imee-img-name="{{name}}" class="imee-prog-img w-100 h-100 ">
                   </div>
                 {{/each}}
               {{/if}}
             </div>
-            <input type="text" class="form-control form-control-sm mt-1" id="programImage" name="programImage" aria-describedby="textHelp" placeholder="Εικόνα Προγράμματος" readonly required>
+            <input type="text" class="form-control form-control-sm mt-1" id="programImage" name="image" aria-describedby="textHelp" placeholder="Εικόνα Προγράμματος" readonly required>
           </div>
           <div class="col-12  col-md-4 text-center">
             <label for="programGalleryPrev" class="m-0"><small class="text-secondary" style="font-weight:600;">Προεπισκόπηση</small></label>
@@ -198,10 +265,9 @@
       <div class="form-group my-5 pl-3">
         <label for="programAttachments" class="m-0"><small class="text-primary" style="font-weight:600;">Συνημμένα</small></label>
         <small class="float-right text-secondary">Για πολλαπλή επιλογή πατήστε <kbd>ctrl</kbd></small>
-        <!-- <input type="text" class="form-control form-control-sm" id="programCategories" name="programCategories" aria-describedby="textHelp" placeholder="Όνομα Προγράμματος"> -->
-        <select class="custom-select custom-select-sm" size="5" id="programAttachments" name="programAttachments" {{#if docs}} multiple {{else}} disabled {{/if}}>
-          {{#if docs}}
-            {{#each docs}}
+        <select class="custom-select custom-select-sm" size="5" id="programAttachments" name="attachments" {{#if  data.documents}} multiple {{else}} disabled {{/if}}>
+          {{#if data.documents}}
+            {{#each data.documents}}
               <option value="{{name}}">{{name}}</option>
             {{/each}}
           {{else}}
@@ -218,7 +284,7 @@
         </p>
       </div>
 
-      <div class="form-group mb-5 mt-3 pl-3">
+      <!-- <div class="form-group mb-5 mt-3 pl-3">
         <div class="row h-100">
           <div class="col-12 col-md-6">
             <label for="programStartDate" class="m-0"><small class="text-primary" style="font-weight:600;">Ημερομηνία Έναρξης</small></label>
@@ -229,19 +295,19 @@
             <input type="date" class="form-control form-control-sm" id="programEndDate" name="programEndDate" aria-describedby="dateHelp" placeholder="Ημερομηνία Λήξης">
           </div>
         </div>
-      </div>
+      </div> -->
 
       <div class="form-group mb-5 mt-3 pl-3">
         <div class="row h-100">
           <div class="col-12 col-md-6">
-            <label for="programHours" class="m-0"><small class="text-primary" style="font-weight:600;">Ώρες Εκπαίδευσης</small></label>
+            <label for="hours" class="m-0"><small class="text-primary" style="font-weight:600;">Ώρες Εκπαίδευσης</small></label>
             <small class="float-right text-secondary">Δύο δεκαδικά ψηφία χωρισμένα με <kbd>.</kbd></small>
-            <input type="number" step="0.01" class="form-control form-control-sm" id="programHours" name="programHours" aria-describedby="numberHelp" placeholder="00.00">
+            <input type="number" step="0.01" class="form-control form-control-sm" id="hours" name="hours" aria-describedby="numberHelp" placeholder="00.00">
           </div>
           <div class="col-12 col-md-6">
-            <label for="programCost" class="m-0"><small class="text-primary" style="font-weight:600;">Κόστος Εκπαίδευσης</small></label>
+            <label for="cost" class="m-0"><small class="text-primary" style="font-weight:600;">Κόστος Εκπαίδευσης</small></label>
             <small class="float-right text-secondary">Δύο δεκαδικά ψηφία χωρισμένα με <kbd>.</kbd></small>
-            <input type="number" step="0.01" class="form-control form-control-sm" id="programCost" name="programCost" aria-describedby="numberHelp" placeholder="00.00">
+            <input type="number" step="0.01" class="form-control form-control-sm" id="cost" name="cost" aria-describedby="numberHelp" placeholder="00.00">
           </div>
         </div>
       </div>
@@ -250,18 +316,18 @@
       <div class="form-group mb-5 mt-3 pl-3">
         <div class="row h-100">
           <div class="col-12 col-md-6">
-            <label for="programLocation" class="m-0"><small class="text-primary" style="font-weight:600;">Τοποθεσία</small></label>
-            <input type="text" class="form-control form-control-sm" id="programLocation" name="programLocation" aria-describedby="textHelp" placeholder="Τοποθεσία">
+            <label for="location" class="m-0"><small class="text-primary" style="font-weight:600;">Τοποθεσία</small></label>
+            <input type="text" class="form-control form-control-sm" id="location" name="location" aria-describedby="textHelp" placeholder="Τοποθεσία">
           </div>
           <div class="col-12 col-md-6">
-            <label for="programTeacher" class="m-0"><small class="text-primary" style="font-weight:600;">Εισηγητής</small></label>
-            <input type="text" class="form-control form-control-sm" id="programTeacher" name="programTeacher" aria-describedby="textHelp" placeholder="Εισηγητής">
+            <label for="tutor" class="m-0"><small class="text-primary" style="font-weight:600;">Εισηγητής</small></label>
+            <input type="text" class="form-control form-control-sm" id="tutor" name="tutor" aria-describedby="textHelp" placeholder="Εισηγητής">
           </div>
         </div>
       </div>
 
       <!-- Gallery -->
-      <div class="media text-muted pt-1">
+      <!-- <div class="media text-muted pt-1">
         <p class="media-body pb-1 mb-0 small lh-125 border-bottom border-gray">
           <strong class="d-block text-gray-dark">Gallery</strong>
         </p>
@@ -270,7 +336,6 @@
       <div class="form-group my-4 pl-3">
         <label for="programGalleryImages" class="m-0"><small class="text-primary" style="font-weight:600;">Εικόνες για Gallery</small></label>
         <small class="float-right text-secondary">Για πολλαπλή επιλογή πατήστε <kbd>ctrl</kbd></small>
-        <!-- <input type="text" class="form-control form-control-sm" id="programCategories" name="programCategories" aria-describedby="textHelp" placeholder="Όνομα Προγράμματος"> -->
         <select class="custom-select custom-select-sm" size="10" id="programGalleryImages" name="programGalleryImages" {{#if images}} multiple {{else}} disabled {{/if}}>
           {{#if images}}
             {{#each images}}
@@ -280,7 +345,7 @@
             <option value="Δεν βρέθηκαν εικόνες">Δεν βρέθηκαν εικόνες</option>
           {{/if}}
         </select>
-      </div>
+      </div> -->
 
 
 

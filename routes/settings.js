@@ -62,6 +62,7 @@ router.get('*', asyncWrapper(async (req, res, next) => {
   });
 
   let result;
+  let fileFound;
   // Get documents
   result = await readdir('./public/files/uploads/docs');
   result.forEach(function(item) {
@@ -69,7 +70,12 @@ router.get('*', asyncWrapper(async (req, res, next) => {
     file.name = item;
     file.ext = path.extname(item).substring(1).toLowerCase();
     file.type = 'doc';
-    documents.push(file);
+
+    fileFound = documents.some(function(el) {
+      return el.name === file.name && el.ext === file.ext && el.type === file.type;
+    });
+    if (!fileFound)
+      documents.push(file);
   });
   // Get Images
   result = await readdir('./public/files/uploads/images');
@@ -78,7 +84,12 @@ router.get('*', asyncWrapper(async (req, res, next) => {
     file.name = item;
     file.ext = path.extname(item).substring(1).toLowerCase();
     file.type = 'img';
-    images.push(file);
+
+    fileFound = images.some(function(el) {
+      return el.name === file.name && el.ext === file.ext && el.type === file.type;
+    });
+    if (!fileFound)
+      images.push(file);
   });
 
 
@@ -122,7 +133,7 @@ router.get('/slider/new', asyncWrapper(async (req, res, next) => {
     programTypes: programTypes,
     programs: programs,
     sliders: sliders
-  }
+  };
 
   res.render('admin/create', {
     layout: 'admin',
@@ -133,6 +144,197 @@ router.get('/slider/new', asyncWrapper(async (req, res, next) => {
 
 }));
 
+
+// -----------------------------------------------------------------------------
+// POST /admin/settings/slider/new
+// -----------------------------------------------------------------------------
+router.post('/slider/new', asyncWrapper(async (req, res, next) => {
+
+  let {
+    title,
+    text,
+    image,
+    sliderConnection,
+    programId,
+    categoryId,
+    programTypeId
+  } = req.body;
+
+  // console.log(req.body);
+  let connectiotType;
+  let connectionId;
+
+  if (sliderConnection) {
+    connectiotType = sliderConnection.substring(0, 1).toLowerCase();
+    connectionId = sliderConnection.substring(2).toLowerCase();
+    switch (connectiotType) {
+      case '1':
+        programId = connectionId;
+        break;
+      case '2':
+        categoryId = connectionId;
+        break;
+      case '3':
+        programTypeId = connectionId;
+        break;
+      default:
+        break;
+    }
+  };
+
+  await Slider.create({
+    title: title,
+    text: text,
+    image: image,
+    programId: programId,
+    categoryId: categoryId,
+    programTypeId: programTypeId
+  });
+
+  req.flash('success_msg', 'Το slider ' + title + ' δημιουργήθηκε με επιτυχία')
+  res.redirect('/admin/settings/slider');
+
+}));
+
+
+// -----------------------------------------------------------------------------
+// GET /admin/settings/slider/:id/delete
+// -----------------------------------------------------------------------------
+router.get('/slider/:id/delete', asyncWrapper(async (req, res, next) => {
+
+  let {
+    id
+  } = req.params;
+
+  let slider = await Slider.findByPk(id);
+
+  data = {
+    slider: slider
+  }
+
+  res.render('admin/delete', {
+    layout: 'admin',
+    title: 'Διαγραφή Slider',
+    type: 'slider',
+    data: data
+  });
+
+}));
+
+// -----------------------------------------------------------------------------
+// POST /admin/settings/slider/:id/delete
+// -----------------------------------------------------------------------------
+router.post('/slider/:id/delete', asyncWrapper(async (req, res, next) => {
+
+  let {
+    id
+  } = req.params;
+
+  await Slider.update({
+    status: 'inactive',
+  }, {
+    where: {
+      id: id
+    }
+  });
+
+
+  req.flash('success_msg', 'Το Slider διαγράφτηκε με επιτυχία')
+  res.redirect('/admin/settings/slider');
+
+}));
+
+
+// -----------------------------------------------------------------------------
+// GET /admin/settings/slider/:id/edit
+// -----------------------------------------------------------------------------
+router.get('/slider/:id/edit', asyncWrapper(async (req, res, next) => {
+
+  let {
+    id
+  } = req.params;
+
+
+
+  let slider = await Slider.findByPk(id);
+
+  data = {
+    documents: documents,
+    images: images,
+    categories: categories,
+    programTypes: programTypes,
+    programs: programs,
+    slider: slider
+  };
+
+  res.render('admin/edit', {
+    layout: 'admin',
+    title: 'Επεξεργασία Slider',
+    type: 'slider',
+    data: data
+  });
+
+}));
+
+
+// -----------------------------------------------------------------------------
+// POST /admin/settings/slider/:id/edit
+// -----------------------------------------------------------------------------
+router.post('/slider/:id/edit', asyncWrapper(async (req, res, next) => {
+
+  let {
+    id
+  } = req.params;
+
+  let {
+    title,
+    text,
+    image,
+    sliderConnection,
+    programId,
+    categoryId,
+    programTypeId
+  } = req.body;
+
+  // console.log(req.body);
+  let connectiotType;
+  let connectionId;
+
+  if (sliderConnection) {
+    connectiotType = sliderConnection.substring(0, 1).toLowerCase();
+    connectionId = sliderConnection.substring(2).toLowerCase();
+    switch (connectiotType) {
+      case '1':
+        programId = connectionId;
+        break;
+      case '2':
+        categoryId = connectionId;
+        break;
+      case '3':
+        programTypeId = connectionId;
+        break;
+      default:
+        break;
+    }
+  };
+
+  await Slider.update({
+    title: title,
+    text: text,
+    image: image,
+    programId: programId,
+    categoryId: categoryId,
+    programTypeId: programTypeId
+  }, {
+    where: {
+      id: id
+    }
+  });
+
+  req.flash('success_msg', 'Το slider ' + title + ' ενημερώθηκε με επιτυχία')
+  res.redirect('/admin/settings/slider');
+
+}));
 
 
 // Global arrays

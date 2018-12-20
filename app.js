@@ -18,11 +18,11 @@ var adminRouter = require('./routes/admin');
 var categRouter = require('./routes/category');
 var progrRouter = require('./routes/program');
 // var newsRouter  = require('./routes/news');
-// var filesRouter = require('./routes/file');
+var filesRouter = require('./routes/file');
 var settingsRouter = require('./routes/settings');
 
 // WYSIWYG Request Handler
-// var froalaHandler = require('./routes/froala');
+var froalaHandler = require('./routes/froala');
 
 var app = express();
 app.use(favicon(path.join(__dirname,'public','images', 'favicon.ico')));
@@ -94,9 +94,9 @@ app.use('/admin', adminRouter);
 app.use('/admin/category', categRouter);
 app.use('/admin/program', progrRouter);
 // app.use('/admin/news', newsRouter);
-// app.use('/admin/file', filesRouter);
+app.use('/admin/file', filesRouter);
 app.use('/admin/settings', settingsRouter);
-// app.use('/admin/froala', froalaHandler);
+app.use('/admin/froala', froalaHandler);
 
 
 

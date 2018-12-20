@@ -32,13 +32,43 @@ Object.keys(db).forEach(modelName => {
 });
 
 
+
+
+
+
 // Associations
-db.category.belongsTo(db.programType, {foreignKey: 'programTypeId'});
-db.megaNav.belongsTo(db.programType, {foreignKey: 'programTypeId'});
+db.category.belongsToMany(db.program, {
+  through: 'programCategories',
+});
+db.program.belongsToMany(db.category, {
+  through: 'programCategories',
+});
 
-db.megaNav.hasMany(db.category, {foreignKey: 'megaNavId'});
-db.category.hasMany(db.program, {foreignKey: 'categoryId'});
 
+db.category.belongsTo(db.programType, {
+  foreignKey: 'programTypeId'
+});
+db.program.belongsTo(db.programType, {
+  foreignKey: 'programTypeId'
+});
+db.megaNav.belongsTo(db.programType, {
+  foreignKey: 'programTypeId'
+});
+
+db.megaNav.hasMany(db.category, {
+  foreignKey: 'megaNavId'
+});
+
+
+db.slider.belongsTo(db.category, {
+  foreignKey: 'categoryId'
+});
+db.slider.belongsTo(db.program, {
+  foreignKey: 'programId'
+});
+db.slider.belongsTo(db.programType, {
+  foreignKey: 'programTypeId'
+});
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

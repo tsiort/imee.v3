@@ -125,22 +125,37 @@ router.get('*', function(req, res, next) {
   next();
 })
 
-
+{
+  where: {
+    status: 'active'
+  }
+}
 
 router.get('*', async function(req, res, next) {
 
   categories = await Category.findAll({
     raw: true,
+    where: {
+      status: 'active'
+    },
     include: [{
       model: ProgramType
     }]
 
   });
   programTypes = await ProgramType.findAll({
-    raw: true
+    raw: true,
+    where: {
+      status: 'active'
+    },
+
   });
   sliders = await Slider.findAll({
-    raw: true
+    raw: true,
+    where: {
+      status: 'active'
+    },
+
   });
 
   nav1 = await MegaNav.findById( 1, {

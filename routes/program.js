@@ -31,6 +31,7 @@ let documents = [];
 let images = [];
 let categories = [];
 let programTypes = [];
+let programs = [];
 
 let data;
 
@@ -40,23 +41,56 @@ let data;
 // -----------------------------------------------------------------------------
 router.get('*', asyncWrapper(async (req, res, next) => {
 
-
-  program = await Program.findOrCreate({
+  programs = await Program.findAll({
     where: {
-      slug: 'Some slugified text',
-      featured: true,
-      multiText: false,
-      title: 'Test Program',
-      singleText: 'OKKK Yo man',
-      categoryId: 1
+      status: 'active'
+    },
+    include: [{
+      model: Category,
+      // as: 'categories',
+      // through: 'programCategories'
+    }],
+    include: [{
+      model: ProgramType
+    }]
+  });
+  console.log(programs);
+
+  // programs = await Program.findAll({
+  //   where: {
+  //     status: 'active'
+  //   },
+  //   include: [{
+  //     model: Category,
+  //     as: 'categories',
+  //     through: 'programCategories'
+  //   }],
+  //   include: [{
+  //     model: ProgramType
+  //   }]
+  // });
+
+  categories = await Category.findAll({
+    where: {
+      status: 'active'
+    },
+    include: [{
+      model: Program
+    }],
+    include: [{
+      model: ProgramType
+    }],
+  });
+
+  programTypes = await ProgramType.findAll({
+    where: {
+      status: 'active'
     }
   });
 
-  categories = await Category.findAll();
-  programTypes = await ProgramType.findAll();
-
 
   let result;
+  let fileFound;
   // Get documents
   result = await readdir('./public/files/uploads/docs');
   result.forEach(function(item) {
@@ -64,7 +98,12 @@ router.get('*', asyncWrapper(async (req, res, next) => {
     file.name = item;
     file.ext = path.extname(item).substring(1).toLowerCase();
     file.type = 'doc';
-    documents.push(file);
+
+    fileFound = documents.some(function(el) {
+      return el.name === file.name && el.ext === file.ext && el.type === file.type;
+    });
+    if (!fileFound)
+      documents.push(file);
   });
   // Get Images
   result = await readdir('./public/files/uploads/images');
@@ -73,7 +112,12 @@ router.get('*', asyncWrapper(async (req, res, next) => {
     file.name = item;
     file.ext = path.extname(item).substring(1).toLowerCase();
     file.type = 'img';
-    images.push(file);
+
+    fileFound = images.some(function(el) {
+      return el.name === file.name && el.ext === file.ext && el.type === file.type;
+    });
+    if (!fileFound)
+      images.push(file);
   });
 
 
@@ -86,13 +130,20 @@ router.get('*', asyncWrapper(async (req, res, next) => {
 // -----------------------------------------------------------------------------
 router.get('/', asyncWrapper(async (req, res, next) => {
 
-  let programs = await Program.findAll();
+  data = {
+    documents: documents,
+    images: images,
+    categories: categories,
+    programTypes: programTypes,
+    programs: programs
+  }
+
 
   res.render('admin/program', {
     layout: 'admin',
     title: 'Προγράμματα',
     type: 'prog',
-    programs: programs
+    data: data
   });
 
 }));
@@ -100,7 +151,6 @@ router.get('/', asyncWrapper(async (req, res, next) => {
 // GET /admin/program/new
 // -----------------------------------------------------------------------------
 router.get('/new', asyncWrapper(async (req, res, next) => {
-
 
   data = {
     documents: documents,
@@ -117,6 +167,108 @@ router.get('/new', asyncWrapper(async (req, res, next) => {
   });
 
 }));
+
+
+// -----------------------------------------------------------------------------
+// POST /admin/program/new
+// -----------------------------------------------------------------------------
+router.post('/new', asyncWrapper(async (req, res, next) => {
+
+  let {
+    id,
+    slug,
+    title,
+    featured,
+    multiText,
+    singleText,
+    image,
+    attachments,
+    subTitle1,
+    subText1,
+    subTitle2,
+    subText2,
+    subTitle3,
+    subText3,
+    subTitle4,
+    subText4,
+    subTitle5,
+    subText5,
+    subTitle6,
+    subText6,
+    hours,
+    cost,
+    location,
+    tutor,
+    programCategories,
+  } = req.body;
+
+  if ( featured == 'on')
+    featured = 1;
+
+  slug = title
+
+
+  await Program.create({
+      id: id,
+      slug: slug,
+      title: title,
+      featured: featured,
+      multiText: multiText,
+      singleText: singleText,
+      image: image,
+      attachments: attachments,
+      subTitle1: subTitle1,
+      subText1: subText1,
+      subTitle2: subTitle2,
+      subText2: subText2,
+      subTitle3: subTitle3,
+      subText3: subText3,
+      subTitle4: subTitle4,
+      subText4: subText4,
+      subTitle5: subTitle5,
+      subText5: subText5,
+      subTitle6: subTitle6,
+      subText6: subText6,
+      hours: hours,
+      cost: cost,
+      location: location,
+      tutor: tutor,
+      // categories: [{ text: 's'} ]
+    }
+    , {
+      include: [{
+        model: Category,
+        as: 'categories'
+      }]
+    }).then(program => {
+
+        program.setCategories(programCategories)
+
+
+      console.log(program);
+    })
+
+
+
+  req.flash('success_msg', 'Το slider ' + title + ' δημιουργήθηκε με επιτυχία')
+  res.redirect('/admin/program');
+
+  // data = {
+  //   documents: documents,
+  //   images: images,
+  //   categories: categories,
+  //   programTypes: programTypes
+  // }
+  //
+  // res.render('admin/create', {
+  //   layout: 'admin-wysiwyg',
+  //   title: 'Νέο Πρόγραμμα',
+  //   type: 'prog',
+  //   data: data
+  // });
+
+}));
+
 
 
 // /* New Program POST */
