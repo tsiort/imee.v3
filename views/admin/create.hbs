@@ -157,6 +157,22 @@
           </div>
         </div>
       </div>
+
+      <div class="form-group my-5 pl-3">
+        <label for="programTypeId" class="m-0"><small class="text-primary" style="font-weight:600;">Βασική Κατηγορία</small></label>
+        <select class="custom-select custom-select-sm" id="programTypeId" name="programTypeId" required>
+          <!-- <option selected>Open this select menu</option> -->
+          {{#if data.programTypes}}
+            {{#each data.programTypes}}
+              <option value="{{id}}">{{text}}</option>
+            {{/each}}
+          {{else}}
+            <option value="Δεν βρέθηκαν βασικέςκατηγορίες">Δεν βρέθηκαν βασικές κατηγορίες</option>
+          {{/if}}
+        </select>
+      </div>
+
+
       <!-- Addition of multiple sections  -->
       <div class="form-group my-5 pl-3">
         <div class="custom-control custom-radio custom-control-inline">
@@ -325,29 +341,6 @@
           </div>
         </div>
       </div>
-
-      <!-- Gallery -->
-      <!-- <div class="media text-muted pt-1">
-        <p class="media-body pb-1 mb-0 small lh-125 border-bottom border-gray">
-          <strong class="d-block text-gray-dark">Gallery</strong>
-        </p>
-      </div>
-
-      <div class="form-group my-4 pl-3">
-        <label for="programGalleryImages" class="m-0"><small class="text-primary" style="font-weight:600;">Εικόνες για Gallery</small></label>
-        <small class="float-right text-secondary">Για πολλαπλή επιλογή πατήστε <kbd>ctrl</kbd></small>
-        <select class="custom-select custom-select-sm" size="10" id="programGalleryImages" name="programGalleryImages" {{#if images}} multiple {{else}} disabled {{/if}}>
-          {{#if images}}
-            {{#each images}}
-              <option value="{{name}}">{{name}}</option>
-            {{/each}}
-          {{else}}
-            <option value="Δεν βρέθηκαν εικόνες">Δεν βρέθηκαν εικόνες</option>
-          {{/if}}
-        </select>
-      </div> -->
-
-
 
 
 

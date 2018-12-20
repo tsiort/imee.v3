@@ -47,28 +47,12 @@ router.get('*', asyncWrapper(async (req, res, next) => {
     },
     include: [{
       model: Category,
-      // as: 'categories',
-      // through: 'programCategories'
     }],
     include: [{
       model: ProgramType
     }]
   });
-  console.log(programs);
 
-  // programs = await Program.findAll({
-  //   where: {
-  //     status: 'active'
-  //   },
-  //   include: [{
-  //     model: Category,
-  //     as: 'categories',
-  //     through: 'programCategories'
-  //   }],
-  //   include: [{
-  //     model: ProgramType
-  //   }]
-  // });
 
   categories = await Category.findAll({
     where: {
@@ -200,75 +184,98 @@ router.post('/new', asyncWrapper(async (req, res, next) => {
     location,
     tutor,
     programCategories,
+    programTypeId,
   } = req.body;
 
-  if ( featured == 'on')
+  if (featured == 'on')
     featured = 1;
 
   slug = title
 
 
-  await Program.create({
-      id: id,
-      slug: slug,
-      title: title,
-      featured: featured,
-      multiText: multiText,
-      singleText: singleText,
-      image: image,
-      attachments: attachments,
-      subTitle1: subTitle1,
-      subText1: subText1,
-      subTitle2: subTitle2,
-      subText2: subText2,
-      subTitle3: subTitle3,
-      subText3: subText3,
-      subTitle4: subTitle4,
-      subText4: subText4,
-      subTitle5: subTitle5,
-      subText5: subText5,
-      subTitle6: subTitle6,
-      subText6: subText6,
-      hours: hours,
-      cost: cost,
-      location: location,
-      tutor: tutor,
-      // categories: [{ text: 's'} ]
-    }
-    , {
-      include: [{
-        model: Category,
-        as: 'categories'
-      }]
-    }).then(program => {
+  let program = await Program.create({
+    id: id,
+    slug: slug,
+    title: title,
+    featured: featured,
+    multiText: multiText,
+    singleText: singleText,
+    image: image,
+    attachments: attachments,
+    subTitle1: subTitle1,
+    subText1: subText1,
+    subTitle2: subTitle2,
+    subText2: subText2,
+    subTitle3: subTitle3,
+    subText3: subText3,
+    subTitle4: subTitle4,
+    subText4: subText4,
+    subTitle5: subTitle5,
+    subText5: subText5,
+    subTitle6: subTitle6,
+    subText6: subText6,
+    hours: hours,
+    cost: cost,
+    location: location,
+    tutor: tutor,
+    programTypeId: programTypeId
+  }, {
+    include: [{
+      model: Category,
+      as: 'categories'
+    }],
+    include: [{
+      model: ProgramType,
+    }]
+  });
 
-        program.setCategories(programCategories)
+  await program.setCategories(programCategories);
 
-
-      console.log(program);
-    })
-
-
-
-  req.flash('success_msg', 'Το slider ' + title + ' δημιουργήθηκε με επιτυχία')
+  req.flash('success_msg', 'Το πρόγραμμα ' + title + ' δημιουργήθηκε με επιτυχία')
   res.redirect('/admin/program');
-
-  // data = {
-  //   documents: documents,
-  //   images: images,
-  //   categories: categories,
-  //   programTypes: programTypes
-  // }
-  //
-  // res.render('admin/create', {
-  //   layout: 'admin-wysiwyg',
-  //   title: 'Νέο Πρόγραμμα',
-  //   type: 'prog',
-  //   data: data
-  // });
 
 }));
 
+
+// -----------------------------------------------------------------------------
+// GET /admin/program/:id/edit
+// -----------------------------------------------------------------------------
+router.get('/:id/edit', asyncWrapper(async (req, res, next) => {
+
+  let {
+    id
+  } = req.params;
+
+  let program = await Program.findByPk(id, {
+    where: {
+      status: 'active'
+    },
+    include: [{
+        model: Category,
+      },
+      {
+        model: ProgramType
+      }
+    ],
+  });
+
+
+  data = {
+    documents: documents,
+    images: images,
+    categories: categories,
+    programTypes: programTypes,
+    program: program
+  }
+
+  res.render('admin/edit', {
+    layout: 'admin-wysiwyg',
+    title: 'Αλλαγή Προγράμματος',
+    type: 'prog',
+    data: data
+  });
+
+}));
 
 
 // /* New Program POST */

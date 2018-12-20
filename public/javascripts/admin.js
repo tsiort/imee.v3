@@ -62,8 +62,15 @@ $(function() {
       $('.imee-admin-multiple-sections').addClass('d-none');
 
     }
-
   })
+
+$('#programTypeId').on('change', function() {
+  alert($('#programTypeId').val())
+  $("[imee-programType-id]").val('');
+  $("[imee-programType-id]").hide();
+  $("[imee-programType-id='"+$('#programTypeId').val()+"']").show();
+})
+
 
 
 })
