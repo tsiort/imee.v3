@@ -9,6 +9,7 @@ let models = require("../models");
 
 let Category = models.category;
 let ProgramType = models.programType;
+let Program = models.program;
 let Slider = models.slider;
 let MegaNav = models.megaNav;
 
@@ -56,46 +57,46 @@ router.get('*', function(req, res, next) {
   MegaNav.findOrCreate({
     where: {
       title: 'Σεμινάρια',
-      programTypeId: 1
+      programTypeId: 2
     }
   }).then(megaNav => {});
 
-  Category.findOrCreate({
-    where: {
-      text: 'Για ανέργους',
-      programTypeId: 1,
-      megaNavId: 1
-    }
-  }).then(category => {});
-
-  Category.findOrCreate({
-    where: {
-      text: 'Για ΑΜΕΑ',
-      programTypeId: 1,
-      megaNavId: 1
-    }
-  }).then(category => {});
-
-  Category.findOrCreate({
-    where: {
-      text: 'Για Φοιτητές',
-      programTypeId: 1,
-      megaNavId: 1
-    }
-  }).then(category => {});
-
-
+  // Category.findOrCreate({
+  //   where: {
+  //     text: 'Για ανέργους',
+  //     programTypeId: 1,
+  //     megaNavId: 1
+  //   }
+  // }).then(category => {});
+  //
+  // Category.findOrCreate({
+  //   where: {
+  //     text: 'Για ΑΜΕΑ',
+  //     programTypeId: 1,
+  //     megaNavId: 1
+  //   }
+  // }).then(category => {});
+  //
+  // Category.findOrCreate({
+  //   where: {
+  //     text: 'Για Φοιτητές',
+  //     programTypeId: 1,
+  //     megaNavId: 1
+  //   }
+  // }).then(category => {});
 
 
-  Slider
-    .findOrCreate({
-      where: {
-        title: 'Είσαι Άνεργος;',
-        text: 'Συμπλήρωσε τα στοιχεία σου εδώ και εμείς θα επικοινωνήσουμε άμεσα μαζί σου για να σε ενημερώσουμε για τις νέες δράσεις κατάρτησης που σε αφορούν',
-        image: 'under-const.jpg'
-      }
-    })
-    .spread((slider, created) => {});
+
+  //
+  // Slider
+  //   .findOrCreate({
+  //     where: {
+  //       title: 'Είσαι Άνεργος;',
+  //       text: 'Συμπλήρωσε τα στοιχεία σου εδώ και εμείς θα επικοινωνήσουμε άμεσα μαζί σου για να σε ενημερώσουμε για τις νέες δράσεις κατάρτησης που σε αφορούν',
+  //       image: 'under-const.jpg'
+  //     }
+  //   })
+  //   .spread((slider, created) => {});
 
 
 
@@ -125,11 +126,7 @@ router.get('*', function(req, res, next) {
   next();
 })
 
-{
-  where: {
-    status: 'active'
-  }
-}
+
 
 router.get('*', async function(req, res, next) {
 
@@ -162,20 +159,19 @@ router.get('*', async function(req, res, next) {
     // raw: true,
     include: [{
           model: Category,
-        }],
-    // include: [{
-    //   model: Category
-    // }]
+        },
+      {
+          model: Program
+      }],
   });
 
-
-  data = {
-    catergories: categories,
-    programTypes: programTypes,
-    sliders: sliders,
-    nav1: nav1,
-    nav2: nav2
-  }
+  nav2 = await MegaNav.findById( 2, {
+    include: [{
+      model: Program
+    }]
+  });
+  console.log(nav1);
+  console.log(nav2);
   next();
 })
 
@@ -250,11 +246,20 @@ router.get('*', async function(req, res, next) {
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  console.log(data);
 
-  data.nav1.categories.forEach(function(item){
-    console.log(item.dataValues);
-  });
+  data = {
+    catergories: categories,
+    programTypes: programTypes,
+    sliders: sliders,
+    nav1: nav1,
+    nav2: nav2
+  }
+
+  //
+  //
+  // data.nav1.categories.forEach(function(item){
+  //   console.log(item.dataValues);
+  // });
 
   res.render('index', {
     title: 'Αρχική',

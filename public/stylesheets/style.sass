@@ -1,9 +1,69 @@
 @import "../../node_modules/bootstrap/scss/bootstrap"
-@import url('https://fonts.googleapis.com/css?family=Noto+Sans')
+// @import url('https://fonts.googleapis.com/css?family=Noto+Sans')
+@import url('https://fonts.googleapis.com/css?family=Fira+Sans:300,400,600,700,800,900&subset=greek-ext')
+
+@import "mixins"
+
+// Off canvas css
+.navbar-side
+  height: 100%
+  width: 25%
+  position: fixed
+  top: 0
+  right: 0
+  padding: 0
+  list-style: none
+  border-left: 2px solid #ccc
+  background-color: #f7f7f9
+  overflow-y: auto
+  z-index: 1000
+  -webkit-transform: translateX(100%)
+  -ms-transform: translateX(100%)
+  transform: translateX(100%)
+  -webkit-transition: 300ms ease
+  transition: 300ms ease
+  @include media-breakpoint-up(xs)
+    width: 85%
+  @include media-breakpoint-up(sm)
+    width: 50%
+  @include media-breakpoint-up(md)
+    width: 25%
+
+.navbar-side-item
+  padding: 1.5rem 0
+  margin: 0
+  height: 5rem
+  overflow: hidden
+
+.side-link
+  padding-left: 2rem
+
+.reveal
+  -webkit-transform: translateX(0%)
+  -ms-transform: translateX(0%)
+  transform: translateX(0%)
+  -webkit-transition: 300ms ease
+  transition: 300ms ease
+
+.overlay
+  position: fixed
+  display: none
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  cursor: pointer
+  background-color: black
+  opacity: 0.8
+  z-index: 990
 
 body
   height: 100%
-  font-family: 'Noto Sans', sans-serif  
+  // font-family: Anonymous_Pro, 'Noto Sans', sans-serif !important
+  // font-family: 'Linux' !important
+  font-family: 'Fira Sans', sans-serif
+  // font-family: 'Arimo' !important
+  // font-family: 'Anonymous_Pro' !important
   font-smoothing: antialiased !important
   -webkit-font-smoothing: antialiased !important
   -moz-osx-font-smoothing: grayscale !important
@@ -12,14 +72,20 @@ body
 $black: #00060c
 $blue: #011f79
 // $grey-transparent: rgba(1, 31, 121, .5)
-$grey-transparent: rgba(118, 117, 136, 0.5)
+$grey-transparent: rgba(118, 117, 136, 0.8)
+// $grey-transparent: rgba(159, 45, 49, 0.7)
 $light-grey: #f2f2f2
 $grey: #dbdbdb
 $heavy-grey: #6f6f6f
 $heavier-grey: #666666
+$imee-grey: #e4e3e8
 // $red: #be2a27
-$red: #9f2d31
+// $red: #9f2d31
+// $red: #b33237
+$red: #8b272b
+$red-transparent: rgba(159, 45, 49, 0.7)
 $grey-blue: #767588
+$grey-blue-heavy: #535260
 $grey-blue-dark: #2f2f37
 $light: #f8f9fa
 
@@ -39,6 +105,8 @@ $light: #f8f9fa
   background: $heavier-grey !important
 .imee-grey-blue
   background: $grey-blue !important
+.imee-grey-light
+  background: $imee-grey !important
 .imee-grey-blue-dark
     background: $grey-blue-dark !important
 .imee-text-black
@@ -55,6 +123,8 @@ $light: #f8f9fa
   color: $light-grey !important
 .imee-text-grey-blue
   color: $grey-blue !important
+.imee-text-grey-blue-heavy
+  color: $grey-blue-heavy !important
 
 
 @include media-breakpoint-up(md)
@@ -76,10 +146,28 @@ $light: #f8f9fa
       background: $grey-transparent
       padding: 10px
 
+.carousel-caption
+  // right: auto
+  // top: 10%
+  // bottom: 10%
+  // max-width: 500px
+  > h3
+    background: $grey-transparent
+    padding: 12px
+    text-shadow: 2px 2px 4px #000000
+  > p
+    font-size: 16px
+    text-shadow: 2px 2px 4px #000000
+    background: $grey-transparent
+    padding: 12px
+  > div
+    background: $grey-transparent
+    padding: 10px
+    text-align: center !important
 
-
-
-
+@include media-breakpoint-down(md)
+  #imee-nav-row
+    background-color: #f8f9fa !important
 
 @include media-breakpoint-up(lg)
   .dropdown:hover
@@ -109,7 +197,7 @@ $light: #f8f9fa
 .dropdown-item:hover, .dropdown-item:focus
     color: #16181b
     text-decoration: none
-    background-color: #f8f9fa
+    background-color: #f1f1f4
     // background-color: #f8f9fa
 
 
@@ -117,7 +205,7 @@ $light: #f8f9fa
 
 .imee-section-header
   letter-spacing: 2px
-  font-weight: bold
+  font-weight: 500
 
 // .dropdown-header
 //     padding: 1rem 1.5rem
@@ -154,6 +242,22 @@ $light: #f8f9fa
       font-size: 1.25rem !important
       line-height: 1.5 !important
 
+.imee-btn-red
+    color: $red
+    background: transparent
+    border: 1px solid $red
+    // border: 1px solid #dee2e6,
+    padding: 0.6rem 1.4rem
+    font-size: 0.9rem
+    line-height: 1.5
+    border-radius: 2rem
+    &:hover
+      color: white
+      box-shadow: 3px 6px 16px -8px rgba(118, 117, 136, 0.5)
+    &.btn-lg
+      font-size: 1.25rem !important
+      line-height: 1.5 !important
+
 
 .imee-scroller
   position: relative
@@ -172,33 +276,80 @@ $light: #f8f9fa
     white-space: nowrap
     -webkit-overflow-scrolling: touch
 
-.imee-nav-link
-  transition: background-color .5s ease
+.imee-nav-item
   &::before
-  	content: ''
-  	display: block
-  	margin: auto
-  	height: 3px
-  	width: 0px
-  	background: transparent
-    border-top: 2px solid transparent
-  	transition: width .5s ease, background-color .5s ease
+    content: ''
+    position: absolute
+    display: block
+    margin: auto
+    left: 50%
+    height: 3px
+    width: 0px
+    background: transparent
+    transition: all 1s 
   &:hover::before
     width: 100%
-    background-color: transparent
-    border-top: 2px solid $light
-    color: $red
+    background-color: $red
+    left: 0
   &.active
-    background-color: white !important
+    background-color: $light !important
+    color: $red !important
+    > a
+      color: $red !important
+      background-color: $light !important
   &.active::before
     width: 100%
-    border-top: 2px solid $blue
+    border-top: 2px solid $red
+    background-color: $light !important
+    color: $red !important
   &:hover
     background-color: $light
+    background-color: $light !important
+    color: $red !important
     > a
       color: $red !important
       background-color: $light !important
 
+
+// .imee-nav-link
+//   transition: background-color 1s ease
+//   &::before
+//   	content: ''
+//   	display: block
+//   	margin: auto
+//   	height: 3px
+//   	width: 0px
+//   	background: transparent
+//     border-top: 2px solid transparent
+//   	transition: width 1s ease, background-color 1s ease
+//   &:hover::before
+//     width: 100%
+//     background-color: transparent
+//     border-top: 2px solid $red
+//     color: $red
+//   &.active
+//     background-color: $light !important
+//     color: $red !important
+//     > a
+//       color: $red !important
+//       background-color: $light !important
+//   &.active::before
+//     width: 100%
+//     border-top: 2px solid $red
+//     background-color: $light !important
+//     color: $red !important
+//   &:hover
+//     background-color: $light
+//     background-color: $light !important
+//     color: $red !important
+//     > a
+//       color: $red !important
+//       background-color: $light !important
+
+.imee-nav-link
+  > .nav-link
+    height: 100%
+    line-height: 20px
 
 .imee-pill
   color: $grey-blue !important
@@ -227,10 +378,18 @@ $light: #f8f9fa
     // border: none !important
     // text-decoration: underline
 
+.bg-pattern
+  // background: radial-gradient(black 3px, transparent 4px),radial-gradient($ 3px, transparent 4px),linear-gradient(#fff 4px, transparent 0),linear-gradient(45deg, transparent 74px, transparent 75px, #a4a4a4 75px, #a4a4a4 76px, transparent 77px, transparent 109px),linear-gradient(-45deg, transparent 75px, transparent 76px, #a4a4a4 76px, #a4a4a4 77px, transparent 78px, transparent 109px), #fff
+  // background-size: 109px 109px, 109px 109px,100% 6px, 109px 109px, 109px 109px
+  // background-position: 54px 55px, 0px 0px, 0px 0px, 0px 0px, 0px 0px
+
+
 .imee-card
   height: 100%
   line-height: 1.5
   // transition: transform 10s
+  // background: $red
+  color: white !important
   overflow: hidden !important
   > .card-div-top
     overflow: hidden !important
@@ -249,6 +408,8 @@ $light: #f8f9fa
     // overflow: hidden
     > .card-title
       // height: 2.55rem
+      font-weight: 500
+      font-size: 20px
       // overflow: hidden
     > .card-text
       // height: 39px
@@ -350,15 +511,22 @@ p
   max-width: 1200px
 
 
-#imee-mega-nav
+#imee-mega-nav,
+#imee-mega-nav-seminars
   display: none
   -webkit-transition: opacity .5s
   transition: opacity .5s
   &:hover
     display: block
 
+
 #imee-prog:hover ~ #imee-mega-nav
   display: block
+
+#imee-seminars:hover ~ #imee-mega-nav-seminars
+  display: block
+
+
 
 .imee-prog-img
   transition: box-shadow 0.3s ease-in-out
@@ -377,8 +545,9 @@ p
   cursor: pointer
 
 #imee-footer-seperator
-  background: $blue
-  border-bottom: 0px solid $red
+  // border-top: 3px solid $grey-blue-heavy
+  // border-top: 3px solid #302e38
+  // background: $blue
   // padding: 2px
 
 .imee-fw-600

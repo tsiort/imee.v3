@@ -244,7 +244,7 @@
           <!-- <option selected>Open this select menu</option> -->
           {{#if data.categories}}
             {{#each data.categories}}
-              <option value="{{id}}">{{text}}</option>
+              <option value="{{id}}" imee-programType-id="{{programTypeId}}">{{text}}</option>
             {{/each}}
           {{else}}
             <option value="Δεν βρέθηκαν κατηγορίες">Δεν βρέθηκαν κατηγορίες</option>

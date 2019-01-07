@@ -1,7 +1,6 @@
 $(function() {
   'use strict'
 
-
   $('[data-toggle="offcanvas"]').on('click', function() {
     $('.offcanvas-collapse').toggleClass('open');
   })
@@ -64,12 +63,15 @@ $(function() {
     }
   })
 
-$('#programTypeId').on('change', function() {
-  alert($('#programTypeId').val())
-  $("[imee-programType-id]").val('');
   $("[imee-programType-id]").hide();
-  $("[imee-programType-id='"+$('#programTypeId').val()+"']").show();
-})
+  $("[imee-programType-id='" + $('#programTypeId').val() + "']").show();
+
+
+  $('#programTypeId').on('change', function() {
+    $("[imee-programType-id]").removeAttr("selected");
+    $("[imee-programType-id]").hide();
+    $("[imee-programType-id='" + $('#programTypeId').val() + "']").show();
+  })
 
 
 

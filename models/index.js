@@ -56,9 +56,9 @@ db.megaNav.belongsTo(db.programType, {
 });
 
 db.megaNav.hasMany(db.category, {
-  foreignKey: 'megaNavId'
 });
-
+db.megaNav.hasMany(db.program, {
+});
 
 db.slider.belongsTo(db.category, {
   foreignKey: 'categoryId'

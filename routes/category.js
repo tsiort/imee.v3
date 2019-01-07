@@ -204,7 +204,8 @@ router.post('/:id/edit', asyncWrapper(async (req, res, next) => {
 
   await Category.update({
     text: text,
-    programTypeId: programTypeId
+    programTypeId: programTypeId,
+    megaNavId: programTypeId
   }, {
     where: {
       id: id
