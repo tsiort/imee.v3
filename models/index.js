@@ -55,10 +55,8 @@ db.megaNav.belongsTo(db.programType, {
   foreignKey: 'programTypeId'
 });
 
-db.megaNav.hasMany(db.category, {
-});
-db.megaNav.hasMany(db.program, {
-});
+db.megaNav.hasMany(db.category, {});
+db.megaNav.hasMany(db.program, {});
 
 db.slider.belongsTo(db.category, {
   foreignKey: 'categoryId'
@@ -69,6 +67,32 @@ db.slider.belongsTo(db.program, {
 db.slider.belongsTo(db.programType, {
   foreignKey: 'programTypeId'
 });
+
+
+
+// Create Default Records
+db.programType
+  .findOrCreate({
+    where: {
+      text: 'Επιδοτούμενα'
+    }
+  })
+  .spread((programType, created) => {});
+db.megaNav
+  .findOrCreate({
+    where: {
+      title: 'Επιδοτούμενα',
+      programTypeId: 1
+    }
+  })
+  .spread((programType, created) => {});
+db.megaNav
+  .findOrCreate({
+    where: {
+      title: 'Σεμινάρια	',
+    }
+  })
+  .spread((programType, created) => {});
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

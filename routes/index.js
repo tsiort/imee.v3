@@ -15,11 +15,6 @@ let MegaNav = models.megaNav;
 
 
 
-// var Slider = require('../models/slider.js');
-// var News = require('../models/news.js');
-// var Meganav = require('../models/meganav.js');
-
-
 let programTypes = [];
 let categories = [];
 let sliders = [];
@@ -30,36 +25,36 @@ let data;
 
 router.get('*', function(req, res, next) {
 
-  ProgramType
-    .findOrCreate({
-      where: {
-        text: 'Επιδοτούμενα'
-      }
-    })
-    .spread((programType, created) => {});
-
-  ProgramType
-    .findOrCreate({
-      where: {
-        text: 'Σεμινάρια'
-      }
-    })
-    .spread((programType, created) => {});
-
-
-  MegaNav.findOrCreate({
-    where: {
-      title: 'Επιδοτούμενα',
-      programTypeId: 1
-    }
-  }).then(megaNav => {});
-
-  MegaNav.findOrCreate({
-    where: {
-      title: 'Σεμινάρια',
-      programTypeId: 2
-    }
-  }).then(megaNav => {});
+  // ProgramType
+  //   .findOrCreate({
+  //     where: {
+  //       text: 'Επιδοτούμενα'
+  //     }
+  //   })
+  //   .spread((programType, created) => {});
+  //
+  // ProgramType
+  //   .findOrCreate({
+  //     where: {
+  //       text: 'Σεμινάρια'
+  //     }
+  //   })
+  //   .spread((programType, created) => {});
+  //
+  //
+  // MegaNav.findOrCreate({
+  //   where: {
+  //     title: 'Επιδοτούμενα',
+  //     programTypeId: 1
+  //   }
+  // }).then(megaNav => {});
+  //
+  // MegaNav.findOrCreate({
+  //   where: {
+  //     title: 'Σεμινάρια',
+  //     programTypeId: 2
+  //   }
+  // }).then(megaNav => {});
 
   // Category.findOrCreate({
   //   where: {
@@ -155,23 +150,41 @@ router.get('*', async function(req, res, next) {
 
   });
 
-  nav1 = await MegaNav.findById( 1, {
+  nav1 = await MegaNav.findById(1, {
     // raw: true,
     include: [{
-          model: Category,
-        },
+        model: Category,
+      },
       {
-          model: Program
-      }],
+        model: Program,
+        include: [{
+          model: Category,
+        }]
+      }
+    ],
   });
 
-  nav2 = await MegaNav.findById( 2, {
+  nav2 = await MegaNav.findById(2, {
     include: [{
       model: Program
     }]
   });
+  // console.log(nav1);
+  // console.log(nav2);
+
+  // nav1.categories.forEach((category) => {
+  //   console.log(category);
+  // })
   console.log(nav1);
-  console.log(nav2);
+  nav1.programs.forEach((program)   => {
+    console.log(program.title);
+    // console.log(program.categories);
+
+    program.categories.forEach((category) => {
+      console.log(`ID: ${category.id}, text: ${category.text}`);
+    })
+  })
+
   next();
 })
 
