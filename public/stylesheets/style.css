@@ -6555,7 +6555,8 @@ body {
   border-radius: 2rem; }
   .imee-btn-red:hover {
     color: white;
-    box-shadow: 3px 6px 16px -8px rgba(118, 117, 136, 0.5); }
+    box-shadow: 3px 6px 16px -8px rgba(118, 117, 136, 0.5);
+    background: #8b272b; }
   .imee-btn-red.btn-lg, .btn-group-lg > .imee-btn-red.btn {
     font-size: 1.25rem !important;
     line-height: 1.5 !important; }

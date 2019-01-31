@@ -19,8 +19,7 @@ const readdir = promisify(fs.readdir);
 // Model includes
 // -----------------------------------------------------------------------------
 const models = require("../models");
-const Category = models.category;
-const Program = models.program;
+const Seminar = models.seminar;
 
 
 // -----------------------------------------------------------------------------
@@ -28,8 +27,7 @@ const Program = models.program;
 // -----------------------------------------------------------------------------
 let documents = [];
 let images = [];
-let categories = [];
-let programs = [];
+let seminars = [];
 
 let data;
 
@@ -39,21 +37,12 @@ let data;
 // -----------------------------------------------------------------------------
 router.get('*', asyncWrapper(async (req, res, next) => {
 
-  programs = await Program.findAll({
-    where: {
-      status: 'active'
-    },
-    include: [{
-      model: Category,
-    }]
-  });
-
-
-  categories = await Category.findAll({
+  seminars = await Seminar.findAll({
     where: {
       status: 'active'
     }
   });
+
 
 
 
@@ -94,41 +83,39 @@ router.get('*', asyncWrapper(async (req, res, next) => {
 
 
 // -----------------------------------------------------------------------------
-// GET /admin/program
+// GET /admin/seminar
 // -----------------------------------------------------------------------------
 router.get('/', asyncWrapper(async (req, res, next) => {
 
   data = {
     documents: documents,
     images: images,
-    categories: categories,
-    programs: programs
+    seminars: seminars
   }
 
 
-  res.render('admin/program', {
+  res.render('admin/seminar', {
     layout: 'admin',
     title: 'Προγράμματα',
-    type: 'prog',
+    type: 'semin',
     data: data
   });
 
 }));
 // -----------------------------------------------------------------------------
-// GET /admin/program/new
+// GET /admin/seminar/new
 // -----------------------------------------------------------------------------
 router.get('/new', asyncWrapper(async (req, res, next) => {
 
   data = {
     documents: documents,
     images: images,
-    categories: categories
   }
 
   res.render('admin/create', {
     layout: 'admin-wysiwyg',
     title: 'Νέο Πρόγραμμα',
-    type: 'prog',
+    type: 'semin',
     data: data
   });
 
@@ -136,7 +123,7 @@ router.get('/new', asyncWrapper(async (req, res, next) => {
 
 
 // -----------------------------------------------------------------------------
-// POST /admin/program/new
+// POST /admin/seminar/new
 // -----------------------------------------------------------------------------
 router.post('/new', asyncWrapper(async (req, res, next) => {
 
@@ -165,10 +152,9 @@ router.post('/new', asyncWrapper(async (req, res, next) => {
     hours,
     cost,
     location,
-    tutor,
-    programCategories,
+    tutor
   } = req.body;
-  console.log(easyAccess);
+
   if (featured == 'on')
     featured = 1;
   if (easyAccess == 'on')
@@ -177,7 +163,7 @@ router.post('/new', asyncWrapper(async (req, res, next) => {
   slug = title
 
 
-  let program = await Program.create({
+  let seminar = await Seminar.create({
     id: id,
     slug: slug,
     title: title,
@@ -203,23 +189,17 @@ router.post('/new', asyncWrapper(async (req, res, next) => {
     cost: cost,
     location: location,
     tutor: tutor,
-    megaNavId: null
-  }, {
-    include: [{
-      model: Category
-    }]
   });
 
-  await program.setCategory(programCategories);
 
   req.flash('success_msg', 'Το πρόγραμμα ' + title + ' δημιουργήθηκε με επιτυχία')
-  res.redirect('/admin/program');
+  res.redirect('/admin/seminar');
 
 }));
 
 
 // -----------------------------------------------------------------------------
-// GET /admin/program/:id/edit
+// GET /admin/seminar/:id/edit
 // -----------------------------------------------------------------------------
 router.get('/:id/edit', asyncWrapper(async (req, res, next) => {
 
@@ -227,27 +207,23 @@ router.get('/:id/edit', asyncWrapper(async (req, res, next) => {
     id
   } = req.params;
 
-  let program = await Program.findByPk(id, {
+  let seminar = await Seminar.findByPk(id, {
     where: {
       status: 'active'
-    },
-    include: [{
-        model: Category,
-      }],
+    }
   });
 
-  console.log(program);
+  console.log(seminar);
   data = {
     documents: documents,
     images: images,
-    categories: categories,
-    program: program
+    program: seminar
   }
 
   res.render('admin/edit', {
     layout: 'admin-wysiwyg',
     title: 'Αλλαγή Προγράμματος',
-    type: 'prog',
+    type: 'semin',
     data: data
   });
 
@@ -255,7 +231,7 @@ router.get('/:id/edit', asyncWrapper(async (req, res, next) => {
 
 
 // -----------------------------------------------------------------------------
-// POST /admin/program/:id/edit'
+// POST /admin/seminar/:id/edit'
 // -----------------------------------------------------------------------------
 router.post('/:id/edit', asyncWrapper(async (req, res, next) => {
 
@@ -287,8 +263,7 @@ router.post('/:id/edit', asyncWrapper(async (req, res, next) => {
     hours,
     cost,
     location,
-    tutor,
-    programCategories,
+    tutor
   } = req.body;
 
   if (featured == 'on')
@@ -299,7 +274,7 @@ router.post('/:id/edit', asyncWrapper(async (req, res, next) => {
   slug = title
 
 
-  await Program.update({
+  await Seminar.update({
     slug: slug,
     title: title,
     featured: featured,
@@ -328,32 +303,23 @@ router.post('/:id/edit', asyncWrapper(async (req, res, next) => {
     where: {
       id: id
     }
-  }, {
-    include: [{
-      model: Category
-    }]
   });
 
 
-  let program = await Program.findByPk(id, {
+  let seminar = await Seminar.findByPk(id, {
     where: {
       status: 'active'
-    },
-    include: [{
-        model: Category,
-      }]
+    }
   });
-  await program.setCategory(programCategories);
-
 
   req.flash('success_msg', 'Το πρόγραμμα ' + title + ' ενημερώθηκε με επιτυχία');
-  res.redirect('/admin/program');
+  res.redirect('/admin/seminar');
 
 }));
 
 
 // -----------------------------------------------------------------------------
-// GET /admin/program/:id/delete
+// GET /admin/seminar/:id/delete
 // -----------------------------------------------------------------------------
 router.get('/:id/delete', asyncWrapper(async (req, res, next) => {
 
@@ -361,34 +327,30 @@ router.get('/:id/delete', asyncWrapper(async (req, res, next) => {
     id
   } = req.params;
 
-  let program = await Program.findByPk(id, {
+  let seminar = await Seminar.findByPk(id, {
     where: {
       status: 'active'
-    },
-    include: [{
-        model: Category,
-      }]
+    }
   });
 
 
   data = {
     documents: documents,
     images: images,
-    categories: categories,
-    program: program
+    program: seminar
   }
 
   res.render('admin/delete', {
     layout: 'admin-wysiwyg',
     title: 'Αλλαγή Προγράμματος',
-    type: 'prog',
+    type: 'semin',
     data: data
   });
 
 }));
 
 // -----------------------------------------------------------------------------
-// POST /admin/program/:id/delete
+// POST /admin/seminar/:id/delete
 // -----------------------------------------------------------------------------
 router.post('/:id/delete', asyncWrapper(async (req, res, next) => {
 
@@ -396,7 +358,7 @@ router.post('/:id/delete', asyncWrapper(async (req, res, next) => {
     id
   } = req.params;
 
-  await Program.update({
+  await Seminar.update({
     status: 'inactive',
   }, {
     where: {
@@ -405,8 +367,8 @@ router.post('/:id/delete', asyncWrapper(async (req, res, next) => {
   });
 
 
-  req.flash('success_msg', 'Το πρόγρ; διαγράφτηκε με επιτυχία')
-  res.redirect('/admin/program');
+  req.flash('success_msg', 'Το πρόγραμμα διαγράφτηκε με επιτυχία')
+  res.redirect('/admin/seminar');
 
 
 }));

@@ -1,6 +1,6 @@
 module.exports = function(sequelize, Sequelize) {
 
-  const MegaNav = sequelize.define('megaNav', {
+  const ProgramDropList = sequelize.define('programDropList', {
     id: {
       autoIncrement: true,
       primaryKey: true,
@@ -14,6 +14,6 @@ module.exports = function(sequelize, Sequelize) {
   });
 
 
-  return MegaNav;
+  return ProgramDropList;
 
 }

@@ -10,11 +10,11 @@
   <div class="col-12 p-0 ">
     <div class="imee-container rounded border shadow-sm ">
 
-      {{#if program}}
+      {{#if data.program}}
 
         <div class="row mx-0">
           <div class="col-12 p-0">
-            <img src="/files/uploads/images/{{program.image}}" alt="{{program.image}}" style="height:400px;width:100%;object-fit:cover;">
+            <img src="/files/uploads/images/{{data.program.image}}" alt="{{data.program.image}}" style="height:400px;width:100%;object-fit:cover;">
           </div>
         </div>
         <div class="row mx-0">
@@ -23,96 +23,96 @@
           <div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 p-2 imee-text-black ">
             <div class="row mx-0">
               <div class="col-12 py-2 my-1 border-bottom">
-                <span class="imee-prog-title imee-text-blue">{{program.title}}</span>
-                <!-- <h3 class="py-0 m-0 imee-section-header imee-text-grey-blue">{{program.title}}</h3> -->
+                <span class="imee-prog-title imee-text-blue">{{data.program.title}}</span>
+                <!-- <h3 class="py-0 m-0 imee-section-header imee-text-grey-blue">{{data.program.title}}</h3> -->
               </div>
               <div class="col-12 fr-view mt-4">
-                {{#ifCond program.section_indicator '==' '2'}}
+                {{#ifCond data.program.multiText '==' '2'}}
 
-                  {{#if program.section01title}}
+                  {{#if data.program.subTitle1}}
                     <div class="row mx-0 my-2 ">
                       <div class="col-12 px-0 ">
                         <a class="imee-collapse w-100 d-block py-3 pl-4 imee-text-grey-blue font-weight-bold imee-light-grey collapsed" data-toggle="collapse" href="#section01title" role="" aria-expanded="true" aria-controls="collapse">
-                          <i class="fas fa-plus"></i> {{program.section01title}}
+                          <i class="fas fa-plus"></i> {{data.program.subTitle1}}
                         </a>
                         <div class="collapse show" id="section01title">
                           <div class=" w-100 pl-4 mt-3 text-justify">
-                            {{{program.section01text}}}
+                            {{{data.program.subText1}}}
                           </div>
                         </div>
                       </div>
                     </div>
                   {{/if}}
 
-                  {{#if program.section02title}}
+                  {{#if data.program.subTitle2}}
                     <div class="row mx-0 my-2 ">
                       <div class="col-12 px-0 ">
                         <a class="imee-collapse w-100 d-block py-3 pl-4 imee-text-grey-blue font-weight-bold imee-light-grey" data-toggle="collapse" href="#section02title" role="" aria-expanded="false" aria-controls="collapse">
-                          <i class="fas fa-plus mr-1"></i> {{program.section02title}}
+                          <i class="fas fa-plus mr-1"></i> {{data.program.subTitle2}}
                         </a>
                         <div class="collapse" id="section02title">
                           <div class=" w-100 pl-4 mt-3 text-justify">
-                            {{{program.section02text}}}
+                            {{{data.program.subText2}}}
                           </div>
                         </div>
                       </div>
                     </div>
                   {{/if}}
 
-                  {{#if program.section03title}}
+                  {{#if data.program.subTitle3}}
                     <div class="row mx-0 my-2 ">
                       <div class="col-12 px-0 ">
                         <a class="imee-collapse w-100 d-block py-3 pl-4 imee-text-grey-blue font-weight-bold imee-light-grey" data-toggle="collapse" href="#section03title" role="" aria-expanded="false" aria-controls="collapse">
-                          <i class="fas fa-plus"></i> {{program.section03title}}
+                          <i class="fas fa-plus"></i> {{data.program.subTitle3}}
                         </a>
                         <div class="collapse" id="section03title">
                           <div class=" w-100 pl-4 mt-3 text-justify">
-                            {{{program.section03text}}}
+                            {{{data.program.subText3}}}
                           </div>
                         </div>
                       </div>
                     </div>
                   {{/if}}
 
-                  {{#if program.section04title}}
+                  {{#if data.program.subTitle4}}
                     <div class="row mx-0 my-2 ">
                       <div class="col-12 px-0 ">
                         <a class="imee-collapse w-100 d-block py-3 pl-4 imee-text-grey-blue font-weight-bold imee-light-grey" data-toggle="collapse" href="#section04title" role="" aria-expanded="false" aria-controls="collapse">
-                          <i class="fas fa-plus"></i> {{program.section04title}}
+                          <i class="fas fa-plus"></i> {{data.program.subTitle4}}
                         </a>
                         <div class="collapse" id="section04title">
                           <div class=" w-100 pl-4 mt-3 text-justify">
-                            {{{program.section04text}}}
+                            {{{data.program.subText4}}}
                           </div>
                         </div>
                       </div>
                     </div>
                   {{/if}}
 
-                  {{#if program.section05title}}
+                  {{#if data.program.subTitle5}}
                     <div class="row mx-0 my-2 ">
                       <div class="col-12 px-0 ">
                         <a class="imee-collapse w-100 d-block py-3 pl-4 imee-text-grey-blue font-weight-bold imee-light-grey" data-toggle="collapse" href="#section05title" role="" aria-expanded="false" aria-controls="collapse">
-                          <i class="fas fa-plus"></i> {{program.section05title}}
+                          <i class="fas fa-plus"></i> {{data.program.subText5}}
                         </a>
                         <div class="collapse" id="section05title">
                           <div class=" w-100 pl-4 mt-3 text-justify">
-                            {{{program.section05text}}}
+                            {{{data.program.subText5}}}
                           </div>
                         </div>
                       </div>
                     </div>
                   {{/if}}
 
-                  {{#if program.section06title}}
+                  {{#if data.program.subTitle6}}
                     <div class="row mx-0 my-2 ">
                       <div class="col-12 px-0 ">
                         <a class="imee-collapse w-100 d-block py-3 pl-4 imee-text-grey-blue font-weight-bold imee-light-grey" data-toggle="collapse" href="#section06title" role="" aria-expanded="false" aria-controls="collapse">
-                          <i class="fas fa-plus"></i> {{program.section06title}}
+                          <i class="fas fa-plus"></i> {{data.program.subTitle6}}
                         </a>
                         <div class="collapse" id="section06title">
                           <div class=" w-100 pl-4 mt-3 text-justify">
-                            {{{program.section06text}}}
+                            {{{data.program.subText6}}}
                           </div>
                         </div>
                       </div>
@@ -123,8 +123,8 @@
                 {{/ifCond}}
 
 
-                {{#ifCond program.section_indicator '==' '1'}}
-                  {{{program.text}}}
+                {{#ifCond data.program.multiText '==' '1'}}
+                  {{{data.program.singleText}}}
                 {{/ifCond}}
               </div>
 
@@ -139,42 +139,42 @@
                 <span class="imee-prog-title">Πληροφορίες</span>
                 <!-- <h3 class="py-0 m-0 imee-section-header imee-text-grey-blue">Πληροφορίες</h3> -->
               </div>
-              {{#if program.start_date}}
+              {{#if data.program.start_date}}
                 <div class="col-12 p-2 my-1">
                   <span class="font-weight-bold float-left">Έναρξη</span>
-                  <span class="font-weight-normal float-right imee-text-red">{{dateFormat program.start_date}}</span>
+                  <span class="font-weight-normal float-right imee-text-red">{{dateFormat data.program.start_date}}</span>
                 </div>
               {{/if}}
-              {{#if program.end_date}}
+              {{#if data.program.end_date}}
                 <div class="col-12 p-2 my-1 ">
                   <span class="font-weight-bold float-left">Λήξη</span>
-                  <span class="font-weight-normal float-right imee-text-red">{{dateFormat program.end_date}}</span>
+                  <span class="font-weight-normal float-right imee-text-red">{{dateFormat data.program.end_date}}</span>
                 </div>
               {{/if}}
-              {{#if program.hours}}
+              {{#if data.program.hours}}
                 <div class="col-12 p-2 my-1 ">
                   <span class="font-weight-bold float-left">Ώρες</span>
-                  <span class="font-weight-normal float-right imee-text-red">{{program.hours}}</span>
+                  <span class="font-weight-normal float-right imee-text-red">{{data.program.hours}}</span>
                 </div>
               {{/if}}
-              {{#if program.cost}}
-                {{#ifCond program.cost "!=" "0" }}
+              {{#if data.program.cost}}
+                {{#ifCond data.program.cost "!=" "0" }}
                   <div class="col-12 p-2 my-1">
                     <span class="font-weight-bold float-left">Κόστος</span>
-                    <span class="font-weight-normal float-right imee-text-red">{{program.cost}} &euro;</span>
+                    <span class="font-weight-normal float-right imee-text-red">{{data.program.cost}} &euro;</span>
                   </div>
                 {{/ifCond}}
               {{/if}}
-              {{#if program.location}}
+              {{#if data.program.location}}
                 <div class="col-12 p-2 my-1 ">
                   <span class="font-weight-bold float-left">Τοποθεσία</span>
-                  <span class="font-weight-normal float-right imee-text-red">{{program.location}}</span>
+                  <span class="font-weight-normal float-right imee-text-red">{{data.program.location}}</span>
                 </div>
               {{/if}}
-              {{#if program.teacher}}
+              {{#if data.program.teacher}}
                 <div class="col-12 p-2 my-1">
                   <span class="font-weight-bold float-left">Εισηγητής</span>
-                  <span class="font-weight-normal float-right imee-text-red">{{program.teacher}}</span>
+                  <span class="font-weight-normal float-right imee-text-red">{{data.program.teacher}}</span>
                 </div>
               {{/if}}
             </div>
@@ -187,11 +187,11 @@
 
         <div class="row mx-0 px-2 ">
           <!-- Gallery -->
-          {{#if program.gallery}}
+          {{#if data.program.gallery}}
             <div class="col-12 py-3">
               <h5 class="imee-text-grey-blue my-3">Σχετικές Εικόνες</h5>
               <div id="imee-img-viewer">
-                {{#each program.gallery}}
+                {{#each data.program.gallery}}
                   <img src="/files/uploads/images/{{this}}" alt="{{this}}" class="img-thumbnail " style="height:100px;width:100px;object-fit:cover;">
                 {{else}}
                   <img src="/files/uploads/images/{{this}}" alt="{{this}}" class="img-thumbnail " style="height:100px;width:100px;object-fit:cover;">
@@ -200,10 +200,10 @@
             </div>
           {{/if}}
           <!-- Attachments  -->
-          {{#if program.attachments}}
+          {{#if data.program.attachments}}
             <div class="col-12 py-3">
               <h5 class="imee-text-grey-blue my-3">Αρχεία</h5>
-              {{#each program.attachments}}
+              {{#each data.program.attachments}}
                 <div class="col-12 p-0 mb-3">
                   <a href="/files/uploads/docs/{{this}}" class="imee-text-grey-blue" download>
                     <i class="fas fa-lg fa-file-download"></i>
@@ -212,9 +212,9 @@
                 </div>
               {{else}}
                 <div class="col-12 p-0 mb-3">
-                  <a href="/files/uploads/docs/{{program.attachments}}" class="imee-text-grey-blue" download>
+                  <a href="/files/uploads/docs/{{data.program.attachments}}" class="imee-text-grey-blue" download>
                     <i class="fas fa-lg fa-file-download"></i>
-                    <span>{{program.attachments}}</span>
+                    <span>{{data.program.attachments}}</span>
                   </a>
                 </div>
               {{/each}}
@@ -228,7 +228,7 @@
   </div>
 </div>
 
-{{#if program.gallery}}
+{{#if data.program.gallery}}
   <script src="/libs//viewerjs/dist/viewer.js"></script>
   <script type="text/javascript">
     // View a list of images

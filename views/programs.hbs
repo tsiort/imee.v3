@@ -15,10 +15,10 @@
         <li class="nav-item mx-0 my-1">
           <a class="nav-link imee-pill {{#ifCond activecat '==' 'all'}}active{{/ifCond}}" href="/programs">Όλα</a>
         </li>
-        {{#if category}}
-          {{#each category}}
+        {{#if data.categories}}
+          {{#each data.categories}}
             <li class="nav-item mx-0 my-1">
-              <a class="nav-link imee-pill {{#ifCond ../activecat '==' id}}active{{/ifCond}}" href="/programs/category/{{id}}">{{category}}</a>
+              <a class="nav-link imee-pill {{#ifCond ../activecat '==' id}}active{{/ifCond}}" href="/programs/category/{{id}}">{{text}}</a>
             </li>
           {{/each}}
         {{/if}}
@@ -34,141 +34,29 @@
     <div class="imee-container">
       <div class="row mx-0 py-5">
 
-        {{#if program}}
-          {{#each program}}
-            <div class="col-12 col-sm-6 col-md-6  col-lg-{{getLayout ../featured.length @index}} mb-3">
-              <div class="card imee-card shadow-sm border" style="width: auto;">
+
+        {{#if data.programs}}
+          {{#each data.programs}}
+
+          <div class="col-12 col-sm-6 col-md-6  col-lg-{{getLayout ../featuredPrograms.length @index}} mb-3">
+            <div class="card imee-card shadow-sm border" style="width: auto;">
+              <div class="card-div-top">
                 <img class="card-img-top img-fluid" src="/files/uploads/images/{{image}}" alt="{{title}}">
-                <div class="card-body">
-                  <h6 class="card-title imee-text-blue">{{title}}</h6>
-                  <div class="card-text text-justify fr-view">
-                    {{#if categories}}
-                      {{#each categories}}
-                        {{#each ../../category}}
-                          {{#ifCond this.id '==' ../this}}
-                            <a href="/programs/category/{{this.id}}" class="text-white imee-grey-blue px-2 py-1 mr-2 my-1  float-left badge badge-primary font-weight-normal">{{this.category}}</a>
-                          {{/ifCond}}
-                        {{/each}}
-                      {{else}}
-                        {{#each ../category}}
-                          {{#ifCond this.id '==' ../categories}}
-                            <a href="/programs/category/{{this.id}}" class="text-white imee-grey-blue px-2 py-1 mr-2 my-1  float-left badge badge-primary font-weight-normal">{{this.category}}</a>
-                          {{/ifCond}}
-                        {{/each}}
-                      {{/each}}
-                    {{/if}}
-                  </div>
-                </div>
-                <div class="card-footer">
-                  <a href="/programs/{{id}}" class="btn imee-btn-grey">Περισσότερα</a>
-                </div>
+              </div>
+              <div class="card-body pb-1 text-left">
+                <h6 class="card-title imee-text-red">{{title}}</h6>
+              </div>
+              <div class="card-footer text-right ">
+                <a href="/programs/{{id}}" class="btn imee-btn-red">Περισσότερα</a>
               </div>
             </div>
-          {{/each}}
-        {{else}}
-        {{/if}}
+          </div>
 
+          {{/each}}
+        {{/if}}
 
 
       </div>
     </div>
   </div>
 </div>
-
-<!-- <div class="row mx-0 imee-light-grey">
-  <div class="col-12 p-0">
-    <div class="imee-container">
-      <div class="tab-content" id="pills-tabContent">
-        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-          <div class="row mx-0 p-3 m-3">
-
-
-            <div class="col-12 col-sm-6 col-md-4 mb-3">
-              <div class="card imee-card shadow-sm" style="width: auto;">
-                <img class="card-img-top img-fluid" src="/images/5.png" alt="Card image cap">
-                <div class="card-body">
-                  <h6 class="card-title">ΤΕΧΝΙΚΟΣ ΑΣΦΑΛΕΙΑΣ</h6>
-                  <p class="card-text" style="font-size:14px;">Ότι καλύτερο για να βρείτε δουλειά</p>
-
-                </div>
-                <div class="card-footer">
-                  <a href="/programs/1" class="btn imee-btn-grey">Περισσότερα</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-12 col-sm-6 col-md-4 mb-3">
-              <div class="card imee-card shadow-sm" style="width: auto;">
-                <img class="card-img-top img-fluid" src="images/2.png" alt="Card image cap">
-                <div class="card-body">
-                  <h6 class="card-title">ΣΕΜΙΝΑΡΙΑ ΕΠΙΧΕΙΡΗΜΑΤΙΚΟΤΗΤΑΣ</h6>
-                  <p class="card-text" style="font-size:14px;">Ότι καλύτερο για να βρείτε δουλειά</p>
-
-                </div>
-                <div class="card-footer">
-                  <a href="/programs/1" class="btn imee-btn-grey">Περισσότερα</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-12 col-sm-6 col-md-4 mb-3">
-              <div class="card imee-card shadow-sm" style="width: auto;">
-                <img class="card-img-top img-fluid" src="images/1.png" alt="Card image cap">
-                <div class="card-body">
-                  <h6 class="card-title">ΤΟΥΡΙΣΤΙΚΑ</h6>
-                  <p class="card-text" style="font-size:14px;">Ότι καλύτερο για να βρείτε δουλειά</p>
-
-                </div>
-                <div class="card-footer">
-                  <a href="/programs/1" class="btn imee-btn-grey">Περισσότερα</a>
-                </div>
-              </div>
-            </div>
-
-
-            <div class="w-100"></div>
-
-            <div class="col-12 col-sm-6 col-md-8 mb-3">
-              <div class="card imee-card shadow-sm" style="width: auto;">
-                <img class="card-img-top img-fluid" src="images/3.png" alt="Card image cap">
-                <div class="card-body">
-                  <h6 class="card-title">ΣΕΜΙΝΑΡΙΑ ΠΛΗΡΟΦΟΡΙΚΗΣ</h6>
-                  <p class="card-text" style="font-size:14px;">Ότι καλύτερο για να βρείτε δουλειά</p>
-
-                </div>
-                <div class="card-footer">
-                  <a href="/programs/1" class="btn imee-btn-grey">Περισσότερα</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-12 col-sm-6 col-md-4 mb-3">
-              <div class="card imee-card shadow-sm" style="width: auto;">
-                <img class="card-img-top img-fluid" src="images/4.png" alt="Card image cap">
-                <div class="card-body">
-                  <h6 class="card-title">SOCIAL MEDIA</h6>
-                  <p class="card-text" style="font-size:14px;">Ότι καλύτερο για να βρείτε δουλειά</p>
-
-                </div>
-                <div class="card-footer">
-                  <a href="/programs/1" class="btn imee-btn-grey">Περισσότερα</a>
-                </div>
-              </div>
-            </div>
-
-
-
-          </div>
-        </div>
-        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-          <div class="row mx-0 p-3 m-3">
-            ..222.
-          </div>
-        </div>
-        <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-          <div class="row mx-0 p-3 m-3">
-            ...
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-</div> -->

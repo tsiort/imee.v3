@@ -3,290 +3,182 @@ var router = express.Router();
 
 var passport = require('passport');
 
+const asyncWrapper = require("../middleware/asyncMiddleware");
 
 
 let models = require("../models");
 
 let Category = models.category;
-let ProgramType = models.programType;
 let Program = models.program;
+let Seminar = models.seminar;
 let Slider = models.slider;
-let MegaNav = models.megaNav;
 
 
 
-let programTypes = [];
 let categories = [];
 let sliders = [];
-let nav1 = [];
-let nav2 = [];
+let seminars = [];
+let programs = [];
+let programNav = [];
+let seminarNav = [];
 
 let data;
 
-router.get('*', function(req, res, next) {
-
-  // ProgramType
-  //   .findOrCreate({
-  //     where: {
-  //       text: 'Επιδοτούμενα'
-  //     }
-  //   })
-  //   .spread((programType, created) => {});
-  //
-  // ProgramType
-  //   .findOrCreate({
-  //     where: {
-  //       text: 'Σεμινάρια'
-  //     }
-  //   })
-  //   .spread((programType, created) => {});
-  //
-  //
-  // MegaNav.findOrCreate({
-  //   where: {
-  //     title: 'Επιδοτούμενα',
-  //     programTypeId: 1
-  //   }
-  // }).then(megaNav => {});
-  //
-  // MegaNav.findOrCreate({
-  //   where: {
-  //     title: 'Σεμινάρια',
-  //     programTypeId: 2
-  //   }
-  // }).then(megaNav => {});
-
-  // Category.findOrCreate({
-  //   where: {
-  //     text: 'Για ανέργους',
-  //     programTypeId: 1,
-  //     megaNavId: 1
-  //   }
-  // }).then(category => {});
-  //
-  // Category.findOrCreate({
-  //   where: {
-  //     text: 'Για ΑΜΕΑ',
-  //     programTypeId: 1,
-  //     megaNavId: 1
-  //   }
-  // }).then(category => {});
-  //
-  // Category.findOrCreate({
-  //   where: {
-  //     text: 'Για Φοιτητές',
-  //     programTypeId: 1,
-  //     megaNavId: 1
-  //   }
-  // }).then(category => {});
-
-
-
-  //
-  // Slider
-  //   .findOrCreate({
-  //     where: {
-  //       title: 'Είσαι Άνεργος;',
-  //       text: 'Συμπλήρωσε τα στοιχεία σου εδώ και εμείς θα επικοινωνήσουμε άμεσα μαζί σου για να σε ενημερώσουμε για τις νέες δράσεις κατάρτησης που σε αφορούν',
-  //       image: 'under-const.jpg'
-  //     }
-  //   })
-  //   .spread((slider, created) => {});
-
-
-
-
-
-
-  // Slider
-  //   .findOrCreate({
-  //     where: {
-  //       title: 'Τίτλος 2 ',
-  //       text: 'Κείμενο 2',
-  //       image: 'safety_first_aid.jpeg'
-  //     }
-  //   })
-  //   .spread((slider, created) => {});
-  //
-  // Slider
-  //   .findOrCreate({
-  //     where: {
-  //       title: 'Τίτλος 3 ',
-  //       text: 'Κείμενο 3',
-  //       image: 'food_chef.jpg'
-  //     }
-  //   })
-  //   .spread((slider, created) => {});
-
-  next();
-})
 
 
 
 router.get('*', async function(req, res, next) {
 
   categories = await Category.findAll({
-    raw: true,
     where: {
       status: 'active'
-    },
-    include: [{
-      model: ProgramType
-    }]
-
-  });
-  programTypes = await ProgramType.findAll({
-    raw: true,
-    where: {
-      status: 'active'
-    },
-
+    }
   });
   sliders = await Slider.findAll({
-    raw: true,
     where: {
       status: 'active'
+    }
+  });
+  programNav = await Program.findAll({
+    where: {
+      status: 'active',
+      easyAccess: 1
     },
-
-  });
-
-  nav1 = await MegaNav.findById(1, {
-    // raw: true,
     include: [{
-        model: Category,
-      },
-      {
-        model: Program,
-        include: [{
-          model: Category,
-        }]
-      }
-    ],
-  });
-
-  nav2 = await MegaNav.findById(2, {
-    include: [{
-      model: Program
+      model: Category
     }]
   });
-  // console.log(nav1);
-  // console.log(nav2);
+  seminarNav = await Seminar.findAll({
+    where: {
+      status: 'active',
+      easyAccess: 1
+    }
+  });
 
-  // nav1.categories.forEach((category) => {
-  //   console.log(category);
-  // })
-  console.log(nav1);
-  nav1.programs.forEach((program)   => {
-    console.log(program.title);
-    // console.log(program.categories);
 
-    program.categories.forEach((category) => {
-      console.log(`ID: ${category.id}, text: ${category.text}`);
-    })
-  })
 
   next();
 })
 
-// // var nodemailer = require('nodemailer');
-// //
-// // var transporter = nodemailer.createTransport({
-// //   service: 'gmail',
-// //   // port: 995,
-// //   secure: true,
-// //   auth: {
-// //     user: 'tsiotrasi@gmail.com',
-// //     pass: '111989aaa'
-// //   },
-// // });
-// //
-// // var mailOptions = {
-// //   from: 'tsiotrasi@gmail.com',
-// //   to: 'pertrosmosxolios@gmail.com',
-// //   subject: 'Sending Email using Node.js',
-// //   text: 'That was easy!'
-// // };
-// //
-// // transporter.sendMail(mailOptions, function(error, info){
-// //   if (error) {
-// //     console.log(error);
-// //   } else {
-// //     console.log('Email sent: ' + info.response);
-// //   }
-// // });
-//
-//
-//
-//
-//
-// // Models
-// var User = require('../models/user.js');
-// var Category = require('../models/category.js');
-// var Program = require('../models/program.js');
-// var Slider = require('../models/slider.js');
-// var News = require('../models/news.js');
-// var Meganav = require('../models/meganav.js');
-//
-// var nav = [];
-// var prg = [];
-//
-// router.get('*', function(req, res, next) {
-//   // console.log('got it');
-//   Meganav.get(function(err, result) {
-//     if (err) {
-//       res.json(err);
-//       return;
-//     }
-//     nav = result[0];
-//     if( nav.meganav_featured ){
-//       Program.get(nav.meganav_featured, function(err, result) {
-//         if (err) {
-//           res.json(err);
-//           return;
-//         }
-//         prg = result[0];
-//         next();
-//       });
-//     } else {
-//       prog = null;
-//       next();
-//     }
-//
-//   });
-//
-// });
-//
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', asyncWrapper(async (req, res, next) => {
+
+
+  let featuredPrograms = await Program.findAll({
+    where: {
+      status: 'active',
+      featured: 1
+    }
+  });
+
+  let featuredSeminars = await Seminar.findAll({
+    where: {
+      status: 'active',
+      featured: 1
+    }
+  });
 
   data = {
-    catergories: categories,
-    programTypes: programTypes,
+    categories: categories,
     sliders: sliders,
-    nav1: nav1,
-    nav2: nav2
+    programNav: programNav,
+    seminarNav: seminarNav,
+    featuredPrograms: featuredPrograms,
+    featuredSeminars: featuredSeminars
   }
-
-  //
-  //
-  // data.nav1.categories.forEach(function(item){
-  //   console.log(item.dataValues);
-  // });
 
   res.render('index', {
     title: 'Αρχική',
     data: data
-    // slider: slider,
-    // featured: programs,
-    // news: news,
-    // nav: nav,
-    // prg: prg,
-    // category: category
   });
 
-});
+}));
 
+router.get('/programs', asyncWrapper(async (req, res, next) => {
+
+  programs = await Program.findAll({
+    where: {
+      status: 'active'
+    }
+  });
+
+
+  data = {
+    categories: categories,
+    programNav: programNav,
+    seminarNav: seminarNav,
+    programs: programs
+  }
+
+
+  res.render('programs', {
+    title: 'Προγράμματα',
+    type: 'prog',
+    data: data,
+    activecat: 'all'
+  });
+
+}));
+
+
+router.get('/programs/category/:id', asyncWrapper(async (req, res, next) => {
+
+  let {
+    id
+  } = req.params;
+
+
+  programs = await Program.findAll({
+    where: {
+      status: 'active',
+      categoryId: id
+    }
+  });
+
+
+  data = {
+    categories: categories,
+    programNav: programNav,
+    seminarNav: seminarNav,
+    programs: programs
+  }
+
+  res.render('programs', {
+    title: 'Προγράμματα',
+    type: 'prog',
+    data: data,
+    activecat: id
+  });
+
+}));
+
+
+router.get('/programs/:id', asyncWrapper(async (req, res, next) => {
+
+  let {
+    id
+  } = req.params;
+
+  program = await Program.findByPk(id, {
+    where: {
+      status: 'active',
+    }
+  });
+
+
+  data = {
+    categories: categories,
+    programNav: programNav,
+    seminarNav: seminarNav,
+    program: program
+  }
+
+  res.render('program', {
+    title: 'Προγράμματα',
+    data: data
+  });
+}));
 
 
 // /* GET home page. */

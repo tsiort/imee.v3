@@ -61,26 +61,20 @@
               </div>
             </li>
             <li class="nav-item imee-nav-item text-center col p-0 dropdown">
-              <a class=" nav-link text-white py-2 h-100" href="/"><span>ΕΠΙΔΟΤΟΥΜΕΝΑ<br>ΠΡΟΓΡΑΜΜΑΤΑ</span></a>
+              <a class=" nav-link text-white py-2 h-100" href="/programs"><span>ΕΠΙΔΟΤΟΥΜΕΝΑ<br>ΠΡΟΓΡΑΜΜΑΤΑ</span></a>
               <span class="dropdown-toggle" id="dropdownMenuPrograms" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               </span>
-              {{#if data.nav1.categories}}
+              {{#if data.programNav}}
                 <div class="dropdown-menu  border border-top-0 mt-0 imee-light" aria-labelledby="dropdownMenuPrograms" style="min-width:100%;">
-                  {{#each data.nav1.categories}}
-                    <a class="dropdown-header" href="/programs/category/{{id}}">{{text}}</a>
-
-                    {{#each ../data.nav1.programs}}
-                      {{#each categories}}
-
-                        {{#ifCond id '==' ../../id}}
-                          <a class="dropdown-item" href="/program/{{../id}}">{{../title}}</a>
+                  {{#each data.categories}}
+                    <a class="dropdown-header dropdown-item" href="/programs/category/{{id}}">{{text}}</a>
+                    {{#each ../data.programNav}}
+                      {{#ifCond categoryId '==' ../id}}
+                        <a class="dropdown-item" href="/programs/{{id}}">{{title}}</a>
                         {{/ifCond}}
-
-
-                      {{/each}}
                     {{/each}}
-
                   {{/each}}
+
 
                 </div>
               {{/if}}
@@ -89,10 +83,10 @@
               <a class=" nav-link text-white py-2 h-100" href="/"><span>ΣΕΜΙΝΑΡΙΑ</span></a>
               <span class="dropdown-toggle" id="dropdownMenuSeminars" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               </span>
-              {{#if data.nav2.programs}}
+              {{#if data.seminarNav}}
                 <div class="dropdown-menu  border border-top-0 mt-0 imee-light" aria-labelledby="dropdownMenuSeminars" style="min-width:100%;">
-                  {{#each data.nav2.programs}}
-                    <a class="dropdown-item" href="/programs/{{id}}">{{title}}</a>
+                  {{#each data.seminarNav}}
+                    <a class="dropdown-item" href="/seminars/{{id}}">{{title}}</a>
                   {{/each}}
                 </div>
               {{/if}}

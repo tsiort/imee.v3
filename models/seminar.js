@@ -1,6 +1,6 @@
 module.exports = function(sequelize, Sequelize) {
 
-  const Program = sequelize.define('program', {
+  const Seminar = sequelize.define('seminar', {
     id: {
       autoIncrement: true,
       primaryKey: true,
@@ -88,6 +88,6 @@ module.exports = function(sequelize, Sequelize) {
   });
 
 
-  return Program;
+  return Seminar;
 
 }

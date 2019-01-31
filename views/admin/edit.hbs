@@ -62,7 +62,7 @@
           <div class="col-12">
             <label for="sliderConnection" class="m-0"><small class="text-primary" style="font-weight:600;">Σύνδεσμος</small></label>
             <select class="form-control form-control-sm" id="sliderConnection" name="sliderConnection">
-              <option value="" selected>Χωρίς σύνδεση</option>
+              <option value="">Χωρίς σύνδεση</option>
               {{#if data.programs}}
                 <optgroup label="Προγράμματα">
                   {{#each data.programs}}
@@ -70,17 +70,17 @@
                   {{/each}}
                 </optgroup>
               {{/if}}
-              {{#if data.categories}}
-                <optgroup label="Κατηγορίες">
-                  {{#each data.categories}}
-                    <option value="2-{{id}}" {{#if ../data.slider.categoryId}} {{#ifCond ../data.slider.categoryId '==' id}} selected {{/ifCond}} {{/if}}>{{text}}</option>
+              {{#if data.seminars}}
+                <optgroup label="Προγράμματα">
+                  {{#each data.seminars}}
+                    <option value="2-{{id}}" {{#if ../data.slider.seminarId}} {{#ifCond ../data.slider.seminarId '==' id}} selected {{/ifCond}} {{/if}}>{{title}}</option>
                   {{/each}}
                 </optgroup>
               {{/if}}
-              {{#if data.programTypes}}
-                <optgroup label="Βασικές Κατηγορίες Προγραμμάτων">
-                  {{#each data.programTypes}}
-                    <option value="3-{{id}}" {{#if ../data.slider.programTypeId}} {{#ifCond ../data.slider.programTypeId '==' id}} selected {{/ifCond}} {{/if}}>{{text}}</option>
+              {{#if data.categories}}
+                <optgroup label="Κατηγορίες">
+                  {{#each data.categories}}
+                    <option value="3-{{id}}" {{#if ../data.slider.categoryId}} {{#ifCond ../data.slider.categoryId '==' id}} selected {{/ifCond}} {{/if}}>{{text}}</option>
                   {{/each}}
                 </optgroup>
               {{/if}}
@@ -107,14 +107,6 @@
     <h6 class="border-bottom border-gray pb-2 mb-0" style="font-weight:600;">Επεξεργασία Κατηγορίας</h6>
     {{#if data.category}}
       <form action="/admin/category/{{data.category.id}}/edit" method="post" class="mt-3">
-        <div class="form-group">
-          <label for="programTypeId" class="m-0"><small class="text-primary" style="font-weight:600;">Είδος Κατηγορίας</small></label>
-          <select class="custom-select custom-select-sm" id="programTypeId" name="programTypeId">
-            {{#each data.programTypes}}
-              <option value="{{id}}" {{#ifCond ../data.programType.id '==' id}} selected {{/ifCond}}>{{text}}</option>
-            {{/each}}
-          </select>
-        </div>
 
         <div class="form-group">
           <label for="text" class="m-0"><small class="text-primary" style="font-weight:600;">Όνομα Κατηγορίας</small></label>
@@ -178,32 +170,227 @@
       </div>
 
       <div class="form-group mb-5 mt-3 pl-3">
-        <div class="row h-100">
-          <div class="col-12 col-md-9">
-            <label for="title" class="m-0"><small class="text-primary" style="font-weight:600;">Τίτλος</small></label>
-            <input type="text" class="form-control form-control-sm" id="title" name="title" aria-describedby="textHelp" placeholder="Όνομα Προγράμματος" {{#if data.program.title}} value="{{data.program.title}}" {{/if}} required>
+        <label for="title" class="m-0"><small class="text-primary" style="font-weight:600;">Τίτλος</small></label>
+        <input type="text" class="form-control form-control-sm" id="title" name="title" aria-describedby="textHelp" placeholder="Όνομα Προγράμματος" value="{{data.program.title}}" required>
+      </div>
+
+      <div class="form-group mb-5 mt-3 pl-3">
+        <div class="row h-100 m-0">
+          <div class="col-12">
+            <input type="checkbox" class="form-check-input" id="featured" name="featured" {{#if data.program.featured}} checked {{/if}}>
+            <label class="form-check-label" for="featured"><small class="text-secondary">Εμφάνηση στην αρχική σελίδα</small></label>
           </div>
-          <div class="col-12 col-md-3 align-self-end">
-            <div class="form-check form-check-inline">
-              <input type="checkbox" class="form-check-input" id="featured" name="featured" {{#if data.program.featured}} checked {{/if}}>
-              <label class="form-check-label" for="featured"><small class="text-secondary">Εμφάνηση στην αρχική σελίδα</small></label>
+          <div class="col-12">
+            <input type="checkbox" class="form-check-input" id="easyAccess" name="easyAccess" {{#if data.program.easyAccess}} checked {{/if}}>
+            <label class="form-check-label" for="easyAccess"><small class="text-secondary">Εύκολη πρόσβαση</small></label>
+          </div>
+        </div>
+      </div>
+      <div class="form-group my-5 pl-3">
+        <label for="programCategories" class="m-0"><small class="text-primary" style="font-weight:600;">Κατηγορίες</small></label>
+        <small class="float-right text-secondary">Για πολλαπλή επιλογή πατήστε <kbd>ctrl</kbd></small>
+        <select class="custom-select custom-select-sm" size="5" id="programCategories" name="programCategories" multiple required>
+          {{#each data.categories}}
+            <option value="{{id}}" {{#ifCond this.id '==' ../data.program.categoryId}} selected {{/ifCond}}>{{text}}</option>
+          {{/each}}
+        </select>
+      </div>
+
+      <!-- Addition of multiple sections  -->
+      <div class="form-group my-5 pl-3">
+        <div class="custom-control custom-radio custom-control-inline">
+          <input type="radio" id="singleSection" name="multiText" class="custom-control-input" value="1" {{#ifCond data.program.multiText '==' '1'}} checked {{/ifCond}}>
+          <label class="custom-control-label" for="singleSection"><small class="text-secondary">Μία ενότητα</small></label>
+        </div>
+        <div class="custom-control custom-radio custom-control-inline">
+          <input type="radio" id="multipleSection" name="multiText" class="custom-control-input" value="2" {{#ifCond data.program.multiText '==' '2'}} checked {{/ifCond}}>
+          <label class="custom-control-label" for="multipleSection"><small class="text-secondary">Πολλαπλές ενότητες</small></label>
+        </div>
+      </div>
+
+      <!-- Single section -->
+      <div class="form-group my-5 pl-3 imee-admin-single-section">
+        <label for="singleText" class="m-0"><small class="text-primary" style="font-weight:600;">Κείμενο</small></label>
+        <textarea class="wysiwyg" name="singleText" id="singleText"> {{data.program.singleText}}</textarea>
+      </div>
+
+
+      <!-- Multiple sections -->
+      <div class="form-group my-5 pl-3 imee-admin-multiple-sections">
+        <label for="subTitle1" class="m-0"><small class="text-primary" style="font-weight:600;">Κεφαλίδα Ενότητας</small></label>
+        <input type="text" class="form-control form-control-sm" id="subTitle1" name="subTitle1" aria-describedby="textHelp" placeholder="Κεφαλίδα" {{#if data.program.subTitle1}} value="{{data.program.subTitle1}}" {{/if}}>
+        <label for="subText1" class="m-0"><small class="text-primary" style="font-weight:600;">Κείμενο Ενότητας</small></label>
+        <textarea class="wysiwyg" name="subText1" id="subText1">{{data.program.subText1}}</textarea>
+      </div>
+
+      <div class="form-group my-5 pl-3 imee-admin-multiple-sections">
+        <label for="subTitle2" class="m-0"><small class="text-primary" style="font-weight:600;">Κεφαλίδα Ενότητας</small></label>
+        <input type="text" class="form-control form-control-sm" id="subTitle2" name="subTitle2" aria-describedby="textHelp" placeholder="Κεφαλίδα" {{#if data.program.subTitle2}} value="{{data.program.subTitle2}}" {{/if}}>
+        <label for="subText2" class="m-0"><small class="text-primary" style="font-weight:600;">Κείμενο</small></label>
+        <textarea class="wysiwyg" name="subText2" id="subText2">{{data.program.subText2}}</textarea>
+      </div>
+
+      <div class="form-group my-5 pl-3 imee-admin-multiple-sections">
+        <label for="subTitle3" class="m-0"><small class="text-primary" style="font-weight:600;">Κεφαλίδα Ενότητας</small></label>
+        <input type="text" class="form-control form-control-sm" id="subTitle3" name="subTitle3" aria-describedby="textHelp" placeholder="Κεφαλίδα" {{#if data.program.subTitle3}} value="{{data.program.subTitle3}}" {{/if}}>
+        <label for="subText3" class="m-0"><small class="text-primary" style="font-weight:600;">Κείμενο</small></label>
+        <textarea class="wysiwyg" name="subText3" id="subText3">{{data.program.subText3}}</textarea>
+      </div>
+
+      <div class="form-group my-5 pl-3 imee-admin-multiple-sections">
+        <label for="subTitle4" class="m-0"><small class="text-primary" style="font-weight:600;">Κεφαλίδα Ενότητας</small></label>
+        <input type="text" class="form-control form-control-sm" id="subTitle4" name="subTitle4" aria-describedby="textHelp" placeholder="Κεφαλίδα" {{#if data.program.subTitle4}} value="{{data.program.subTitle4}}" {{/if}}>
+        <label for="subText4" class="m-0"><small class="text-primary" style="font-weight:600;">Κείμενο</small></label>
+        <textarea class="wysiwyg" name="subText4" id="subText4">{{data.program.subText4}}</textarea>
+      </div>
+
+      <div class="form-group my-5 pl-3 imee-admin-multiple-sections">
+        <label for="subTitle5" class="m-0"><small class="text-primary" style="font-weight:600;">Κεφαλίδα Ενότητας</small></label>
+        <input type="text" class="form-control form-control-sm" id="subTitle5" name="subTitle5" aria-describedby="textHelp" placeholder="Κεφαλίδα" {{#if data.program.subTitle5}} value="{{data.program.subTitle5}}" {{/if}}>
+        <label for="subText5" class="m-0"><small class="text-primary" style="font-weight:600;">Κείμενο</small></label>
+        <textarea class="wysiwyg" name="subText5" id="subText5">{{data.program.subText5}}</textarea>
+      </div>
+
+      <div class="form-group my-5 pl-3 imee-admin-multiple-sections">
+        <label for="subTitle6" class="m-0"><small class="text-primary" style="font-weight:600;">Κεφαλίδα Ενότητας</small></label>
+        <input type="text" class="form-control form-control-sm" id="subTitle6" name="subTitle6" aria-describedby="textHelp" placeholder="Κεφαλίδα" {{#if data.program.subTitle6}} value="{{data.program.subTitle6}}" {{/if}}>
+        <label for="subText6" class="m-0"><small class="text-primary" style="font-weight:600;">Κείμενο</small></label>
+        <textarea class="wysiwyg" name="subText6" id="subText6">{{data.program.subText6}}</textarea>
+      </div>
+      <!-- Addition of multiple sections  -->
+
+
+
+      <div class="form-group my-5 pl-3">
+        <div class="row h-100">
+          <div class="col-12 col-md-8">
+            <label for="programGallery" class="m-0"><small class="text-primary" style="font-weight:600;">Κύρια Εικόνα</small></label>
+            <div class="border rounded" style="height:250px;overflow-y:scroll;">
+              {{#if data.images}}
+                {{#each data.images}}
+                  <div class="m-3 border d-inline-block text-center" style="height:80px; width:80px;">
+                    <img src="/files/uploads/images/{{name}}" alt="{{name}}" imee-img-name="{{name}}" class="imee-prog-img w-100 h-100 ">
+                  </div>
+                {{/each}}
+              {{/if}}
             </div>
+            <input type="text" class="form-control form-control-sm mt-1" id="programImage" name="image" aria-describedby="textHelp" placeholder="Εικόνα Προγράμματος" {{#if data.program.image}} value="{{data.program.image}}" {{/if}} readonly required>
+          </div>
+          <div class="col-12  col-md-4 text-center">
+            <label for="programGalleryPrev" class="m-0"><small class="text-secondary" style="font-weight:600;">Προεπισκόπηση</small></label>
+            <div class="border rounded " id="programGalleryPrev" style="height:250px;">
+              {{#if data.program.image}}
+                <img src="/files/uploads/images/{{data.program.image}}" class="w-100 h-100 ">
+              {{/if}}
+            </div>
+            <button type="button" id="btn-prog-img-clear" class="btn btn-primary btn-sm w-100 mt-1">Καθαρισμός Εικόνας</button>
           </div>
         </div>
       </div>
 
+
       <div class="form-group my-5 pl-3">
-        <label for="programTypeId" class="m-0"><small class="text-primary" style="font-weight:600;">Βασική Κατηγορία</small></label>
-        <select class="custom-select custom-select-sm" id="programTypeId" name="programTypeId" required>
-          <!-- <option selected>Open this select menu</option> -->
-          {{#if data.program.programTypeId}}
-            {{#each data.programTypes}}
-              <option value="{{id}}" {{#ifCond id '==' ../data.program.programTypeId}} selected {{/ifCond}}>{{text}}</option>
+        <label for="programAttachments" class="m-0"><small class="text-primary" style="font-weight:600;">Συνημμένα</small></label>
+        <small class="float-right text-secondary">Για πολλαπλή επιλογή πατήστε <kbd>ctrl</kbd></small>
+        <select class="custom-select custom-select-sm" size="5" id="programAttachments" name="attachments" {{#if  data.documents}} multiple {{else}} disabled {{/if}}>
+          {{#if data.documents}}
+            {{#each data.documents}}
+
+              <option value="{{name}}" {{#if ../data.program.attachments}} {{#ifIn name ../data.program.attachments}} selected {{/ifIn}} {{/if}}>{{name}}</option>
             {{/each}}
           {{else}}
-            <option value="Δεν βρέθηκαν βασικέςκατηγορίες">Δεν βρέθηκαν βασικές κατηγορίες</option>
+            <option value="Δεν βρέθηκαν αρχεία">Δεν βρέθηκαν αρχεία</option>
           {{/if}}
         </select>
+        <input type="text" class="form-control form-control-sm mt-2" id="programAttachmentsPreview" name="programAttachmentsPreview" aria-describedby="textHelp" placeholder="Συνημμένα Αρχεία" readonly>
+      </div>
+
+      <!--Course data  -->
+      <div class="media text-muted pt-1">
+        <p class="media-body pb-1 mb-0 small lh-125 border-bottom border-gray">
+          <strong class="d-block text-gray-dark">Πληροφορίες Μαθήματος</strong>
+        </p>
+      </div>
+
+      <!-- <div class="form-group mb-5 mt-3 pl-3">
+      <div class="row h-100">
+        <div class="col-12 col-md-6">
+          <label for="programStartDate" class="m-0"><small class="text-primary" style="font-weight:600;">Ημερομηνία Έναρξης</small></label>
+          <input type="date" class="form-control form-control-sm" id="programStartDate" name="programStartDate" aria-describedby="dateHelp" placeholder="Ημερομηνία Έναρξης">
+        </div>
+        <div class="col-12 col-md-6">
+          <label for="programEndDate" class="m-0"><small class="text-primary" style="font-weight:600;">Ημερομηνία Λήξης</small></label>
+          <input type="date" class="form-control form-control-sm" id="programEndDate" name="programEndDate" aria-describedby="dateHelp" placeholder="Ημερομηνία Λήξης">
+        </div>
+      </div>
+    </div> -->
+
+      <div class="form-group mb-5 mt-3 pl-3">
+        <div class="row h-100">
+          <div class="col-12 col-md-6">
+            <label for="hours" class="m-0"><small class="text-primary" style="font-weight:600;">Ώρες Εκπαίδευσης</small></label>
+            <small class="float-right text-secondary">Δύο δεκαδικά ψηφία χωρισμένα με <kbd>.</kbd></small>
+            <input type="number" step="0.01" class="form-control form-control-sm" id="hours" name="hours" aria-describedby="numberHelp" placeholder="00.00" {{#if data.program.hours}} value="{{data.program.hours}}" {{/if}}>
+          </div>
+          <div class="col-12 col-md-6">
+            <label for="cost" class="m-0"><small class="text-primary" style="font-weight:600;">Κόστος Εκπαίδευσης</small></label>
+            <small class="float-right text-secondary">Δύο δεκαδικά ψηφία χωρισμένα με <kbd>.</kbd></small>
+            <input type="number" step="0.01" class="form-control form-control-sm" id="cost" name="cost" aria-describedby="numberHelp" placeholder="00.00" {{#if data.program.cost}} value="{{data.program.cost}}" {{/if}}>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="form-group mb-5 mt-3 pl-3">
+        <div class="row h-100">
+          <div class="col-12 col-md-6">
+            <label for="location" class="m-0"><small class="text-primary" style="font-weight:600;">Τοποθεσία</small></label>
+            <input type="text" class="form-control form-control-sm" id="location" name="location" aria-describedby="textHelp" placeholder="Τοποθεσία" {{#if data.program.location}} value="{{data.program.location}}" {{/if}}>
+          </div>
+          <div class="col-12 col-md-6">
+            <label for="tutor" class="m-0"><small class="text-primary" style="font-weight:600;">Εισηγητής</small></label>
+            <input type="text" class="form-control form-control-sm" id="tutor" name="tutor" aria-describedby="textHelp" placeholder="Εισηγητής" {{#if data.program.tutor}} value="{{data.program.tutor}}" {{/if}}>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-between border-top pt-3 mt-3">
+        <button type="submit" class="btn btn-primary btn-sm">Αποθήκευση</button>
+        <a href="/admin/program" class="my-auto"><small>Πίσω</small></a>
+      </div>
+
+    </form>
+
+  {{/ifCond}}
+
+
+  {{#ifCond type '==' 'semin'}}
+    <h6 class="border-bottom border-gray pb-2 mb-0" style="font-weight:600;">Αλλαγή Σεμιναρίου</h6>
+
+    <form action="/admin/seminar/{{data.program.id}}/edit" method="post" class="mt-3">
+
+      <div class="media text-muted pt-1">
+        <p class="media-body pb-1 mb-0 small lh-125 border-bottom border-gray">
+          <strong class="d-block text-gray-dark">Βασικά Στοιχεία</strong>
+        </p>
+      </div>
+
+      <div class="form-group mb-5 mt-3 pl-3">
+        <label for="title" class="m-0"><small class="text-primary" style="font-weight:600;">Τίτλος</small></label>
+        <input type="text" class="form-control form-control-sm" id="title" name="title" aria-describedby="textHelp" placeholder="Όνομα Σεμιναρίου" value="{{data.program.title}}" required>
+      </div>
+
+      <div class="form-group mb-5 mt-3 pl-3">
+        <div class="row h-100 m-0">
+          <div class="col-12">
+            <input type="checkbox" class="form-check-input" id="featured" name="featured" {{#if data.program.featured}} checked {{/if}}>
+            <label class="form-check-label" for="featured"><small class="text-secondary">Εμφάνηση στην αρχική σελίδα</small></label>
+          </div>
+          <div class="col-12">
+            <input type="checkbox" class="form-check-input" id="easyAccess" name="easyAccess" {{#if data.program.easyAccess}} checked {{/if}}>
+            <label class="form-check-label" for="easyAccess"><small class="text-secondary">Εύκολη πρόσβαση</small></label>
+          </div>
+        </div>
       </div>
 
 
@@ -270,19 +457,7 @@
       </div>
       <!-- Addition of multiple sections  -->
 
-      <div class="form-group my-5 pl-3">
-        <label for="programCategories" class="m-0"><small class="text-primary" style="font-weight:600;">Κατηγορίες</small></label>
-        <small class="float-right text-secondary">Για πολλαπλή επιλογή πατήστε <kbd>ctrl</kbd></small>
-        <select class="custom-select custom-select-sm" size="5" id="programCategories" name="programCategories" multiple required>
-          {{#each data.categories}}
-            <option value="{{id}}" imee-programType-id="{{programTypeId}}" {{#ifCond this.programTypeId '==' ../data.program.programTypeId}}{{else}}style="display:none;"{{/ifCond}}
-            {{#each ../data.program.categories}}
-              {{#ifCond this.id '==' ../this.id}} selected {{/ifCond}}
-            {{/each}}
-            >{{text}}</option>
-          {{/each}}
-        </select>
-      </div>
+
 
       <div class="form-group my-5 pl-3">
         <div class="row h-100">
@@ -297,7 +472,7 @@
                 {{/each}}
               {{/if}}
             </div>
-            <input type="text" class="form-control form-control-sm mt-1" id="programImage" name="image" aria-describedby="textHelp" placeholder="Εικόνα Προγράμματος" {{#if data.program.image}} value="{{data.program.image}}"{{/if}} readonly required>
+            <input type="text" class="form-control form-control-sm mt-1" id="programImage" name="image" aria-describedby="textHelp" placeholder="Εικόνα Προγράμματος" {{#if data.program.image}} value="{{data.program.image}}" {{/if}} readonly required>
           </div>
           <div class="col-12  col-md-4 text-center">
             <label for="programGalleryPrev" class="m-0"><small class="text-secondary" style="font-weight:600;">Προεπισκόπηση</small></label>
@@ -319,7 +494,7 @@
           {{#if data.documents}}
             {{#each data.documents}}
 
-              <option value="{{name}}" {{#if ../data.program.attachments}}{{#ifIn name ../data.program.attachments}} selected {{/ifIn}}{{/if}}>{{name}}</option>
+              <option value="{{name}}" {{#if ../data.program.attachments}} {{#ifIn name ../data.program.attachments}} selected {{/ifIn}} {{/if}}>{{name}}</option>
             {{/each}}
           {{else}}
             <option value="Δεν βρέθηκαν αρχεία">Δεν βρέθηκαν αρχεία</option>
@@ -353,12 +528,12 @@
           <div class="col-12 col-md-6">
             <label for="hours" class="m-0"><small class="text-primary" style="font-weight:600;">Ώρες Εκπαίδευσης</small></label>
             <small class="float-right text-secondary">Δύο δεκαδικά ψηφία χωρισμένα με <kbd>.</kbd></small>
-            <input type="number" step="0.01" class="form-control form-control-sm" id="hours" name="hours" aria-describedby="numberHelp" placeholder="00.00" {{#if data.program.hours}}value="{{data.program.hours}}"{{/if}}>
+            <input type="number" step="0.01" class="form-control form-control-sm" id="hours" name="hours" aria-describedby="numberHelp" placeholder="00.00" {{#if data.program.hours}} value="{{data.program.hours}}" {{/if}}>
           </div>
           <div class="col-12 col-md-6">
             <label for="cost" class="m-0"><small class="text-primary" style="font-weight:600;">Κόστος Εκπαίδευσης</small></label>
             <small class="float-right text-secondary">Δύο δεκαδικά ψηφία χωρισμένα με <kbd>.</kbd></small>
-            <input type="number" step="0.01" class="form-control form-control-sm" id="cost" name="cost" aria-describedby="numberHelp" placeholder="00.00" {{#if data.program.cost}}value="{{data.program.cost}}"{{/if}}>
+            <input type="number" step="0.01" class="form-control form-control-sm" id="cost" name="cost" aria-describedby="numberHelp" placeholder="00.00" {{#if data.program.cost}} value="{{data.program.cost}}" {{/if}}>
           </div>
         </div>
       </div>
@@ -368,23 +543,24 @@
         <div class="row h-100">
           <div class="col-12 col-md-6">
             <label for="location" class="m-0"><small class="text-primary" style="font-weight:600;">Τοποθεσία</small></label>
-            <input type="text" class="form-control form-control-sm" id="location" name="location" aria-describedby="textHelp" placeholder="Τοποθεσία" {{#if data.program.location}}value="{{data.program.location}}"{{/if}}>
+            <input type="text" class="form-control form-control-sm" id="location" name="location" aria-describedby="textHelp" placeholder="Τοποθεσία" {{#if data.program.location}} value="{{data.program.location}}" {{/if}}>
           </div>
           <div class="col-12 col-md-6">
             <label for="tutor" class="m-0"><small class="text-primary" style="font-weight:600;">Εισηγητής</small></label>
-            <input type="text" class="form-control form-control-sm" id="tutor" name="tutor" aria-describedby="textHelp" placeholder="Εισηγητής" {{#if data.program.tutor}}value="{{data.program.tutor}}"{{/if}}>
+            <input type="text" class="form-control form-control-sm" id="tutor" name="tutor" aria-describedby="textHelp" placeholder="Εισηγητής" {{#if data.program.tutor}} value="{{data.program.tutor}}" {{/if}}>
           </div>
         </div>
       </div>
 
       <div class="d-flex justify-content-between border-top pt-3 mt-3">
         <button type="submit" class="btn btn-primary btn-sm">Αποθήκευση</button>
-        <a href="/admin/program" class="my-auto"><small>Πίσω</small></a>
+        <a href="/admin/seminar" class="my-auto"><small>Πίσω</small></a>
       </div>
 
     </form>
 
   {{/ifCond}}
+
 
   <!-- News Edit -->
   {{#ifCond type '==' 'news'}}
@@ -515,11 +691,7 @@
         <select class="custom-select custom-select-sm" size="10" id="programs" name="programs" multiple>
           {{#if data.programs}}
             {{#each data.programs}}
-              <option value="{{id}}"
-                {{#each ../data.meganav.programs}}
-                  {{#ifCond ../this.id '==' this.id}} selected {{/ifCond}}
-                {{/each}}
-              >{{title}}</option>
+              <option value="{{id}}" {{#each ../data.meganav.programs}} {{#ifCond ../this.id '==' this.id}} selected {{/ifCond}} {{/each}}>{{title}}</option>
             {{/each}}
           {{else}}
             <option value="Δεν βρέθηκαν βασικέςκατηγορίες">Δεν βρέθηκαν προγράμματα</option>
@@ -529,22 +701,18 @@
 
 
       {{#ifCond data.meganav.id '==' '1'}}
-      <div class="form-group my-5 ">
-        <label for="categories" class="m-0"><small class="text-primary" style="font-weight:600;">Κατηγορίες</small></label>
-        <select class="custom-select custom-select-sm" size="10" id="categories" name="categories" multiple>
-          {{#if data.categories}}
-            {{#each data.categories}}
-              <option value="{{id}}"
-                {{#each ../data.meganav.categories}}
-                  {{#ifCond ../this.id '==' this.id}} selected {{/ifCond}}
-                {{/each}}
-              >{{text}}</option>
-            {{/each}}
-          {{else}}
-            <option value="Δεν βρέθηκαν βασικέςκατηγορίες">Δεν βρέθηκαν Κατηγορίες</option>
-          {{/if}}
-        </select>
-      </div>
+        <div class="form-group my-5 ">
+          <label for="categories" class="m-0"><small class="text-primary" style="font-weight:600;">Κατηγορίες</small></label>
+          <select class="custom-select custom-select-sm" size="10" id="categories" name="categories" multiple>
+            {{#if data.categories}}
+              {{#each data.categories}}
+                <option value="{{id}}" {{#each ../data.meganav.categories}} {{#ifCond ../this.id '==' this.id}} selected {{/ifCond}} {{/each}}>{{text}}</option>
+              {{/each}}
+            {{else}}
+              <option value="Δεν βρέθηκαν βασικέςκατηγορίες">Δεν βρέθηκαν Κατηγορίες</option>
+            {{/if}}
+          </select>
+        </div>
       {{/ifCond}}
 
 

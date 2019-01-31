@@ -9,14 +9,12 @@ const asyncWrapper = require("../middleware/asyncMiddleware");
 // -----------------------------------------------------------------------------
 const models = require("../models");
 const Category = models.category;
-const ProgramType = models.programType;
 
 
 // -----------------------------------------------------------------------------
 // Data Arrays
 // -----------------------------------------------------------------------------
 let categories = [];
-let programTypes = [];
 
 let data;
 
@@ -27,14 +25,6 @@ let data;
 router.get('*', asyncWrapper(async (req, res, next) => {
 
   categories = await Category.findAll({
-    where: {
-      status: 'active'
-    },
-    include: [{
-      model: ProgramType
-    }]
-  });
-  programTypes = await ProgramType.findAll({
     where: {
       status: 'active'
     }
@@ -50,8 +40,7 @@ router.get('*', asyncWrapper(async (req, res, next) => {
 router.get('/', asyncWrapper(async (req, res, next) => {
 
   data = {
-    categories: categories,
-    programTypes: programTypes
+    categories: categories
   }
 
   res.render('admin/categories', {
@@ -70,8 +59,7 @@ router.get('/', asyncWrapper(async (req, res, next) => {
 router.get('/new', asyncWrapper(async (req, res, next) => {
 
   data = {
-    categories: categories,
-    programTypes: programTypes
+    categories: categories
   }
 
   res.render('admin/create', {
@@ -88,14 +76,11 @@ router.get('/new', asyncWrapper(async (req, res, next) => {
 router.post('/new', asyncWrapper(async (req, res, next) => {
 
   let {
-    programTypeId,
     text
   } = req.body;
 
   await Category.create({
-    text: text,
-    programTypeId: programTypeId,
-    megaNavId: programTypeId
+    text: text
   });
 
   req.flash('success_msg', 'Η Κατηγορία ' + text + ' δημιουργήθηκε με επιτυχία')
@@ -113,12 +98,7 @@ router.get('/:id/delete', asyncWrapper(async (req, res, next) => {
     id
   } = req.params;
 
-  let category = await Category.findByPk(
-    id, {
-      include: [{
-        model: ProgramType
-      }]
-    });
+  let category = await Category.findByPk(id);
 
   data = {
     category: category
@@ -166,16 +146,10 @@ router.get('/:id/edit', asyncWrapper(async (req, res, next) => {
     id
   } = req.params;
 
-  let category = await Category.findByPk(
-    id, {
-      include: [{
-        model: ProgramType
-      }]
-    });
+  let category = await Category.findByPk(id);
 
   data = {
-    category: category,
-    programTypes: programTypes
+    category: category
   }
 
   res.render('admin/edit', {
@@ -194,7 +168,6 @@ router.get('/:id/edit', asyncWrapper(async (req, res, next) => {
 router.post('/:id/edit', asyncWrapper(async (req, res, next) => {
 
   let {
-    programTypeId,
     text
   } = req.body;
 
@@ -203,9 +176,7 @@ router.post('/:id/edit', asyncWrapper(async (req, res, next) => {
   } = req.params;
 
   await Category.update({
-    text: text,
-    programTypeId: programTypeId,
-    megaNavId: programTypeId
+    text: text
   }, {
     where: {
       id: id

@@ -37,26 +37,34 @@ Object.keys(db).forEach(modelName => {
 
 
 // Associations
-db.category.belongsToMany(db.program, {
-  through: 'programCategories',
-});
-db.program.belongsToMany(db.category, {
-  through: 'programCategories',
-});
+
+db.program.belongsTo(db.category, {});
+
+// db.programDropList.hasMany(db.program, {});
+// db.seminarDropList.hasMany(db.seminar, {});
+
+// db.slider.hasMany(db.program, {});
+// db.slider.hasMany(db.seminar, {});
+// db.slider.hasMany(db.category, {});
+
+// db.category.belongsToMany(db.program, {
+//   through: 'programCategories',
+// });
 
 
-db.category.belongsTo(db.programType, {
-  foreignKey: 'programTypeId'
-});
-db.program.belongsTo(db.programType, {
-  foreignKey: 'programTypeId'
-});
-db.megaNav.belongsTo(db.programType, {
-  foreignKey: 'programTypeId'
-});
 
-db.megaNav.hasMany(db.category, {});
-db.megaNav.hasMany(db.program, {});
+// db.category.belongsTo(db.programType, {
+//   foreignKey: 'programTypeId'
+// });
+// db.program.belongsTo(db.programType, {
+//   foreignKey: 'programTypeId'
+// });
+// db.megaNav.belongsTo(db.programType, {
+//   foreignKey: 'programTypeId'
+// });
+
+// db.megaNav.hasMany(db.category, {});
+// db.megaNav.hasMany(db.program, {});
 
 db.slider.belongsTo(db.category, {
   foreignKey: 'categoryId'
@@ -64,35 +72,35 @@ db.slider.belongsTo(db.category, {
 db.slider.belongsTo(db.program, {
   foreignKey: 'programId'
 });
-db.slider.belongsTo(db.programType, {
-  foreignKey: 'programTypeId'
+db.slider.belongsTo(db.seminar, {
+  foreignKey: 'seminarId'
 });
 
 
 
 // Create Default Records
-db.programType
-  .findOrCreate({
-    where: {
-      text: 'Επιδοτούμενα'
-    }
-  })
-  .spread((programType, created) => {});
-db.megaNav
-  .findOrCreate({
-    where: {
-      title: 'Επιδοτούμενα',
-      programTypeId: 1
-    }
-  })
-  .spread((programType, created) => {});
-db.megaNav
-  .findOrCreate({
-    where: {
-      title: 'Σεμινάρια	',
-    }
-  })
-  .spread((programType, created) => {});
+// db.programType
+//   .findOrCreate({
+//     where: {
+//       text: 'Επιδοτούμενα'
+//     }
+//   })
+//   .spread((programType, created) => {});
+// db.megaNav
+//   .findOrCreate({
+//     where: {
+//       title: 'Επιδοτούμενα',
+//       programTypeId: 1
+//     }
+//   })
+//   .spread((programType, created) => {});
+// db.megaNav
+//   .findOrCreate({
+//     where: {
+//       title: 'Σεμινάρια	',
+//     }
+//   })
+//   .spread((programType, created) => {});
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

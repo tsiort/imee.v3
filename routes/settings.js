@@ -19,10 +19,10 @@ const readdir = promisify(fs.readdir);
 // -----------------------------------------------------------------------------
 const models = require("../models");
 const Category = models.category;
-const ProgramType = models.programType;
 const Program = models.program;
+const Seminar = models.seminar;
 const Slider = models.slider;
-const MegaNav = models.megaNav;
+
 
 // -----------------------------------------------------------------------------
 // Data Arrays
@@ -30,10 +30,9 @@ const MegaNav = models.megaNav;
 let documents = [];
 let images = [];
 let categories = [];
-let programTypes = [];
 let programs = [];
+let seminars = [];
 let sliders = [];
-let megaNav = [];
 
 let data;
 
@@ -47,12 +46,13 @@ router.get('*', asyncWrapper(async (req, res, next) => {
       status: 'active'
     }
   });
-  programTypes = await ProgramType.findAll({
+
+  programs = await Program.findAll({
     where: {
       status: 'active'
     }
   });
-  programs = await Program.findAll({
+  seminars = await Seminar.findAll({
     where: {
       status: 'active'
     }
@@ -62,7 +62,7 @@ router.get('*', asyncWrapper(async (req, res, next) => {
       status: 'active'
     }
   });
-  megaNav = await MegaNav.findAll();
+
 
   let result;
   let fileFound;
@@ -109,8 +109,8 @@ router.get('/slider', asyncWrapper(async (req, res, next) => {
     documents: documents,
     images: images,
     categories: categories,
-    programTypes: programTypes,
     programs: programs,
+    seminars: seminars,
     sliders: sliders
   }
 
@@ -133,10 +133,10 @@ router.get('/slider/new', asyncWrapper(async (req, res, next) => {
     documents: documents,
     images: images,
     categories: categories,
-    programTypes: programTypes,
     programs: programs,
+    seminars: seminars,
     sliders: sliders
-  };
+  }
 
   res.render('admin/create', {
     layout: 'admin',
@@ -160,7 +160,7 @@ router.post('/slider/new', asyncWrapper(async (req, res, next) => {
     sliderConnection,
     programId,
     categoryId,
-    programTypeId
+    seminarId
   } = req.body;
 
   // console.log(req.body);
@@ -173,12 +173,18 @@ router.post('/slider/new', asyncWrapper(async (req, res, next) => {
     switch (connectiotType) {
       case '1':
         programId = connectionId;
+        seminarId = null;
+        categoryId = null;
         break;
       case '2':
-        categoryId = connectionId;
+        seminarId = connectionId;
+        programId = null;
+        categoryId = null;
         break;
       case '3':
-        programTypeId = connectionId;
+        categoryId = connectionId;
+        seminarId = null;
+        programId = null;
         break;
       default:
         break;
@@ -191,7 +197,7 @@ router.post('/slider/new', asyncWrapper(async (req, res, next) => {
     image: image,
     programId: programId,
     categoryId: categoryId,
-    programTypeId: programTypeId
+    seminarId: seminarId
   });
 
   req.flash('success_msg', 'Το slider ' + title + ' δημιουργήθηκε με επιτυχία')
@@ -266,8 +272,8 @@ router.get('/slider/:id/edit', asyncWrapper(async (req, res, next) => {
     documents: documents,
     images: images,
     categories: categories,
-    programTypes: programTypes,
     programs: programs,
+    seminars: seminars,
     slider: slider
   };
 
@@ -297,9 +303,11 @@ router.post('/slider/:id/edit', asyncWrapper(async (req, res, next) => {
     sliderConnection,
     programId,
     categoryId,
-    programTypeId
+    seminarId
   } = req.body;
-
+  console.log(programId);
+  console.log(categoryId);
+  console.log(seminarId);
   // console.log(req.body);
   let connectiotType;
   let connectionId;
@@ -310,12 +318,18 @@ router.post('/slider/:id/edit', asyncWrapper(async (req, res, next) => {
     switch (connectiotType) {
       case '1':
         programId = connectionId;
+        seminarId = null;
+        categoryId = null;
         break;
       case '2':
-        categoryId = connectionId;
+        seminarId = connectionId;
+        programId = null;
+        categoryId = null;
         break;
       case '3':
-        programTypeId = connectionId;
+        categoryId = connectionId;
+        seminarId = null;
+        programId = null;
         break;
       default:
         break;
@@ -328,7 +342,7 @@ router.post('/slider/:id/edit', asyncWrapper(async (req, res, next) => {
     image: image,
     programId: programId,
     categoryId: categoryId,
-    programTypeId: programTypeId
+    seminarId: seminarId
   }, {
     where: {
       id: id
