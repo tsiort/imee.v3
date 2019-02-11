@@ -12,6 +12,7 @@ let Category = models.category;
 let Program = models.program;
 let Seminar = models.seminar;
 let Slider = models.slider;
+let News = models.announcement;
 
 
 
@@ -21,6 +22,7 @@ let seminars = [];
 let programs = [];
 let programNav = [];
 let seminarNav = [];
+let news =[];
 
 let data;
 
@@ -79,13 +81,21 @@ router.get('/', asyncWrapper(async (req, res, next) => {
     }
   });
 
+  let featuredNews = await News.findAll({
+    where: {
+      status: 'active',
+      featured: 1
+    }
+  });
+
   data = {
     categories: categories,
     sliders: sliders,
     programNav: programNav,
     seminarNav: seminarNav,
     featuredPrograms: featuredPrograms,
-    featuredSeminars: featuredSeminars
+    featuredSeminars: featuredSeminars,
+    featuredNews: featuredNews
   }
 
   res.render('index', {
@@ -94,6 +104,8 @@ router.get('/', asyncWrapper(async (req, res, next) => {
   });
 
 }));
+
+
 
 router.get('/programs', asyncWrapper(async (req, res, next) => {
 

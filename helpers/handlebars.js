@@ -24,6 +24,7 @@ var register = function(Handlebars) {
         case '&&':
           return (v1 && v2) ? options.fn(this) : options.inverse(this);
         case '||':
+          // console.log(`${v1} ${v2} ${operator}`);
           return (v1 || v2) ? options.fn(this) : options.inverse(this);
         default:
           return options.inverse(this);

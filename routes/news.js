@@ -1,144 +1,225 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
-var News = require('../models/news.js');
+const asyncWrapper = require("../middleware/asyncMiddleware");
 
-/* News GET */
-router.get('/', authenticationMiddleware(), function(req, res, next) {
+// -----------------------------------------------------------------------------
+// Model includes
+// -----------------------------------------------------------------------------
+const models = require("../models");
+const News = models.announcement;
 
-  News.getAll(function(err, result) {
-    if (err) {
-      res.json(err);
-      return;
+
+// -----------------------------------------------------------------------------
+// Data Arrays
+// -----------------------------------------------------------------------------
+let news = [];
+
+let data;
+
+
+// -----------------------------------------------------------------------------
+// Data retrieval executed before main routing
+// -----------------------------------------------------------------------------
+router.get('*', asyncWrapper(async (req, res, next) => {
+
+  news = await News.findAll({
+    where: {
+      status: 'active'
     }
-    res.render('admin/news', {
-      layout: 'admin',
-      title: 'Ανακοινώσεις',
-      type: 'news',
-      news: result
-    });
   });
-});
 
-/* New Announcement GET */
-router.get('/new', authenticationMiddleware(), function(req, res, next) {
+  next();
+}));
+
+// -----------------------------------------------------------------------------
+// GET /admin/news
+// -----------------------------------------------------------------------------
+router.get('/', asyncWrapper(async (req, res, next) => {
+
+  data = {
+    news: news
+  }
+
+  res.render('admin/news', {
+    layout: 'admin',
+    title: 'Ανακοινώσεις',
+    type: 'news',
+    data: data
+  });
+
+}));
+
+
+// -----------------------------------------------------------------------------
+// GET /admin/news/new
+// -----------------------------------------------------------------------------
+router.get('/new', asyncWrapper(async (req, res, next) => {
+
   res.render('admin/create', {
     layout: 'admin-wysiwyg',
     title: 'Νέα Ανακοίνωση',
     type: 'news'
   });
-});
 
-/* New Announcement POST */
-router.post('/new', authenticationMiddleware(), function(req, res, next) {
+}));
 
-  // Get params
-  var newsTitle = req.body.newsTitle;
-  var newsText = req.body.newsText;
-  var newsMainPage = req.body.newsMainPage;
+// -----------------------------------------------------------------------------
+// POST /admin/news/new
+// -----------------------------------------------------------------------------
+router.post('/new', asyncWrapper(async (req, res, next) => {
 
-  if (req.body.newsMainPage == 'on')
-    newsMainPage = 1;
-  else
-    newsMainPage = 0;
+  let {
+    id,
+    slug,
+    title,
+    featured,
+    text,
+    attachments
+  } = req.body || null;
 
-  News.new(newsMainPage, newsTitle, newsText, function(err, result) {
-    if (err) {
-      res.json(err);
-      return;
+
+  if (featured == 'on')
+    featured = 1;
+
+  slug = title
+
+  let news = await News.create({
+    id: id,
+    slug: slug,
+    title: title,
+    featured: featured,
+    text: text,
+    attachments: attachments,
+  })
+
+  req.flash('success_msg', 'Η Ανακοίνωση ' + title + ' δημιουργήθηκε με επιτυχία')
+  res.redirect('/admin/news');
+
+}));
+
+
+// -----------------------------------------------------------------------------
+// GET /admin/news/:id/edit
+// -----------------------------------------------------------------------------
+router.get('/:id/edit', asyncWrapper(async (req, res, next) => {
+
+  let {
+    id
+  } = req.params;
+
+
+  let news = await News.findByPk(id, {
+    where: {
+      status: 'active'
     }
-    req.flash('success_msg', 'Η Ανακοίνωση ' + newsTitle + ' δημιουργήθηκε με επιτυχία')
-    res.redirect('/admin/news');
-  });
-});
+  })
 
-/* Edit Announcement GET */
-router.get('/:id/edit', authenticationMiddleware(), function(req, res, next) {
-
-  var id = req.params.id;
-
-
-  News.get(id, function(err, result) {
-    if (err) {
-      res.json(err);
-      return;
-    }
-    res.render('admin/edit', {
-      layout: 'admin-wysiwyg',
-      title: 'Επεξεργασία Ανακοίνωσης',
-      type: 'news',
-      result: result[0],
-    });
-  });
-});
-
-/* Edit Announcement POST */
-router.post('/:id/edit', authenticationMiddleware(), function(req, res, next) {
-
-  // Get params
-  var id = req.params.id;
-  var newsTitle = req.body.newsTitle;
-  var newsText = req.body.newsText;
-  var newsMainPage = req.body.newsMainPage;
-
-  if (req.body.newsMainPage == 'on')
-    newsMainPage = 1;
-  else
-    newsMainPage = 0;
-
-
-  News.update(id, newsMainPage, newsTitle, newsText, function(err, result) {
-    if (err) {
-      res.json(err);
-      return;
-    }
-    req.flash('success_msg', 'Η Ανακοίνωση ' + newsTitle + ' ενημερώθηκε με επιτυχία')
-    res.redirect('/admin/news');
-  });
-});
-
-/* Delete Announcement GET */
-router.get('/:id/delete', authenticationMiddleware(), function(req, res, next) {
-
-  var id = req.params.id;
-
-  News.get(id, function(err, result) {
-    if (err) {
-      res.json(err);
-      return;
-    }
-    res.render('admin/delete', {
-      layout: 'admin',
-      title: 'Διαγραφή Ανακοίνωσης',
-      type: 'news',
-      result: result[0]
-    });
-  });
-});
-
-/* Delete Announcement POST */
-router.post('/:id/delete', authenticationMiddleware(), function(req, res, next) {
-
-  var id = req.params.id;
-
-  News.delete(id, function(err, result) {
-    if (err) {
-      res.json(err);
-    } else {
-      req.flash('success_msg', 'Η Ανακοίνωση διαγράφτηκε με επιτυχία')
-      res.redirect('/admin/news');
-    }
-  });
-});
-
-// Authentication based restriction middleware
-function authenticationMiddleware() {
-  return (req, res, next) => {
-    // if (req.isAuthenticated()) return next();
-    // res.redirect('/login');
-    return next();
+  data = {
+    news: news
   }
-}
+
+  res.render('admin/edit', {
+    layout: 'admin-wysiwyg',
+    title: 'Επεξεργασία Ανακοίνωσης',
+    type: 'news',
+    data: data
+  });
+
+}));
+
+
+// -----------------------------------------------------------------------------
+// POST /admin/program/:id/edit'
+// -----------------------------------------------------------------------------
+router.post('/:id/edit', asyncWrapper(async (req, res, next) => {
+
+  let {
+    id
+  } = req.params;
+
+
+  let {
+    slug,
+    title,
+    featured,
+    text,
+    attachments
+  } = req.body || null;
+
+  if (featured == 'on')
+    featured = 1;
+
+  slug = title
+
+  await News.update({
+    id: id,
+    slug: slug,
+    title: title,
+    featured: featured,
+    text: text,
+    attachments: attachments,
+  }, {
+    where: {
+      id: id
+    }
+  });
+
+  req.flash('success_msg', 'Η Ανακοίνωση ' + title + ' ενημερώθηκε με επιτυχία')
+  res.redirect('/admin/news');
+}));
+
+
+
+// -----------------------------------------------------------------------------
+// GET /admin/news/:id/delete
+// -----------------------------------------------------------------------------
+router.get('/:id/delete', asyncWrapper(async (req, res, next) => {
+
+  let {
+    id
+  } = req.params;
+
+  let news = await News.findByPk(id, {
+    where: {
+      status: 'active'
+    }
+  })
+
+  data = {
+    news: news
+  }
+
+  res.render('admin/delete', {
+    layout: 'admin',
+    title: 'Διαγραφή Ανακοίνωσης',
+    type: 'news',
+    data: data
+  });
+}));
+
+// -----------------------------------------------------------------------------
+// POST /admin/news/:id/delete
+// -----------------------------------------------------------------------------
+router.post('/:id/delete', asyncWrapper(async (req, res, next) => {
+
+  let {
+    id
+  } = req.params;
+
+
+  await News.update({
+    status: 'inactive',
+  }, {
+    where: {
+      id: id
+    }
+  });
+
+  req.flash('success_msg', 'Η Ανακοίνωση διαγράφτηκε με επιτυχία')
+  res.redirect('/admin/news');
+
+}));
 
 
 module.exports = router;

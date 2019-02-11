@@ -566,27 +566,27 @@
   {{#ifCond type '==' 'news'}}
     <h6 class="border-bottom border-gray pb-2 mb-0" style="font-weight:600;">Επεξεργασία Ανακοίνωσης</h6>
 
-    <form action="/admin/news/{{result.id}}/edit" method="post" class="mt-3">
+    <form action="/admin/news/{{data.news.id}}/edit" method="post" class="mt-3">
 
 
       <div class="form-group mb-5 mt-3 pl-3">
         <div class="row h-100">
           <div class="col-12 col-md-9">
-            <label for="newsTitle" class="m-0"><small class="text-primary" style="font-weight:600;">Τίτλος</small></label>
-            <input type="text" class="form-control form-control-sm" id="newsTitle" name="newsTitle" aria-describedby="textHelp" placeholder="Τίτλος Ανακοίνωσης" value="{{result.title}}" required>
+            <label for="title" class="m-0"><small class="text-primary" style="font-weight:600;">Τίτλος</small></label>
+            <input type="text" class="form-control form-control-sm" id="title" name="title" aria-describedby="textHelp" placeholder="Τίτλος Ανακοίνωσης" value="{{data.news.title}}" required>
           </div>
           <div class="col-12 col-md-3 align-self-end">
             <div class="form-check form-check-inline">
-              <input type="checkbox" class="form-check-input" id="newsMainPage" name="newsMainPage" {{#ifCond result.first_page '==' '1'}} checked {{/ifCond}}>
-              <label class="form-check-label" for="newsMainPage"><small class="text-secondary">Εμφάνηση στην αρχική σελίδα</small></label>
+              <input type="checkbox" class="form-check-input" id="featured" name="featured" {{#ifCond data.news.featured '==' '1'}} checked {{/ifCond}}>
+              <label class="form-check-label" for="featured"><small class="text-secondary">Εμφάνηση στην αρχική σελίδα</small></label>
             </div>
           </div>
         </div>
       </div>
 
       <div class="form-group my-5 pl-3">
-        <label for="newsText" class="m-0"><small class="text-primary" style="font-weight:600;">Κείμενο</small></label>
-        <textarea class="wysiwyg" name="newsText" id="newsText" required>{{result.text}}</textarea>
+        <label for="text" class="m-0"><small class="text-primary" style="font-weight:600;">Κείμενο</small></label>
+        <textarea class="wysiwyg" name="text" id="text" required>{{data.news.text}}</textarea>
       </div>
 
 

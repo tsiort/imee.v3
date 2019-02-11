@@ -152,13 +152,13 @@
   <!-- Announcement Delete -->
   {{#ifCond type '==' 'news'}}
     <h6 class="border-bottom border-gray pb-2 mb-0" style="font-weight:600;">Διαγραφή Ανακοίνωσης</h6>
-    {{#if result}}
+    {{#if data}}
 
       <!-- <small class="text-muted mt-3">Αρχικό Κείμενο: {{result.category}}</small> -->
 
-      <form action="/admin/news/{{result.id}}/delete" method="post" class="mt-3">
+      <form action="/admin/news/{{data.news.id}}/delete" method="post" class="mt-3">
         <div class="form-group">
-          <input type="text" class="form-control" id="newsName" name="newsName" aria-describedby="textHelp" placeholder="Τίτλος Ανακοίνωσης" value="{{result.title}}" disabled>
+          <input type="text" class="form-control" id="title" name="title" aria-describedby="textHelp" placeholder="Τίτλος Ανακοίνωσης" value="{{data.news.title}}" disabled>
         </div>
         <div class="d-flex justify-content-between border-top pt-3 mt-3">
           <button type="submit" class="btn btn-primary btn-sm">Διαγραφή</button>

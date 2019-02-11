@@ -18,7 +18,7 @@ var adminRouter = require('./routes/admin');
 var categRouter = require('./routes/category');
 var progrRouter = require('./routes/program');
 var seminarRouter = require('./routes/seminar');
-// var newsRouter  = require('./routes/news');
+var newsRouter  = require('./routes/news');
 var filesRouter = require('./routes/file');
 var settingsRouter = require('./routes/settings');
 
@@ -95,7 +95,7 @@ app.use('/admin', adminRouter);
 app.use('/admin/category', categRouter);
 app.use('/admin/program', progrRouter);
 app.use('/admin/seminar', seminarRouter);
-// app.use('/admin/news', newsRouter);
+app.use('/admin/news', newsRouter);
 app.use('/admin/file', filesRouter);
 app.use('/admin/settings', settingsRouter);
 app.use('/admin/froala', froalaHandler);

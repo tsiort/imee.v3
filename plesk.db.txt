@@ -1,0 +1,3 @@
+DB: k109316pet_db
+USER: k1093_user
+PASS: iN2p88a!

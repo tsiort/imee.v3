@@ -168,7 +168,7 @@ router.post('/new', asyncWrapper(async (req, res, next) => {
     tutor,
     programCategories,
   } = req.body;
-  console.log(easyAccess);
+
   if (featured == 'on')
     featured = 1;
   if (easyAccess == 'on')
@@ -236,7 +236,7 @@ router.get('/:id/edit', asyncWrapper(async (req, res, next) => {
       }],
   });
 
-  console.log(program);
+
   data = {
     documents: documents,
     images: images,
