@@ -1,6 +1,6 @@
 // On document ready event
 $(function() {
-
+  // $('.loader').fadeOut("slow");
 
   // Open navbarSide when button is clicked
   $('#navbarSideButton').on('click', function() {

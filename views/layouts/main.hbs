@@ -11,15 +11,42 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
   <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
   <!-- <script src="/libs//viewerjs/dist/viewer.js"></script> -->
+  <style media="screen">
+    .loader {
+      position: fixed;
+      left: 0px;
+      top: 0px;
+      width: 100%;
+      height: 100%;
+      z-index: 9999;
+      background: url('/images/preloader.svg') 50% 50% no-repeat rgba(255, 255, 255, 1);
+      -webkit-transition: height .4s;
+      -moz-transition: height .4s;
+      -ms-transition: height .4s;
+      -o-transition: height .4s;
+      transition: height .4s;
+      transition-timing-function: ease;
+    }
+  </style>
   <link href="/libs/froala/css/froala_style.min.css" rel="stylesheet" type="text/css" />
-  <script type="text/javascript" src="/javascripts/custom.js"></script>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
   <link href="/libs/viewerjs/dist/viewer.css" rel="stylesheet">
   <link rel='stylesheet' href='/stylesheets/style.css' />
+  <script type="text/javascript" src="/javascripts/custom.js"></script>
 
 </head>
 
 <body class="bg-pattern">
+  <div id="loading" style="" class="loader">
+  </div>
+  <script>
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        document.getElementById("loading").style.height = "0px";
+        // document.getElementById("loading").style.display = "none";
+      }, 1000);
+    });
+  </script>
   <div class="container-fulid bg-light">
 
     <!-- Contact Row -->
@@ -29,8 +56,17 @@
     <div class="row mx-0 mt-1  text-white text-center">
       <div class="col-12 d-none d-lg-block">
         <div class="imee-container">
-          <a href="/">
-            <img src="/images/kek-logo-1.png" class="img-fluid " alt="IME&E" style="height: auto;width:auto;">
+          <a href="/" class="row m-0 p-0">
+            <div class="col-12 m-0 p-0">
+              <img src="/images/logo-img.svg" class="img-fluid " alt="IME&E" style="height: auto;width:77px;">
+            </div>
+            <div class="col-12 m-0 p-0">
+              <img src="/images/logo-title.svg" class="img-fluid" alt="IME&E" style="height: auto;width:77px;margin-left:4px">
+            </div>
+            <div class="col-12 m-0 p-0">
+              <img src="/images/logo-subtitle.svg" class="img-fluid" alt="IME&E" style="height: auto;width:450px;">
+
+            </div>
           </a>
         </div>
       </div>
@@ -71,7 +107,7 @@
                     {{#each ../data.programNav}}
                       {{#ifCond categoryId '==' ../id}}
                         <a class="dropdown-item" href="/programs/{{id}}">{{title}}</a>
-                        {{/ifCond}}
+                      {{/ifCond}}
                     {{/each}}
                   {{/each}}
 
